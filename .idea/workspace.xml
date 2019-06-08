@@ -2,7 +2,52 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a80d482a-d7c2-4e81-9ab6-8c8503312284" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Parser_test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestItems" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-0.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-0.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-1.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-10.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-10.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-11.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-11.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-12.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-12.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-13.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-13.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-14.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-14.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-15.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-15.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-16.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-16.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-17.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-17.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-18.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-18.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-19.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-19.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-2.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-2.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-20.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-20.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-21.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-21.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-22.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-22.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-23.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-23.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-24.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-24.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-25.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-25.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-26.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-26.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-27.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-27.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-28.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-28.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-29.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-29.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-3.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-3.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-30.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-30.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-31.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-31.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-32.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-32.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-33.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-33.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-34.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-34.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-35.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-35.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-36.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-36.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-37.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-37.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-38.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-38.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-39.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-39.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-4.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-4.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-5.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-5.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-6.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-6.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-7.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-7.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-8.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-8.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items-9.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items-9.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/items_schema.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/items_schema.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/instructions/skeleton_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/instructions/skeleton_parser.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -10,12 +55,120 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="ebay_db" type="feb32156:DbDataSourceImpl" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/json/items_schema.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2380">
+              <caret line="140" selection-start-line="140" selection-end-line="140" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/json/items-1.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="13668">
+              <caret column="804165" selection-start-column="803135" selection-end-column="804603" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/TestItems">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="680">
+              <caret line="100" column="1" selection-start-line="100" selection-start-column="1" selection-end-line="100" selection-end-column="1" />
+              <folding>
+                <element signature="e#1592#3158#0" />
+                <element signature="e#3164#4794#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Parser_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/d206b192-1f9a-41f9-81b7-145720ad636f/console.sql">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/flyway-5.2.4/conf/flyway.conf">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="782">
+              <caret line="46" column="13" selection-start-line="46" selection-start-column="13" selection-end-line="46" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/V1__Create_Cateogry_table.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="16" lean-forward="true" selection-start-column="16" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="Python Unit Test" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/item" />
+        <option value="$PROJECT_DIR$/src/TestItems" />
+        <option value="$PROJECT_DIR$/instructions/skeleton_parser.py" />
+        <option value="$PROJECT_DIR$/src/Parser.py" />
+        <option value="$PROJECT_DIR$/src/Parser.test.py" />
+        <option value="$PROJECT_DIR$/src/Parser_test.py" />
+        <option value="$PROJECT_DIR$/flyway-5.2.4/conf/flyway.conf" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1280" />
     <option name="y" value="23" />
-    <option name="width" value="1314" />
+    <option name="width" value="1280" />
     <option name="height" value="1388" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -26,6 +179,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -33,22 +187,59 @@
               <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
               <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
+              <item name="flyway-5.2.4" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
+              <item name="flyway-5.2.4" type="462c0819:PsiDirectoryNode" />
+              <item name="conf" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
+              <item name="flyway-5.2.4" type="462c0819:PsiDirectoryNode" />
+              <item name="sql" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
+              <item name="instructions" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="database.console.LAST_STATE" value="true" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="fileTemplates" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data/json" />
+      <recent name="$PROJECT_DIR$/instructions" />
       <recent name="$PROJECT_DIR$/data" />
     </key>
   </component>
@@ -64,6 +255,28 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="Unittests in Parser_test.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="cecs535project1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/src/Parser_test.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python tests.Unittests in Parser_test.py" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -74,41 +287,161 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1560002486985</updated>
-      <workItem from="1560002491398" duration="763000" />
+      <workItem from="1560002491398" duration="5459000" />
+      <workItem from="1560014092660" duration="123000" />
     </task>
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="Unittests_in_Parser_test_py - 2019.06.08 at 12h 07m 38s.xml">
+      <configuration name="Unittests in Parser.test.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_Parser_test_py - 2019.06.08 at 12h 07m 40s.xml">
+      <configuration name="Unittests in Parser.test.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_Parser_test_py - 2019.06.08 at 12h 07m 47s.xml">
+      <configuration name="Unittests in Parser.test.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_Parser_test_py - 2019.06.08 at 12h 07m 56s.xml">
+      <configuration name="Unittests in Parser.test.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_Parser_test_py - 2019.06.08 at 12h 08m 16s.xml">
+      <configuration name="Unittests in Parser.test.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_Parser_test_py - 2019.06.08 at 12h 08m 25s.xml">
+      <configuration name="Unittests in Parser.test.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_Parser_test_py - 2019.06.08 at 12h 08m 53s.xml">
+      <configuration name="Unittests in Parser.test.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_Parser_test_py - 2019.06.08 at 12h 09m 30s.xml">
+      <configuration name="Unittests in Parser.test.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_Parser_test_py - 2019.06.08 at 12h 12m 38s.xml">
+      <configuration name="Unittests in Parser_test.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_Parser_test_py - 2019.06.08 at 12h 12m 49s.xml">
+      <configuration name="Unittests in Parser_test.py" configurationId="tests" />
+    </history-entry>
+  </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="763000" />
+    <option name="totallyTimeSpent" value="5582000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="2560" height="1388" extended-state="6" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24980143" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.0949166" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3294753" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3294753" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="SQL Formatter" />
-      <window_info anchor="right" id="SciView" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="11" />
+      <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.16203336" />
+      <window_info anchor="right" id="SQL Formatter" order="5" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/cecs535project1$Unittests_in_Parser_test_py.coverage" NAME="Unittests in Parser_test.py Coverage Results" MODIFIED="1560010369412" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/data/json/items-0.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/json/items-37.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="24" selection-start-column="11" selection-end-column="1270" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/item" />
+    <entry file="file://$PROJECT_DIR$/instructions/skeleton_parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1079">
+          <caret line="98" column="21" selection-start-line="98" selection-start-column="21" selection-end-line="98" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.conda/envs/cecs535project1/lib/python3.7/unittest/loader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="168" selection-start-line="168" selection-end-line="168" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.conda/envs/cecs535project1/lib/python3.7/unittest/case.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="614" selection-start-line="614" selection-end-line="614" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Parser.py" />
+    <entry file="file://$PROJECT_DIR$/data/json/items_schema.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2380">
+          <caret line="140" selection-start-line="140" selection-end-line="140" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/json/items-1.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13668">
+          <caret column="804165" selection-start-column="803135" selection-end-column="804603" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TestItems">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="100" column="1" selection-start-line="100" selection-start-column="1" selection-end-line="100" selection-end-column="1" />
+          <folding>
+            <element signature="e#1592#3158#0" />
+            <element signature="e#3164#4794#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Parser_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/d206b192-1f9a-41f9-81b7-145720ad636f/console.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/conf/flyway.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="46" column="13" selection-start-line="46" selection-start-column="13" selection-end-line="46" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/V1__Create_Cateogry_table.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="16" lean-forward="true" selection-start-column="16" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>
