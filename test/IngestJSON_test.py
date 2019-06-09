@@ -53,6 +53,7 @@ class MyTestCase(unittest.TestCase):
             'TestItems2'
         ],
             'test_values.dat',
+            'Items',
             'Location',
             'Country'
         )
