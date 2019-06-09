@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a80d482a-d7c2-4e81-9ab6-8c8503312284" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IngestApp.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/IngestApp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IngestJSON.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/IngestJSON.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JSONParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/JSONParser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/IngestJSON_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/IngestJSON_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/TestItems2" beforeDir="false" afterPath="$PROJECT_DIR$/test/TestItems2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/categories.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test_values.dat" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_values.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ebay_db" beforeDir="false" afterPath="$PROJECT_DIR$/data/ebay_db" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +56,41 @@
             <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/V1__Create_Cateogry_table.sql">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="85">
-                  <caret line="5" lean-forward="true" selection-end-line="5" />
+                  <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/country">
+              <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+                <state projectRestartId="40a324a0-0981-4353-b838-ebf9558fa82f">
+                  <filtering>
+                    <filter text="" />
+                  </filtering>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/README.md">
+              <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+                <state split_layout="SPLIT">
+                  <first_editor relative-caret-position="187">
+                    <caret line="9" column="87" selection-start-line="9" selection-start-column="87" selection-end-line="9" selection-end-column="87" />
+                  </first_editor>
+                  <second_editor />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/flyway_schema_history">
+              <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+                <state projectRestartId="40a324a0-0981-4353-b838-ebf9558fa82f">
+                  <filtering>
+                    <filter text="" />
+                  </filtering>
                 </state>
               </provider>
             </entry>
@@ -71,7 +98,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/test/Parser_test.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1207">
+                <state relative-caret-position="273">
                   <caret line="71" column="27" lean-forward="true" selection-start-line="71" selection-start-column="27" selection-end-line="71" selection-end-column="27" />
                   <folding>
                     <element signature="e#0#15#0" expanded="true" />
@@ -80,7 +107,7 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/test/IngestJSON_test.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="204">
@@ -105,16 +132,16 @@
       </split-first>
       <split-second>
         <leaf>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/JSONParser.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="398">
+                <state relative-caret-position="459">
                   <caret line="27" column="21" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/IngestJSON.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="119">
@@ -126,8 +153,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/IngestApp.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="14" selection-start-line="14" selection-end-line="14" />
+                <state relative-caret-position="374">
+                  <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
                 </state>
               </provider>
             </entry>
@@ -138,9 +165,29 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/V2__Create_Country_table.sql">
+              <provider selected="true" editor-type-id="text-editor">
+                <state>
+                  <caret column="20" selection-start-column="20" selection-end-column="20" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/categories.dat">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="-16956" />
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/category">
+              <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+                <state projectRestartId="40a324a0-0981-4353-b838-ebf9558fa82f">
+                  <filtering>
+                    <filter text="" />
+                  </filtering>
+                </state>
               </provider>
             </entry>
           </file>
@@ -179,7 +226,6 @@
         <option value="$PROJECT_DIR$/flyway-5.2.4/categories.dat" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
         <option value="$PROJECT_DIR$/flyway-5.2.4/sql/V2__Import_Categories.sql" />
-        <option value="$PROJECT_DIR$/flyway-5.2.4/sql/V2__Create_Country_table.sql" />
         <option value="$PROJECT_DIR$/flyway-5.2.4/sql/V1__Create_Cateogry_table.sql" />
         <option value="$PROJECT_DIR$/test/TestItems" />
         <option value="$PROJECT_DIR$/test/Parser_test.py" />
@@ -189,6 +235,8 @@
         <option value="$PROJECT_DIR$/test/IngestJSON_test.py" />
         <option value="$PROJECT_DIR$/flyway-5.2.4/sql/categories.dat" />
         <option value="$PROJECT_DIR$/src/JSONParser.py" />
+        <option value="$PROJECT_DIR$/flyway-5.2.4/sql/V2__Create_Country_table.sql" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -212,41 +260,6 @@
             <path>
               <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
               <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
-              <item name="flyway-5.2.4" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
-              <item name="flyway-5.2.4" type="462c0819:PsiDirectoryNode" />
-              <item name="sql" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
-              <item name="instructions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
@@ -394,17 +407,11 @@
       <option name="presentableId" value="Default" />
       <updated>1560002486985</updated>
       <workItem from="1560002491398" duration="5459000" />
-      <workItem from="1560014092660" duration="22600000" />
+      <workItem from="1560014092660" duration="23819000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_Parser_test_ParserTestCase_test_extractsNestedValues - 2019.06.09 at 10h 24m 35s.xml">
-      <configuration name="Unittests for Parser_test.ParserTestCase.test_extractsNestedValues" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_for_Parser_test_ParserTestCase_test_extractsNestedValues - 2019.06.09 at 10h 25m 12s.xml">
-      <configuration name="Unittests for Parser_test.ParserTestCase.test_extractsNestedValues" configurationId="tests" />
-    </history-entry>
     <history-entry file="Unittests_for_Parser_test_ParserTestCase_test_extractsNestedValues - 2019.06.09 at 10h 25m 55s.xml">
       <configuration name="Unittests for Parser_test.ParserTestCase.test_extractsNestedValues" configurationId="tests" />
     </history-entry>
@@ -429,9 +436,15 @@
     <history-entry file="Unittests_in_IngestJSON_test_py - 2019.06.09 at 10h 40m 29s.xml">
       <configuration name="Unittests in IngestJSON_test.py" configurationId="tests" />
     </history-entry>
+    <history-entry file="Unittests_for_Parser_test_ParserTestCase - 2019.06.09 at 10h 48m 02s.xml">
+      <configuration name="Unittests for Parser_test.ParserTestCase" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_IngestJSON_test_MyTestCase - 2019.06.09 at 10h 48m 05s.xml">
+      <configuration name="Unittests for IngestJSON_test.MyTestCase" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28059000" />
+    <option name="totallyTimeSpent" value="29278000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -446,14 +459,14 @@
     <frame x="0" y="23" width="2560" height="1387" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15170771" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15170771" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Database Console" order="0" weight="0.32895753" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32895753" />
       <window_info anchor="bottom" id="Run" order="3" weight="0.32972974" />
-      <window_info active="true" anchor="bottom" id="Debug" order="4" visible="true" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" weight="0.32972974" />
@@ -461,13 +474,13 @@
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32972974" />
       <window_info anchor="bottom" id="Database Changes" order="10" weight="0.32972974" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="12" weight="0.32972974" />
+      <window_info anchor="bottom" id="Terminal" order="12" visible="true" weight="0.32972974" />
       <window_info anchor="bottom" id="Python Console" order="13" weight="0.32972974" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24980143" />
       <window_info anchor="right" id="SciView" order="3" />
-      <window_info anchor="right" id="Database" order="4" weight="0.11954766" />
+      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.11953932" />
       <window_info anchor="right" id="SQL Formatter" order="5" />
     </layout>
     <layout-to-restore>
@@ -498,17 +511,6 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/IngestApp.py</url>
-          <line>14</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_in_Parser_test_py.coverage" NAME="Unittests in Parser_test.py Coverage Results" MODIFIED="1560089892880" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
@@ -582,15 +584,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/flyway_schema_history">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="40a324a0-0981-4353-b838-ebf9558fa82f">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.conda/envs/cecs535project1/lib/python3.7/json/decoder.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="806">
@@ -615,15 +608,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/category">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="40a324a0-0981-4353-b838-ebf9558fa82f">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/instructions/skeleton_parser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="158">
@@ -638,13 +622,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/V2__Create_Country_table.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/TestItems">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -652,25 +629,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/V1__Create_Cateogry_table.sql">
+    <entry file="file://$PROJECT_DIR$/test/categories.dat">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/TestItems2">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" lean-forward="true" selection-end-line="5" />
+        <state relative-caret-position="295">
+          <caret line="52" column="31" selection-start-line="52" selection-start-column="31" selection-end-line="52" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/JSONParser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="21" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/Parser_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1207">
+        <state relative-caret-position="273">
           <caret line="71" column="27" lean-forward="true" selection-start-line="71" selection-start-column="27" selection-end-line="71" selection-end-column="27" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/categories.dat">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/test/IngestJSON_test.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -682,10 +666,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/TestItems2">
+    <entry file="file://$PROJECT_DIR$/src/IngestApp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="52" column="31" selection-start-line="52" selection-start-column="31" selection-end-line="52" selection-end-column="31" />
+        <state relative-caret-position="374">
+          <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/V1__Create_Cateogry_table.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/V2__Create_Country_table.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="20" selection-start-column="20" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/countries.dat">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/categories.dat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-16956" />
+      </provider>
+    </entry>
+    <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/category">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="40a324a0-0981-4353-b838-ebf9558fa82f">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/flyway_schema_history">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="40a324a0-0981-4353-b838-ebf9558fa82f">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/country">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="40a324a0-0981-4353-b838-ebf9558fa82f">
+          <filtering>
+            <filter text="" />
+          </filtering>
         </state>
       </provider>
     </entry>
@@ -696,25 +729,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/categories.dat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-16956" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/countries.dat">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/IngestApp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/JSONParser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="27" column="21" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="187">
+            <caret line="9" column="87" selection-start-line="9" selection-start-column="87" selection-end-line="9" selection-end-column="87" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
