@@ -1,3 +1,1042 @@
-cat1
-cat2
-cat3
+1|Collectibles
+2|Decorative & Holiday
+3|Decorative by Brand
+4|Christopher Radko
+5|Enesco
+6|Precious Moments
+7|Other Enesco Items
+8|Dreamsicles
+9|Autographs, Paper & Writing
+10|Paper
+11|Ephemera
+12|Hallmark
+13|Miniature Ornaments
+14|Avon
+15|Other Avon Items
+16|Housewares & Kitchenware
+17|Barware
+18|Other Barware
+19|Pop Culture
+20|Comics
+21|Silver Age (1956-69)
+22|Horror, Sci-Fi
+23|Bottles: Antique (Pre-1900)
+24|Medicines, Cures
+25|Modern Age (1980-Now)
+26|Alternative, Underground
+27|Mary's Moo Moos
+28|Superhero
+29|Art, Animation & Photo Images
+30|Photographic Images
+31|Contemporary (1940-Now)
+32|Celebrity
+33|Other
+34|Golden Age (1938-55)
+35|Westerns
+36|Kitchenware
+37|Other Kitchenware
+38|Classics Illustrated
+39|Salt, Pepper Shakers
+40|Range Sets
+41|Decanters
+42|Cookie Jars
+43|Modern (1970-Now)
+44|Franklin Mint
+45|Other Franklin Mint Items
+46|Knowles Collector Plates
+47|Ice Buckets
+48|Mugs
+49|Magazines
+50|Other Magazines
+51|ANRI
+52|Furnishings, Knives & Tools
+53|Clocks
+54|Antique (Pre-1930)
+55|Shelf
+56|Lladro
+57|Figurines
+58|Fruit Jars
+59|Collections
+60|Dept 56
+61|Other Dept 56 Items
+62|Advertising
+63|Cars
+64|American
+65|Buick
+66|Cookie Cutters
+67|Ornaments
+68|Pretty as a Picture
+69|Corkscrews
+70|Original Comic Art
+71|Paintings
+72|Cartoon Character
+73|Harmony Kingdom
+74|Bottles
+75|Graphic Novels, TPBs
+76|Full Runs
+77|International
+78|UK
+79|Dickens Village
+80|Alpine Village
+81|David Winter
+82|Snow Village
+83|North Pole
+84|Bells
+85|Norman Rockwell
+86|Collector Plates
+87|Duncan Royale
+88|Swarovski
+89|Bradford Exchange
+90|Textiles
+91|Bed & Bath Linens
+92|Bedspreads
+93|Bottles: Modern (1900-Now)
+94|Milk
+95|Cherished Teddies
+96|Bakeware
+97|Other Silver Age
+98|Clothing & Accessories
+99|Boys
+100|Clothing
+101|Boys (Sz 8 and up)
+102|Tops & T-Shirts
+103|Curtains, Draperies
+104|Flambro
+105|Magic
+106|Books
+107|New England Village
+108|Movie, TV
+109|Snowbabies
+110|Royal Doulton
+111|Shaving
+112|Bronze Age (1970-79)
+113|Men
+114|Clothing: Big & Tall
+115|Shirts
+116|T-Shirts, Tank Tops
+117|Metalware
+118|Chrome
+119|Limoges
+120|Trinket Boxes
+121|Quilts
+122|Hummel, Goebel
+123|Promo Glasses
+124|Rugs
+125|Memories of Yesterday
+126|Tableware
+127|Other Tableware
+128|Accessories
+129|Hats
+130|Movies & Television
+131|Memorabilia
+132|Theater
+133|Posters
+134|Heritage Village
+135|Lefton Figurines
+136|Armani
+137|Other Antique Bottles
+138|Other Magic Items
+139|Historical Memorabilia
+140|Firefighting
+141|Charming Tails
+142|Bing & Grondahl Coll Plates
+143|Sports
+144|Golf-Other
+145|Science Fiction
+146|Star Wars
+147|Women
+148|Intimates
+149|Slips
+150|Brass
+151|Danbury Mint
+152|Heavy Metal
+153|Fabric
+154|Shot Glasses
+155|Outwear
+156|Series Ornaments
+157|Pourers, Stoppers
+158|Platinum Age (1897-1937)
+159|Snowbunnies
+160|Other Metalware
+161|Souvenir Programs
+162|Lenox
+163|Other Lenox Collectibles
+164|Trivets
+165|Coasters
+166|Other Modern Bottles
+167|Lace, Crochet, Doilies
+168|HOMCO
+169|Other Limoges Collectibles
+170|Josef
+171|Romance
+172|Trading Cards
+173|Other Sci-Fi
+174|Backpacks, Bags
+175|Cat's Meow Village
+176|Thomas Kinkade
+177|Other Kinkade Collectibles
+178|Pewter
+179|Clothing: Regular
+180|Outerwear
+181|Jackets
+182|Other Jackets
+183|Other Lladro Collectibles
+184|Other Modern Age
+185|Egg Cups
+186|Longaberger
+187|Baskets
+188|Animals
+189|Dog
+190|Beagle
+191|Mixing Bowls
+192|Small Appliances
+193|Blenders
+194|Other Shakers
+195|Militaria
+196|Civil War (1861-65)
+197|Reenactment, Repro
+198|Table Linens
+199|Tablecloths
+200|Other Longaberger Items
+201|Swizzle/Stir Sticks
+202|Other Hallmark Collectibles
+203|Utensils
+204|Measuring Cups, Spoons
+205|Other Bronze Age
+206|Tupperware
+207|Contemporary (1970-Now)
+208|Cookware
+209|Other Cookware
+210|Aluminum
+211|Lucy & Me
+212|European
+213|Alfa Romeo
+214|Fitz & Floyd
+215|Other Fitz&Floyd Collectibles
+216|War
+217|Tea Kettles
+218|Napkin Holders
+219|Choppers
+220|Dinnerware, Serving
+221|Souvenir
+222|Casual
+223|Short Sleeve
+224|Other Non-Sports
+225|Crime
+226|Irons
+227|Canisters
+228|Other Items
+229|Hamilton Collector Plates
+230|Lunchboxes, Thermoses
+231|Vintage Metal
+232|Other Memorabilia
+233|Serving Trays
+234|Harbour Lights
+235|Underwear, Sleepwear
+236|Robes, Sleepwear
+237|Liners
+238|Magnets
+239|Tobacciana
+240|Cigarette
+241|Other Cigarettes
+242|Flatware
+243|Inks
+244|Pitchers
+245|Candle Holders
+246|Sodas
+247|Other Utensils
+248|Other Original Art
+249|Fanzines, Fan Clubs
+250|Newspaper Comics
+251|Camel
+252|Combos
+253|Other Comics
+254|Television
+255|Photos
+256|Flue Covers
+257|Drawings, Sketches
+258|Byers Choice
+259|Molds
+260|Friends of the Feather
+261|Mary Engelbreit
+262|Keychains
+263|Other Historical Items
+264|Silverplate
+265|Schnauzer
+266|Colanders, Strainers
+267|Boyds
+268|Movie
+269|1990-Now
+270|Personal Care
+271|Fragrances: Women
+272|Estee Lauder
+273|Sterling Silver
+274|Coffee Makers
+275|Blankets
+276|Tom Clark
+277|Schmid
+278|Lilliput Lane
+279|Spoon Rests
+280|Star Trek
+281|Open Salts
+282|Calico Kittens
+283|Miniatures
+284|Table Accessories
+285|Other Outerwear
+286|Mad
+287|Other Bed & Bath Linens
+288|Tapestries
+289|Whiskeys: Screw Top
+290|Cake Carriers, Savers
+291|Covers
+292|Cast Iron
+293|Other Golden Age
+294|Spice Racks, Jars
+295|Graniteware
+296|Willitts
+297|Just the Right Shoe
+298|Hair, Skin Care
+299|Vintage (Pre-1970)
+300|1940-69
+301|Sheets, Pillowcases
+302|Breweriana
+303|Signs, Tins
+304|Nodders
+305|Melamine, Melmac
+306|Texas Ware
+307|Tin
+308|Flasks
+309|Christmas in the City
+310|Merry Miniatures
+311|Utility & Black Glass
+312|Napkins, Placemats, Runners
+313|Ashtrays
+314|France
+315|Singles
+316|Contemporary Metal
+317|Pez
+318|Other Pez
+319|Steins, Drinkware
+320|Steins
+321|Tools
+322|Carpentry, Woodworking
+323|Levels, Plumb Bobs
+324|Pinbacks
+325|Copper
+326|Tie-ons
+327|Art
+328|Prints
+329|Other Prints
+330|Feed Sacks, Flour Sacks
+331|Other Swarovski Items
+332|Mixers
+333|PartyLite
+334|Tricks
+335|Other Textiles
+336|Other Norman Rockwell Items
+337|Autographs
+338|Racing-NASCAR
+339|Pocket Dragons
+340|Other Melamine Items
+341|Funny Animal
+342|Plus Sizes
+343|Evening Wear
+344|Wraps
+345|Footwear
+346|Loafers
+347|Kitchen Textiles
+348|Aprons
+349|Postcards
+350|Non-US Countries, Town Views
+351|Caribbean Islands
+352|Transportation
+353|Automobilia
+354|License Plates
+355|US: Colorado
+356|Bronze
+357|Roman
+358|Seraphim Classics
+359|Marlboro
+360|Splash Pages
+361|Shakers
+362|Kiddie Car Classics
+363|Coffee Grinders, Mills
+364|Pressbooks, Press Kits
+365|Press Kits
+366|Fontanini
+367|Movies
+368|Football-Other
+369|Pie Birds
+370|Misses
+371|Jeans
+372|Pulps
+373|Long Sleeve
+374|Video, Film
+375|DVD
+376|Foreign
+377|Enamelware
+378|Contemporary Plastic
+379|Bottles: Reproduction
+380|Wheaton
+381|Pendelfin
+382|Vintage (no feet)
+383|Cultures & Religions
+384|Cultures
+385|Asian
+386|Chinese
+387|Figurals
+388|Comic
+389|Holiday, Seasonal
+390|Christmas: Modern (1946-90)
+391|Basketball-NBA
+392|Leather
+393|Bread Boxes
+394|US State, Town Views
+395|West Virginia
+396|Japan
+397|Phone Cards
+398|Pottery & Glass
+399|Pottery & China
+400|Pottery
+401|Pfaltzgraff
+402|Ice Cream Scoops
+403|Knives
+404|Other Knives
+405|Other Small Appliances
+406|Window Cards
+407|Whiskeys, Gins, Schnapps
+408|Towels
+409|Sleepwear, Robes
+410|Other Sleepwear
+411|Toys & Hobbies
+412|Diecast, Toy Vehicles
+413|Cars, Trucks-Diecast
+414|Hot Wheels
+415|Modern (1980-Now)
+416|Promotional
+417|Jewelry
+418|Other Hummel Collectibles
+419|Career
+420|Jackets, Blazers
+421|Cutlery
+422|Aviation
+423|Airlines
+424|Piedmont
+425|Antiques & Art
+426|Antiques
+427|Decorative Arts
+428|VHS
+429|Sci-Fi
+430|Alternative, Zines
+431|Babylon 5
+432|Action, Adventure
+433|My Blushing Bunnies
+434|Other Roman Collectibles
+435|Dresses
+436|Boots
+437|Other Boots
+438|Vintage Clothing, Accessories
+439|Clothing (Pre-1980)
+440|1940-59
+441|Lingerie, Stockings
+442|Sarah's Attic
+443|Current
+444|Neckwear
+445|Neck Ties
+446|Other Lunchboxes
+447|Bitters
+448|Disneyana
+449|Contemporary (1968-Now)
+450|Pins, Buttons
+451|Bar Sets
+452|Pens, Pencils, Pads
+453|Swords
+454|Railroadiana, Trains
+455|Other Paper
+456|Military
+457|Tender Tails
+458|Christmas: Vintage (Pre-1946)
+459|Mineral Waters
+460|Vanity Items
+461|Perfumes
+462|Poisons
+463|Shorts
+464|Other Willitts
+465|This Little Piggy
+466|Wardrobe
+467|Classic Toys
+468|Marbles
+469|Machine Made
+470|Bird
+471|Other Birds
+472|Godzilla
+473|Animation Characters
+474|Betty Boop
+475|Wallets
+476|Peelers
+477|Other Danbury Mint Items
+478|Ads, Flyers
+479|Toasters
+480|X-Files
+481|Wade Figurines
+482|Margaret Furlong
+483|Shelia's
+484|Winston
+485|Sweaters
+486|Handle Ties
+487|Napkin Rings
+488|Petites
+489|Christmas: Current (1991-Now)
+490|Nutcrackers
+491|San Francisco Music Box
+492|Boonton
+493|Antique, Vintage (Pre-1940)
+494|Hollow Ware
+495|Calendars
+496|Vintage Plastic
+497|Robes
+498|Xena
+499|Dr. Who
+500|Buffy the Vampire Slayer
+501|Japanese
+502|DragonBall Z
+503|Makeup & Face Care
+504|Lip Color
+505|Hockey-NHL
+506|Virginia Slims
+507|Rolling Pins
+508|Egg Beaters
+509|Wedding Apparel
+510|Brides' Gowns
+511|Other Gowns
+512|Pickles, Sauces, Other Food
+513|Protectors
+514|Dress
+515|Spare Tops, Bottoms
+516|Body Care
+517|Baseball-Other
+518|Sleeveless
+519|Royal Copenhagen Coll Plates
+520|Distillery
+521|Jack Daniels
+522|Medicines: Screw Top
+523|Flags
+524|Other Flags
+525|Goblets, Tumblers
+526|Tops
+527|Other Posters
+528|Artistic Nudes
+529|Potholders, Oven Mitts
+530|Handbags
+531|Casual, Daytime
+532|Other Casual Styles
+533|Popcorn Poppers
+534|Wedgwood
+535|Other Wedgwood Collectibles
+536|Girls
+537|Consumer Electronics
+538|Phones & Wireless Devices
+539|Cellular, Wireless Phones
+540|Audiovox
+541|Batteries
+542|Skirts
+543|Original Period Items
+544|Openers
+545|Comedy
+546|Decorative by Theme
+547|X Files
+548|Pants
+549|Belt Buckles
+550|Martial Arts
+551|Shavers
+552|Tennis
+553|Napkins, Placemats
+554|Lucky Strike
+555|Kool
+556|Supplies
+557|Planet of the Apes
+558|Shoulder Bags
+559|Comic Strip Art
+560|Drama
+561|Cans: Non-US
+562|Exercise, Fitness
+563|Candy & Nuts
+564|Life Savers
+565|Other Kitchen Textiles
+566|Other Footwear
+567|Golf-PGA
+568|Computers
+569|Input Peripherals
+570|Mousepads
+571|Samplers
+572|Other Doulton Collectibles
+573|Horror
+574|Garters
+575|Props
+576|Football-NFL
+577|Games
+578|Mage Knight
+579|Photo
+580|Camera Accessories
+581|Filters
+582|Sky & UV
+583|Home & Garden
+584|Baby Items
+585|Feeding
+586|High Chairs
+587|Safety
+588|Monitors
+589|Coins
+590|Coins: US
+591|Halves
+592|Seated Liberty (1839-91)
+593|Nursery
+594|Bedding
+595|Sheets
+596|Stamps
+597|United States
+598|Possessions
+599|Apple, Macintosh
+600|Drives-Internal
+601|Duck Stamps
+602|Gardening
+603|Plants, Seeds, Bulbs
+604|Houseplants
+605|Food & Beverage
+606|Honey, Syrup
+607|Glass
+608|Stained Glass
+609|Half Dimes
+610|Paper Money: World
+611|Canada
+612|Dominion of Canada
+613|Paper Money: US
+614|Obsolete Currency
+615|Bed & Bath
+616|Motorola
+617|Hands-Free Headsets, Kits
+618|Coins: World
+619|UK (Great Britain)
+620|Collections, Lots
+621|Quarters
+622|Standing Liberty (1916-30)
+623|Home Audio & Video
+624|Cable & Satellite
+625|Cable
+626|Covers, Event
+627|Postal History
+628|California Pottery
+629|Home D_cor
+630|Accent Pieces
+631|Video Games
+632|Nintendo, Super
+633|Role Playing
+634|Collections, Mixture
+635|Gadgets & Other Electronics
+636|GPS
+637|Laptops & Accessories
+638|Memory Upgrades
+639|Other World
+640|China
+641|Housekeeping & Storage
+642|Laundry & Closets
+643|Irons, Ironing Boards
+644|Nintendo 64
+645|Satellite
+646|DSS Receivers
+647|Large Cents
+648|Braided Hair (1840-57)
+649|Washington (1932-Now)
+650|Tools, Gear, Equipment
+651|Lawn Mowers, Tractors
+652|50 States (1999-2008)
+653|Fenton
+654|Other Baby Items
+655|Floral D_cor
+656|Wreaths
+657|Printers & Supplies
+658|Laser Printers
+659|B&W
+660|HP
+661|Tickets & Travel
+662|Tickets & Experiences
+663|Event Tickets
+664|Sporting Events
+665|Football
+666|Professional
+667|Dolls & Bears
+668|Bears
+669|Retired, Discontinued
+670|Digital Cameras
+671|Drives, Media
+672|Drives
+673|Hard Drives-IDE
+674|Taylor Smith & Taylor
+675|Barbie
+676|Contemporary (1973-Now)
+677|Pink Box
+678|Artist
+679|Manufactured
+680|FDCs (pre-1951)
+681|Pyrex
+682|Nintendo NES
+683|Dolls
+684|By Material
+685|Porcelain
+686|Lenses
+687|To fit Nikon
+688|EAPG
+689|Colored
+690|Iroquois
+691|Kyocera/Qualcomm
+692|Europe
+693|Italy & Area
+694|Sony PlayStation
+695|Arcade
+696|Elegant
+697|Ericsson
+698|Cingular
+699|Business, Office & Industrial
+700|Office Equipment
+701|Copiers
+702|Other Brands
+703|16-inch or smaller
+704|Hall
+705|Car Audio & Electronics
+706|Subwoofers
+707|10 Inch
+708|Lexmark
+709|Beta
+710|D_cor
+711|Antique
+712|Other Antique Dolls
+713|Lamps, Lighting, Ceiling Fans
+714|Table Lamps
+715|Gaming Controls
+716|Power Tools
+717|Other Power Tools
+718|PCMCIA Cards
+719|Rumble Paks
+720|Garden D_cor
+721|Gazing Balls
+722|Scanners
+723|USB
+724|Paragon
+725|Memory Cards & Expansion Paks
+726|Vaseline
+727|Wire, Cables
+728|Video Cables
+729|Educational, Developmental
+730|Herend
+731|Pickard
+732|Vases
+733|Networking & I.T.
+734|Network Interface Cards
+735|Internet Games
+736|Adapters & Cables
+737|Waterford
+738|Software
+739|PC
+740|Business
+741|Project Management
+742|Other Lamps, Lighting
+743|Flat Panel
+744|Basketball
+745|Gift Certificates
+746|Restaurants
+747|Music
+748|CDs, Records, & Tapes
+749|CDs
+750|Classical
+751|Pre-1940
+752|Lobby Cards
+753|Pressbooks (1960-Now)
+754|Pressbooks (1900-59)
+755|Reproduction
+756|Silver
+757|International/1847 Rogers
+758|Reggae, Ska
+759|Standees
+760|1970-89
+761|Scripts
+762|Playbills
+763|Audio
+764|Cassettes
+765|Music & Concert
+766|Fiction
+767|Adventure
+768|Contemporary (1950-Now)
+769|Laserdisc
+770|PAL
+771|Exercise
+772|Children, Family
+773|Animation
+774|16mm
+775|Props, Wardrobe
+776|Classics
+777|First Editions
+778|Children
+779|Mystery, Adventure
+780|Pop
+781|Ceramics
+782|Rock: Alternative
+783|Infants
+784|3-6 Months
+785|8mm
+786|Rock: Hard
+787|Cult
+788|Documentary
+789|Antique (Pre-1900)
+790|Portrait
+791|Magazines, Catalogs
+792|National Geographic
+793|Fantasy
+794|Cartoons
+795|Antiquities
+796|Mystery
+797|Records
+798|33 RPM/LPs
+799|Color Vinyl
+800|Illustrated
+801|Musicals
+802|Rock: Classic
+803|Soundtracks: Film
+804|Instructional
+805|True Crime
+806|Nonfiction
+807|Blues
+808|Independent Films
+809|Country
+810|Vehicles
+811|Modern (1900-49)
+812|Open Editions
+813|Old Time Radio
+814|House
+815|Movies, TV
+816|Other Movie, TV
+817|Religion
+818|Antiquarian, Rare
+819|Illustrated, Art
+820|Folk
+821|Mystery, Suspense
+822|Textbooks, Education
+823|Self-Help
+824|Ethnographic
+825|Native American
+826|Science, Nature
+827|Books, Manuscripts
+828|Horror, Mystery
+829|Sterling
+830|Gorham, Whiting
+831|Soap Opera Digest
+832|CED
+833|6-12 Months
+834|Outfits & Sets
+835|12-24 Months
+836|Bottoms
+837|Other Accessories
+838|Little Boys (Sz 4-7)
+839|Mixed Lots
+840|Jeans & Pants
+841|Little Girls (Sz 4-6x)
+842|0-3 Months
+843|One-Pieces
+844|Teens
+845|Girls (Sz 7 and up)
+846|Sleepwear
+847|Jewelry, Gems & Watches
+848|Fine Jewelry
+849|New, Contemporary
+850|Necklaces
+851|Diamond
+852|Everything Else
+853|Gifts & Party Supplies
+854|Gag Gifts, Novelties
+855|Gag Gifts
+856|Pearl
+857|Gold
+858|16 Inch
+859|Medical, Dental
+860|Instruments
+861|Toddlers (Sz 2T-4T)
+862|24 Inch
+863|18 Inch
+864|Sweats
+865|Rings
+866|Emerald
+867|Socks & Tights
+868|Swimwear
+869|Coats
+870|Other Lengths
+871|Blazers & Sports Coats
+872|Hair Accessories
+873|Underwear
+874|Oxfords
+875|Belts
+876|Nightgowns
+877|Other Shirts
+878|Heels, Pumps
+879|Other Heels, Pumps
+880|Scarves
+881|Other Dresses
+882|Sandals
+883|Suits
+884|Bracelets
+885|Other Gemstone
+886|Jade
+887|Organizers, Planners
+888|Sunglasses
+889|Daytime
+890|Panties
+891|Retail
+892|Shelving & Racks
+893|Vests
+894|Corsets
+895|Other Tops
+896|Pajamas
+897|Totes
+898|Maisto
+899|20 Inch
+900|Other Coats
+901|Other Materials
+902|Gloves, Mittens
+903|Cleansers & Moisturizers
+904|Suspenders, Braces
+905|Athletic Shoes
+906|Other Athletic Shoes
+907|Top & T-Shirts
+908|Custom
+909|Denim
+910|Bras
+911|Underwire
+912|Backpacks, Purses
+913|Briefcases
+914|Evening
+915|Grooms' Attire
+916|Mixed Sizes
+917|Athletic
+918|Action Figures
+919|Vintage (1977-89)
+920|Hiking
+921|Sets
+922|School Uniforms
+923|Fur
+924|Treasure Hunt
+925|Dress, Evening
+926|Other Neckwear
+927|Running
+928|Briefs
+929|Maternity
+930|Push-Up
+931|Costume Jewelry
+932|Vintage
+933|Designer, Signed
+934|Oral Hygiene
+935|Hosiery
+936|Socks
+937|Boxers
+938|Electronic, Battery, Wind-Up
+939|Electronic, Interactive
+940|Furby
+941|Flats
+942|Cross Training
+943|Work
+944|Board, Traditional Games
+945|Trivial Pursuit
+946|Mules
+947|22 Inch
+948|Clogs
+949|Hair Care
+950|Clippers, Trimmers
+951|Demi-Cup
+952|Fragrances: Men
+953|Bath, Shower Gel
+954|Cowboy, Western
+955|Other Evening Bags
+956|Stockings
+957|Lotion
+958|Camisoles
+959|Soft Cup
+960|Shapers
+961|Wigs, Extensions
+962|Clutches
+963|Cases, Bags, Totes
+964|Beaded
+965|Backpacks
+966|Walking
+967|Calvin Klein
+968|Pins, Brooches
+969|Yo-Yos
+970|Party, Occasion Supplies
+971|Retirement
+972|Eyeshadow
+973|Foundation
+974|Hair Removal
+975|Nail Care
+976|Nail Color
+977|Bridesmaids' Dresses
+978|Sets & Kits
+979|Veils, Headpieces
+980|Charms, Lockets
+981|Blush
+982|Slippers, Moccasins
+983|Pantyhose
+984|Bow Ties
+985|Other Board Games
+986|Leotards, Unitards
+987|Loose Gemstones
+988|Tourmaline
+989|Oval
+990|Soap
+991|Mascara, Eyeliner
+992|Other Bras
+993|Nursing
+994|Telephone Systems
+995|Super Hero
+996|X-Men
+997|Massagers
+998|Face Powder
+999|Beads, Amulets
+1000|Crystal, Lampwork & Glass
+1001|Crystal
+1002|Vintage, Antique
+1003|Other Flats
+1004|Flower Girls' Dresses
+1005|Elizabeth Arden
+1006|Shampoo
+1007|Cross-Training
+1008|Other Shapes
+1009|Chanel
+1010|Caps & Hats
+1011|Two-Piece
+1012|One-Piece
+1013|Concealer
+1014|Conditioner
+1015|Poo-Chi
+1016|Brushes, Combs
+1017|Weird Stuff
+1018|Slightly Unusual
+1019|Files, Implements
+1020|Watches
+1021|Wristwatches
+1022|Brand Name
+1023|TAG Heuer
+1024|Motorcycle
+1025|Strapless
+1026|Risque Novelties
+1027|Other Boys Items
+1028|NASCAR
+1029|Action/Revell
+1030|Brushes, Applicators
+1031|Ethnic, Tribal Jewelry
+1032|Other Ethnic, Tribal
+1033|Wrestling
+1034|Gel, Mousse, Spray
+1035|Heat Styling
+1036|Hair Dryers
+1037|Toners, Fresheners
+1038|First Gear
+1039|Chains, Necklaces
+1040|Magic, Gaming Cards (CCG)
+1041|Magic the Gathering
+1042|Individual Cards

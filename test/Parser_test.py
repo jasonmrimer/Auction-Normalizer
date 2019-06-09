@@ -9,16 +9,30 @@ class ParserTestCase(unittest.TestCase):
     def setUp(self):
         open('test_categories.dat', 'w').close()
 
-    def test_something(self):
-        self.assertEqual(True, True)
-
     def test_readAllCategoriesFromFileWithoutDuplicates(self):
-        categories = parse_categories('TestItems')
+        categories = parse_categories([], 'TestItems')
         self.assertEqual(len(categories), 4)
         self.assertTrue(categories.__contains__('Collectibles'))
         self.assertTrue(categories.__contains__('Kitchenware'))
         self.assertTrue(categories.__contains__('Test'))
         self.assertTrue(categories.__contains__('Dept 56'))
+
+    def test_shouldAddNewCategoriesToList(self):
+        categories = parse_categories(
+            [
+                'Collectibles',
+                'cat4',
+                'cat5',
+            ],
+            'TestItems'
+        )
+        self.assertEqual(len(categories), 6)
+        self.assertTrue(categories.__contains__('Collectibles'))
+        self.assertTrue(categories.__contains__('Kitchenware'))
+        self.assertTrue(categories.__contains__('Test'))
+        self.assertTrue(categories.__contains__('Dept 56'))
+        self.assertTrue(categories.__contains__('cat4'))
+        self.assertTrue(categories.__contains__('cat5'))
 
     def test_removeDuplicatesFromList(self):
         self.assertEqual(
@@ -39,7 +53,11 @@ class ParserTestCase(unittest.TestCase):
             'test_categories.dat'
         )
         file = open('test_categories.dat', 'r')
-        self.assertEqual(file.read(), 'Cat1\nCat2\nCat3')
+        self.assertEqual(
+            file.read(),
+            '1|Cat1\n'
+            '2|Cat2\n'
+            '3|Cat3')
         file.close()
 
     def test_parsesCategoriesFromJSONToDat(self):
@@ -47,10 +65,10 @@ class ParserTestCase(unittest.TestCase):
         file = open('test_categories.dat', 'r')
         self.assertEqual(
             file.read(),
-            'Collectibles\n'
-            'Kitchenware\n'
-            'Test\n'
-            'Dept 56')
+            '1|Collectibles\n'
+            '2|Kitchenware\n'
+            '3|Test\n'
+            '4|Dept 56')
         file.close()
 
 
