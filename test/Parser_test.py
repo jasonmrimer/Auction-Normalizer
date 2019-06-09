@@ -10,28 +10,43 @@ class ParserTestCase(unittest.TestCase):
         open('test_values.dat', 'w').close()
 
     def test_readAllCategoriesFromFileWithoutDuplicates(self):
-        categories = parse_values([], 'TestItems', 'Category')
+        categories = values_from_json_file([], 'TestItems', 'Items', 'Category')
         self.assertEqual(len(categories), 4)
         self.assertTrue(categories.__contains__('Collectibles'))
         self.assertTrue(categories.__contains__('Kitchenware'))
         self.assertTrue(categories.__contains__('Test'))
         self.assertTrue(categories.__contains__('Dept 56'))
 
-    def test_readAllCountriesFromFileWithoutDupicates(self):
-        countries = parse_values([], 'TestItems', 'Country')
+    def test_readAllCountriesFromFileWithoutDuplicates(self):
+        countries = values_from_json_file([], 'TestItems', 'Items', 'Country')
         self.assertEqual(3, len(countries))
         self.assertTrue(countries.__contains__('USA'))
         self.assertTrue(countries.__contains__('Czech Republic'))
         self.assertTrue(countries.__contains__('Croatia'))
 
+    def test_readsValuesWithSingleRelationship(self):
+        values = values_with_relationship(
+            [],
+            'TestItems',
+            'Items',
+            'Location',
+            'Country'
+        )
+        self.assertTrue(4, len(values))
+        self.assertEqual('USA', values['Happy Holidays'])
+        self.assertEqual('USA', values['Sunny South'])
+        self.assertEqual('Croatia', values['SEE MY OTHER AUCTIONS'])
+        self.assertEqual('USA', values['Ohio - The Buckeye State!'])
+
     def test_shouldAddNewCategoriesToList(self):
-        categories = parse_values(
+        categories = values_from_json_file(
             [
                 'Collectibles',
                 'cat4',
                 'cat5',
             ],
             'TestItems',
+            'Items',
             'Category'
         )
         self.assertEqual(len(categories), 6)
@@ -118,6 +133,9 @@ class ParserTestCase(unittest.TestCase):
         self.assertTrue(values.__contains__('value7'))
         self.assertTrue(values.__contains__('value8'))
 
+    def test_extractObjectsFromJSONFile(self):
+        self.assertEqual(list, type(dictionary_from_json_file('TestItems', 'Items')))
+
 
 if __name__ == '__main__':
-            unittest.main()
+    unittest.main()

@@ -1,12 +1,20 @@
 from json import loads
 
 
-def parse_values(values, json_filepath, key):
-    with open(json_filepath, 'r') as file:
-        objects = loads(file.read())['Items']
-        for obj in objects:
-            values = extract_nested_values_from_json_with_key(values, obj, key)
+def dictionary_from_json_file(filepath, top_key):
+    with open(filepath, 'r') as file:
+        return loads(file.read())[top_key]
+
+
+def values_from_json_file(values, json_filepath, top_key, search_key):
+    for obj in dictionary_from_json_file(json_filepath, top_key):
+        values = extract_nested_values_from_json_with_key(values, obj, search_key)
     return remove_duplicates(values)
+
+
+def values_with_relationship(values, json_filepath, top_key, child_key, parent_key):
+    for obj in dictionary_from_json_file(json_filepath, top_key):
+        if 
 
 
 def write_categories_to_dat(categories, dat_filepath):
