@@ -25,7 +25,7 @@
         }
       ],
       "Location": "Sunny South",
-      "Country": "USA",
+      "Country": "Germany",
       "Started": "Dec-08-01 16:23:53",
       "Ends": "Dec-15-01 16:23:53",
       "Seller": {
@@ -50,7 +50,7 @@
               "UserID": "dpaustintx",
               "Rating": "100",
               "Location": "SEE MY OTHER AUCTIONS",
-              "Country": "USA"
+              "Country": "Japan"
             },
             "Time": "Dec-10-01 10:25:30",
             "Amount": "$13.99"
