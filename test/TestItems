@@ -16,7 +16,7 @@
             "Bidder": {
               "UserID": "torrisattic",
               "Rating": "223",
-              "Location": "Happy Holidays",
+              "Location": "Sunny South",
               "Country": "USA"
             },
             "Time": "Dec-10-01 10:23:53",
@@ -79,7 +79,7 @@
       "First_Bid": "$5.00",
       "Number_of_Bids": "0",
       "Bids": null,
-      "Location": "Elwood,New York",
+      "Location": "Sunny South",
       "Country": "Czech Republic",
       "Started": "Dec-09-01 16:41:48",
       "Ends": "Dec-16-01 16:41:48",

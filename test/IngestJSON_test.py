@@ -1,6 +1,6 @@
 import unittest
 
-from IngestJSON import ingest_values_from_files
+from IngestJSON import *
 
 
 class MyTestCase(unittest.TestCase):
@@ -10,6 +10,7 @@ class MyTestCase(unittest.TestCase):
             'TestItems2'
         ],
             'test_values.dat',
+            'Items',
             'Category'
         )
         file = open('test_values.dat', 'r')
@@ -31,6 +32,7 @@ class MyTestCase(unittest.TestCase):
             'TestItems2'
         ],
             'test_values.dat',
+            'Items',
             'Country'
         )
         file = open('test_values.dat', 'r')
@@ -43,6 +45,36 @@ class MyTestCase(unittest.TestCase):
             file.read(),
             'the extracted countries do not match the test files\'s contents'
         )
+        file.close()
+
+    def test_readsLocationsFromAllGivenFiles(self):
+        ingest_related_values_from_files([
+            'TestItems',
+            'TestItems2'
+        ],
+            'test_values.dat',
+            'Location',
+            'Country'
+        )
+        file = open('test_values.dat', 'r')
+        contents = file.read()
+        self.assertTrue(contents.__contains__('1|'))
+        self.assertTrue(contents.__contains__('2|'))
+        self.assertTrue(contents.__contains__('3|'))
+        self.assertTrue(contents.__contains__('4|'))
+        self.assertTrue(contents.__contains__('5|'))
+        self.assertTrue(contents.__contains__('6|'))
+        self.assertTrue(contents.__contains__('7|'))
+        self.assertTrue(contents.__contains__('8|'))
+        self.assertFalse(contents.__contains__('9|'))
+        self.assertTrue(contents.__contains__('|Sunny South|USA'))
+        self.assertTrue(contents.__contains__('|SEE MY OTHER AUCTIONS|Croatia'))
+        self.assertTrue(contents.__contains__('|Ohio - The Buckeye State!|USA'))
+        self.assertTrue(contents.__contains__('|Sunny South|Czech Republic'))
+        self.assertTrue(contents.__contains__('|Happy Holidays|USA'))
+        self.assertTrue(contents.__contains__('|Sunny South|Germany'))
+        self.assertTrue(contents.__contains__('|SEE MY OTHER AUCTIONS|Japan'))
+        self.assertTrue(contents.__contains__('|Elwood,New York|USA'))
         file.close()
 
 
