@@ -39,9 +39,9 @@ def write_categories_to_dat(categories, dat_filepath):
         while len(categories) > 0:
             value = categories.pop()
             if len(categories) == 0:
-                file.write(f'{starting_length}|{value[0]}|{value[1]}')
+                file.write(f'{starting_length}|"{stringify(value[0])}"|"{stringify(value[1])}"')
             else:
-                file.write(f'{starting_length - len(categories)}|{value[0]}|{value[1]}\n')
+                file.write(f'{starting_length - len(categories)}|"{stringify(value[0])}"|"{stringify(value[1])}"\n')
     file.close()
 
 
@@ -72,3 +72,12 @@ def extract_nested_values_from_json_with_key(values, json_object, key):
                     values = extract_nested_values_from_json_with_key(values, list_item, key)
 
     return values
+
+
+def stringify(string):
+    index_of_quote = string.find('"')
+    if string.find('"') < 0:
+        return string
+    left = string[:index_of_quote + 1]
+    right = string[index_of_quote + 1:]
+    return left + '"' + stringify(right)

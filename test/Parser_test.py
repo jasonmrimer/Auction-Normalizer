@@ -86,16 +86,16 @@ class ParserTestCase(unittest.TestCase):
         write_categories_to_dat(
             {
                 ('Key1', 'Val1'),
-                ('Key2', 'Val2'),
+                ('Key"2', 'Val2'),
                 ('Key3', 'Val3')
             },
             'test_values.dat'
         )
         file = open('test_values.dat', 'r')
         contents = file.read()
-        self.assertTrue(contents.__contains__('Key1|Val1'))
-        self.assertTrue(contents.__contains__('Key2|Val2'))
-        self.assertTrue(contents.__contains__('Key3|Val3'))
+        self.assertTrue(contents.__contains__('"Key1"|"Val1"'))
+        self.assertTrue(contents.__contains__('"Key""2"|"Val2"'))
+        self.assertTrue(contents.__contains__('"Key3"|"Val3"'))
         self.assertTrue(contents.__contains__('1|'))
         self.assertTrue(contents.__contains__('2|'))
         self.assertTrue(contents.__contains__('3|'))
@@ -153,6 +153,9 @@ class ParserTestCase(unittest.TestCase):
 
     def test_extractObjectsFromJSONFile(self):
         self.assertEqual(list, type(dictionary_from_json_file('TestItems', 'Items')))
+
+    def test_addsQuotationMarkToExistingQuotation(self):
+        self.assertEqual('29"" bike with 2"" tires', stringify('29" bike with 2" tires'))
 
 
 if __name__ == '__main__':

@@ -114,44 +114,48 @@
     <column id="31" parent="9" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
-      <SequenceIdentity>1</SequenceIdentity>
     </column>
     <column id="32" parent="9" name="name">
       <Position>2</Position>
       <DataType>varchar(128)|0s</DataType>
     </column>
-    <column id="33" parent="9" name="country_name">
+    <column id="33" parent="9" name="country_id">
       <Position>3</Position>
-      <DataType>varchar(64)|0s</DataType>
+      <DataType>integer|0s</DataType>
     </column>
     <key id="34" parent="9">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="35" parent="10" name="type">
+    <foreign-key id="35" parent="9">
+      <ColNames>country_id</ColNames>
+      <RefTableName>country</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="36" parent="10" name="type">
       <Position>1</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="36" parent="10" name="name">
+    <column id="37" parent="10" name="name">
       <Position>2</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="37" parent="10" name="tbl_name">
+    <column id="38" parent="10" name="tbl_name">
       <Position>3</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="38" parent="10" name="rootpage">
+    <column id="39" parent="10" name="rootpage">
       <Position>4</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="39" parent="10" name="sql">
+    <column id="40" parent="10" name="sql">
       <Position>5</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="40" parent="11" name="name">
+    <column id="41" parent="11" name="name">
       <Position>1</Position>
     </column>
-    <column id="41" parent="11" name="seq">
+    <column id="42" parent="11" name="seq">
       <Position>2</Position>
     </column>
   </database-model>

@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a80d482a-d7c2-4e81-9ab6-8c8503312284" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/IngestApp.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/IngestApp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IngestJSON.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/IngestJSON.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flyway-5.2.4/sql/relate_location_to_country.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d206b192-1f9a-41f9-81b7-145720ad636f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d206b192-1f9a-41f9-81b7-145720ad636f.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ebay_db" beforeDir="false" afterPath="$PROJECT_DIR$/data/ebay_db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flyway-5.2.4/sql/locations.dat" beforeDir="false" afterPath="$PROJECT_DIR$/flyway-5.2.4/sql/locations.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JSONParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/JSONParser.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/IngestJSON_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/IngestJSON_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Parser_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Parser_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test_values.dat" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_values.dat" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -52,111 +57,58 @@
     </expanded>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/test/Parser_test.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="102">
-                  <caret line="9" column="44" lean-forward="true" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
-                  <folding>
-                    <element signature="e#167#207#0" />
-                    <element signature="e#719#814#0" />
-                    <element signature="e#1309#1573#0" />
-                    <element signature="e#1399#1470#0" />
-                    <element signature="e#1626#1920#0" />
-                    <element signature="e#1844#1898#0" />
-                    <element signature="e#2689#4329#0" />
-                    <element signature="e#2720#3011#0" />
-                    <element signature="e#2745#2823#0" />
-                    <element signature="e#2854#2962#0" />
-                    <element signature="e#2993#3039#0" />
-                    <element signature="e#3022#3077#0" />
-                    <element signature="e#3055#3157#0" />
-                    <element signature="e#3271#3311#0" />
-                    <element signature="e#3293#3350#0" />
-                    <element signature="e#3329#3392#0" />
-                    <element signature="e#3488#3546#0" />
-                    <element signature="e#3524#3587#0" />
-                    <element signature="e#3561#3675#0" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/test/IngestJSON_test.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="664">
-                  <caret line="57" column="20" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
-                  <folding>
-                    <element signature="e#0#15#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/JSONParser.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="373">
-                  <caret line="40" column="23" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="23" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/IngestJSON.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="357">
-                  <caret line="21" column="55" selection-start-line="21" selection-start-column="55" selection-end-line="21" selection-end-column="55" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/IngestApp.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="323">
-                  <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/test/TestItems">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="787">
-                  <caret line="19" column="30" lean-forward="true" selection-start-line="18" selection-start-column="14" selection-end-line="19" selection-end-column="30" />
-                  <caret line="27" column="23" lean-forward="true" selection-start-line="26" selection-start-column="6" selection-end-line="27" selection-end-column="23" />
-                  <caret line="52" column="34" lean-forward="true" selection-start-line="51" selection-start-column="14" selection-end-line="52" selection-end-column="34" />
-                  <caret line="60" column="23" lean-forward="true" selection-start-line="59" selection-start-column="6" selection-end-line="60" selection-end-column="23" />
-                  <caret line="82" column="34" lean-forward="true" selection-start-line="81" selection-start-column="6" selection-end-line="82" selection-end-column="34" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/test/TestItems2">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="787">
-                  <caret line="19" column="30" lean-forward="true" selection-start-line="18" selection-start-column="14" selection-end-line="19" selection-end-column="30" />
-                  <caret line="27" column="27" lean-forward="true" selection-start-line="26" selection-start-column="6" selection-end-line="27" selection-end-column="27" />
-                  <caret line="52" column="32" lean-forward="true" selection-start-line="51" selection-start-column="14" selection-end-line="52" selection-end-column="32" />
-                  <caret line="60" column="23" lean-forward="true" selection-start-line="59" selection-start-column="6" selection-end-line="60" selection-end-column="23" />
-                  <caret line="81" column="23" lean-forward="true" selection-start-line="80" selection-start-column="6" selection-end-line="81" selection-end-column="23" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/IngestJSON.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="493">
+              <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/relate_location_to_country.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/location2">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state projectRestartId="b1fb99c3-0619-439f-a22a-11c0d888a450">
+              <filtering>
+                <filter text="" />
+              </filtering>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/IngestJSON_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="25" column="9" lean-forward="true" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/Parser_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -169,6 +121,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>happy hol</find>
+      <find>&quot;</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -198,15 +151,18 @@
         <option value="$PROJECT_DIR$/flyway-5.2.4/sql/V2__Create_Country_table.sql" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/test/TestItems" />
-        <option value="$PROJECT_DIR$/test/Parser_test.py" />
-        <option value="$PROJECT_DIR$/src/JSONParser.py" />
-        <option value="$PROJECT_DIR$/test/IngestJSON_test.py" />
         <option value="$PROJECT_DIR$/src/IngestJSON.py" />
         <option value="$PROJECT_DIR$/src/IngestApp.py" />
+        <option value="$PROJECT_DIR$/flyway-5.2.4/sql/locations.dat" />
+        <option value="$PROJECT_DIR$/test/IngestJSON_test.py" />
+        <option value="$PROJECT_DIR$/test/Parser_test.py" />
+        <option value="$PROJECT_DIR$/src/JSONParser.py" />
+        <option value="$PROJECT_DIR$/flyway-5.2.4/sql/relate_location_to_country.sql" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1280" />
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="1387" />
@@ -219,13 +175,23 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
               <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
+              <item name="flyway-5.2.4" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cecs535project1" type="462c0819:PsiDirectoryNode" />
+              <item name="flyway-5.2.4" type="462c0819:PsiDirectoryNode" />
+              <item name="sql" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cecs535project1" type="b2602c69:ProjectViewProjectNode" />
@@ -246,12 +212,13 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="database.console.LAST_STATE" value="false" />
+    <property name="database.console.LAST_STATE" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/test" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -322,21 +289,6 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for IngestJSON_test.MyTestCase.test_readsLocationsFromAllGivenFiles" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <module name="cecs535project1" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;IngestJSON_test.MyTestCase.test_readsLocationsFromAllGivenFiles&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
     <configuration name="Unittests for Parser_test.ParserTestCase" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="cecs535project1" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -352,7 +304,7 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for test.IngestJSON_test.MyTestCase.test_readsLocationsFromAllGivenFiles" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for Parser_test.ParserTestCase.test_addsQuotationMarkToExistingQuotation" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="cecs535project1" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -363,17 +315,32 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test.IngestJSON_test.MyTestCase.test_readsLocationsFromAllGivenFiles&quot;" />
+      <option name="_new_target" value="&quot;Parser_test.ParserTestCase.test_addsQuotationMarkToExistingQuotation&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for Parser_test.ParserTestCase.test_writesRelatedValuesToFile" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="cecs535project1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;Parser_test.ParserTestCase.test_writesRelatedValuesToFile&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.IngestApp" />
-        <item itemvalue="Python tests.Unittests for IngestJSON_test.MyTestCase.test_readsLocationsFromAllGivenFiles" />
-        <item itemvalue="Python tests.Unittests for Parser_test.ParserTestCase" />
         <item itemvalue="Python tests.Unittests for IngestJSON_test.MyTestCase" />
-        <item itemvalue="Python tests.Unittests for test.IngestJSON_test.MyTestCase.test_readsLocationsFromAllGivenFiles" />
+        <item itemvalue="Python tests.Unittests for Parser_test.ParserTestCase" />
+        <item itemvalue="Python tests.Unittests for Parser_test.ParserTestCase.test_writesRelatedValuesToFile" />
+        <item itemvalue="Python tests.Unittests for Parser_test.ParserTestCase.test_addsQuotationMarkToExistingQuotation" />
       </list>
     </recent_temporary>
   </component>
@@ -389,43 +356,44 @@
       <updated>1560002486985</updated>
       <workItem from="1560002491398" duration="5459000" />
       <workItem from="1560014092660" duration="31209000" />
+      <workItem from="1560124293133" duration="3766000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_Parser_test_ParserTestCase_test_writesRelatedValuesToFile - 2019.06.09 at 19h 15m 37s.xml">
-      <configuration name="Unittests for Parser_test.ParserTestCase.test_writesRelatedValuesToFile" configurationId="tests" />
+    <history-entry file="Unittests_for_Parser_test_ParserTestCase_test_addsQuotationMarkToExistingQuotation - 2019.06.09 at 20h 22m 25s.xml">
+      <configuration name="Unittests for Parser_test.ParserTestCase.test_addsQuotationMarkToExistingQuotation" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_Parser_test_ParserTestCase_test_writesRelatedValuesToFile - 2019.06.09 at 19h 15m 49s.xml">
-      <configuration name="Unittests for Parser_test.ParserTestCase.test_writesRelatedValuesToFile" configurationId="tests" />
+    <history-entry file="Unittests_for_Parser_test_ParserTestCase_test_addsQuotationMarkToExistingQuotation - 2019.06.09 at 20h 22m 33s.xml">
+      <configuration name="Unittests for Parser_test.ParserTestCase.test_addsQuotationMarkToExistingQuotation" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_IngestJSON_test_MyTestCase_test_readsLocationsFromAllGivenFiles - 2019.06.09 at 19h 19m 48s.xml">
-      <configuration name="Unittests for IngestJSON_test.MyTestCase.test_readsLocationsFromAllGivenFiles" configurationId="tests" />
+    <history-entry file="Unittests_for_Parser_test_ParserTestCase_test_addsQuotationMarkToExistingQuotation - 2019.06.09 at 20h 22m 48s.xml">
+      <configuration name="Unittests for Parser_test.ParserTestCase.test_addsQuotationMarkToExistingQuotation" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_IngestJSON_test_MyTestCase_test_readsLocationsFromAllGivenFiles - 2019.06.09 at 19h 20m 05s.xml">
-      <configuration name="Unittests for IngestJSON_test.MyTestCase.test_readsLocationsFromAllGivenFiles" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_for_IngestJSON_test_MyTestCase_test_readsLocationsFromAllGivenFiles - 2019.06.09 at 19h 21m 01s.xml">
-      <configuration name="Unittests for IngestJSON_test.MyTestCase.test_readsLocationsFromAllGivenFiles" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_for_IngestJSON_test_MyTestCase - 2019.06.09 at 19h 28m 37s.xml">
-      <configuration name="Unittests for IngestJSON_test.MyTestCase" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_for_IngestJSON_test_MyTestCase - 2019.06.09 at 19h 29m 53s.xml">
-      <configuration name="Unittests for IngestJSON_test.MyTestCase" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_for_IngestJSON_test_MyTestCase - 2019.06.09 at 19h 30m 10s.xml">
-      <configuration name="Unittests for IngestJSON_test.MyTestCase" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_for_Parser_test_ParserTestCase - 2019.06.09 at 19h 30m 23s.xml">
+    <history-entry file="Unittests_for_Parser_test_ParserTestCase - 2019.06.09 at 20h 23m 00s.xml">
       <configuration name="Unittests for Parser_test.ParserTestCase" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_IngestJSON_test_MyTestCase_test_readsLocationsFromAllGivenFiles - 2019.06.09 at 19h 39m 40s.xml">
-      <configuration name="Unittests for IngestJSON_test.MyTestCase.test_readsLocationsFromAllGivenFiles" configurationId="tests" />
+    <history-entry file="Unittests_for_Parser_test_ParserTestCase - 2019.06.09 at 20h 23m 24s.xml">
+      <configuration name="Unittests for Parser_test.ParserTestCase" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_IngestJSON_test_MyTestCase - 2019.06.09 at 20h 23m 30s.xml">
+      <configuration name="Unittests for IngestJSON_test.MyTestCase" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_Parser_test_ParserTestCase_test_writesRelatedValuesToFile - 2019.06.09 at 20h 24m 12s.xml">
+      <configuration name="Unittests for Parser_test.ParserTestCase.test_writesRelatedValuesToFile" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_Parser_test_ParserTestCase_test_writesRelatedValuesToFile - 2019.06.09 at 20h 24m 34s.xml">
+      <configuration name="Unittests for Parser_test.ParserTestCase.test_writesRelatedValuesToFile" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_Parser_test_ParserTestCase - 2019.06.09 at 20h 24m 42s.xml">
+      <configuration name="Unittests for Parser_test.ParserTestCase" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_IngestJSON_test_MyTestCase - 2019.06.09 at 20h 24m 48s.xml">
+      <configuration name="Unittests for IngestJSON_test.MyTestCase" configurationId="tests" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36668000" />
+    <option name="totallyTimeSpent" value="40434000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -437,16 +405,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="2560" height="1387" extended-state="6" />
+    <frame x="1280" y="23" width="1280" height="1387" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15170771" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.15289913" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Database Console" order="0" weight="0.32895753" />
+      <window_info active="true" anchor="bottom" id="Database Console" order="0" visible="true" weight="0.32895753" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32895753" />
-      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.32972974" />
+      <window_info anchor="bottom" id="Run" order="3" weight="0.32972974" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -461,8 +429,8 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24980143" />
       <window_info anchor="right" id="SciView" order="3" />
-      <window_info anchor="right" id="Database" order="4" weight="0.11953932" />
-      <window_info anchor="right" id="SQL Formatter" order="5" />
+      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.1187399" />
+      <window_info anchor="right" id="SQL Formatter" order="5" weight="0.32962668" />
     </layout>
     <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" weight="0.15170771" />
@@ -494,20 +462,20 @@
     <option name="version" value="1" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_IngestJSON_test_MyTestCase_test_readsLocationsFromAllGivenFiles.coverage" NAME="Unittests for IngestJSON_test.MyTestCase.test_readsLocationsFromAllGivenFiles Coverage Results" MODIFIED="1560123580774" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_IngestJSON_test_MyTestCase_test_readsLocationsFromAllGivenFiles.coverage" NAME="Unittests for IngestJSON_test.MyTestCase.test_readsLocationsFromAllGivenFiles Coverage Results" MODIFIED="1560124926019" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_IngestJSON_test_MyTestCase_test_readsCountriesFromAllGivenFiles.coverage" NAME="Unittests for IngestJSON_test.MyTestCase.test_readsCountriesFromAllGivenFiles Coverage Results" MODIFIED="1560090899402" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase_test_readAllCategoriesFromFileWithoutDuplicates.coverage" NAME="Unittests for Parser_test.ParserTestCase.test_readAllCategoriesFromFileWithoutDuplicates Coverage Results" MODIFIED="1560100278251" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/cecs535project1$JSONParser.coverage" NAME="JSONParser Coverage Results" MODIFIED="1560032491783" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase_test_writesRelatedValuesToFile.coverage" NAME="Unittests for Parser_test.ParserTestCase.test_writesRelatedValuesToFile Coverage Results" MODIFIED="1560122149617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase_test_writesRelatedValuesToFile.coverage" NAME="Unittests for Parser_test.ParserTestCase.test_writesRelatedValuesToFile Coverage Results" MODIFIED="1560126274333" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase_test_extractObjectsFromJSONFile.coverage" NAME="Unittests for Parser_test.ParserTestCase.test_extractObjectsFromJSONFile Coverage Results" MODIFIED="1560100367652" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase_test_removeDuplicatesFromList.coverage" NAME="Unittests for Parser_test.ParserTestCase.test_removeDuplicatesFromList Coverage Results" MODIFIED="1560100338530" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
-    <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase.coverage" NAME="Unittests for Parser_test.ParserTestCase Coverage Results" MODIFIED="1560123023495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase.coverage" NAME="Unittests for Parser_test.ParserTestCase Coverage Results" MODIFIED="1560126282199" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase_test_extractDictionaryFromJSONFile.coverage" NAME="Unittests for Parser_test.ParserTestCase.test_extractDictionaryFromJSONFile Coverage Results" MODIFIED="1560100366338" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase_test_readAllCategoriesFromFile.coverage" NAME="Unittests for Parser_test.ParserTestCase.test_readAllCategoriesFromFile Coverage Results" MODIFIED="1560033395621" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
-    <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_IngestJSON_test_MyTestCase.coverage" NAME="Unittests for IngestJSON_test.MyTestCase Coverage Results" MODIFIED="1560123010605" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_IngestJSON_test_MyTestCase.coverage" NAME="Unittests for IngestJSON_test.MyTestCase Coverage Results" MODIFIED="1560126288413" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_in_Parser_test_py.coverage" NAME="Unittests in Parser_test.py Coverage Results" MODIFIED="1560089892880" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_IngestJSON_test_MyTestCase_test_addsOnlyNewCategoriesWithNewFileIngest.coverage" NAME="Unittests for IngestJSON_test.MyTestCase.test_addsOnlyNewCategoriesWithNewFileIngest Coverage Results" MODIFIED="1560045401790" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
-    <SUITE FILE_PATH="coverage/cecs535project1$IngestApp.coverage" NAME="IngestApp Coverage Results" MODIFIED="1560123593370" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/cecs535project1$IngestApp.coverage" NAME="IngestApp Coverage Results" MODIFIED="1560127734897" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase_test_dedupesTupleList.coverage" NAME="Unittests for Parser_test.ParserTestCase.test_dedupesTupleList Coverage Results" MODIFIED="1560120819804" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase_test_readsValuesWithSingleRelationship.coverage" NAME="Unittests for Parser_test.ParserTestCase.test_readsValuesWithSingleRelationship Coverage Results" MODIFIED="1560120833069" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase_test_something.coverage" NAME="Unittests for Parser_test.ParserTestCase.test_something Coverage Results" MODIFIED="1560020887566" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
@@ -518,6 +486,7 @@
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase_test_shouldAddNewCategoriesToList.coverage" NAME="Unittests for Parser_test.ParserTestCase.test_shouldAddNewCategoriesToList Coverage Results" MODIFIED="1560100335102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_IngestJSON_test_MyTestCase_test_something.coverage" NAME="Unittests for IngestJSON_test.MyTestCase.test_something Coverage Results" MODIFIED="1560044343944" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase_test_readAllCountriesFromFileWithoutDupicates.coverage" NAME="Unittests for Parser_test.ParserTestCase.test_readAllCountriesFromFileWithoutDupicates Coverage Results" MODIFIED="1560087593792" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase_test_addsQuotationMarkToExistingQuotation.coverage" NAME="Unittests for Parser_test.ParserTestCase.test_addsQuotationMarkToExistingQuotation Coverage Results" MODIFIED="1560126168429" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase_test_parsesCategoriesFromJSONToDat.coverage" NAME="Unittests for Parser_test.ParserTestCase.test_parsesCategoriesFromJSONToDat Coverage Results" MODIFIED="1560046058762" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_in_IngestJSON_test_py.coverage" NAME="Unittests in IngestJSON_test.py Coverage Results" MODIFIED="1560091229405" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_Parser_test_ParserTestCase_test_readsValuesWithSingleRelationshipNoDuplicates.coverage" NAME="Unittests for Parser_test.ParserTestCase.test_readsValuesWithSingleRelationshipNoDuplicates Coverage Results" MODIFIED="1560120916596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
@@ -550,13 +519,7 @@
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/d206b192-1f9a-41f9-81b7-145720ad636f/console.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Parser_test">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Parser_test" />
     <entry file="file://$USER_HOME$/.conda/envs/cecs535project1/lib/python3.7/json/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1638">
@@ -567,24 +530,11 @@
     <entry file="file://$PROJECT_DIR$/data/json/items-0.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/V2__Import_Categories.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="92" lean-forward="true" selection-start-column="92" selection-end-column="92" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/V2__Import_Categories.sql" />
     <entry file="file://$USER_HOME$/.conda/envs/cecs535project1/lib/python3.7/json/decoder.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="806">
           <caret line="336" selection-start-line="336" selection-end-line="336" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.conda/envs/cecs535project1/lib/python3.7/unittest/case.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="58" selection-start-line="58" selection-end-line="58" />
         </state>
       </provider>
     </entry>
@@ -609,9 +559,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/categories.dat">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/test/categories.dat" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -671,16 +619,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/JSONParser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="40" column="23" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="23" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/test/test_values.dat">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/test/TestItems">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="787">
+        <state relative-caret-position="976">
           <caret line="19" column="30" lean-forward="true" selection-start-line="18" selection-start-column="14" selection-end-line="19" selection-end-column="30" />
           <caret line="27" column="23" lean-forward="true" selection-start-line="26" selection-start-column="6" selection-end-line="27" selection-end-column="23" />
           <caret line="52" column="34" lean-forward="true" selection-start-line="51" selection-start-column="14" selection-end-line="52" selection-end-column="34" />
@@ -691,7 +635,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/TestItems2">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="787">
+        <state relative-caret-position="976">
           <caret line="19" column="30" lean-forward="true" selection-start-line="18" selection-start-column="14" selection-end-line="19" selection-end-column="30" />
           <caret line="27" column="27" lean-forward="true" selection-start-line="26" selection-start-column="6" selection-end-line="27" selection-end-column="27" />
           <caret line="52" column="32" lean-forward="true" selection-start-line="51" selection-start-column="14" selection-end-line="52" selection-end-column="32" />
@@ -700,48 +644,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_values.dat">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/Parser_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="9" column="44" lean-forward="true" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
-          <folding>
-            <element signature="e#167#207#0" />
-            <element signature="e#719#814#0" />
-            <element signature="e#1309#1573#0" />
-            <element signature="e#1399#1470#0" />
-            <element signature="e#1626#1920#0" />
-            <element signature="e#1844#1898#0" />
-            <element signature="e#2689#4329#0" />
-            <element signature="e#2720#3011#0" />
-            <element signature="e#2745#2823#0" />
-            <element signature="e#2854#2962#0" />
-            <element signature="e#2993#3039#0" />
-            <element signature="e#3022#3077#0" />
-            <element signature="e#3055#3157#0" />
-            <element signature="e#3271#3311#0" />
-            <element signature="e#3293#3350#0" />
-            <element signature="e#3329#3392#0" />
-            <element signature="e#3488#3546#0" />
-            <element signature="e#3524#3587#0" />
-            <element signature="e#3561#3675#0" />
-          </folding>
+        <state relative-caret-position="17">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/locations.dat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="741">
+          <caret line="9006" column="24" lean-forward="true" selection-start-line="9006" selection-start-column="24" selection-end-line="9006" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/IngestJSON.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="55" selection-start-line="21" selection-start-column="55" selection-end-line="21" selection-end-column="55" />
+        <state relative-caret-position="493">
+          <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.conda/envs/cecs535project1/lib/python3.7/unittest/case.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="691" selection-start-line="691" selection-end-line="691" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/IngestJSON_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="664">
-          <caret line="57" column="20" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
+        <state relative-caret-position="357">
+          <caret line="25" column="9" lean-forward="true" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
@@ -750,8 +684,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/IngestApp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+        <state relative-caret-position="561">
+          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/JSONParser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="41" column="92" selection-start-line="41" selection-start-column="92" selection-end-line="41" selection-end-column="92" />
+          <caret line="43" column="86" selection-start-line="43" selection-start-column="86" selection-end-line="43" selection-end-column="86" />
+          <caret line="43" column="110" selection-start-line="43" selection-start-column="110" selection-end-line="43" selection-end-column="110" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/location">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="b1fb99c3-0619-439f-a22a-11c0d888a450">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/location2">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="b1fb99c3-0619-439f-a22a-11c0d888a450">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/relate_location_to_country.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
         </state>
       </provider>
     </entry>
