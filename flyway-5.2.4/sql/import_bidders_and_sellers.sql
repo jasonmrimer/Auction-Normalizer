@@ -1,0 +1,1 @@
+.IMPORT '/Users/engineer/workspace/cecs535project1/flyway-5.2.4/sql/bidders.dat' user

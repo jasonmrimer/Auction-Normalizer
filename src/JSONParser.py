@@ -1,59 +1,112 @@
 from json import loads
 
 
-def dictionary_from_json_file(filepath, top_key):
+def dictionary_from_json_file(
+        filepath,
+        top_key
+):
     with open(filepath, 'r') as file:
         return loads(file.read())[top_key]
 
 
-def values_from_json_file(values, json_filepath, top_key, search_key):
-    for obj in dictionary_from_json_file(json_filepath, top_key):
-        values = extract_nested_values_from_json_with_key(values, obj, search_key)
-    return remove_duplicates(values)
+def values_from_json_file(
+        values,
+        collection,
+        search_key
+):
+    for obj in collection:
+        values = extract_nested_values_from_json_with_key(
+            values,
+            obj,
+            search_key
+        )
+    if type(values) == list:
+        return remove_duplicates(values)
+    return values
 
 
-def values_with_relationship(values, collection, child_key, parent_key):
+def values_with_single_relationship(
+        values,
+        collection,
+        child_key,
+        parent_key
+):
     if type(collection) == list:
         for item in collection:
             if type(item) == dict:
-                values = values_with_relationship(values, item, child_key, parent_key)
+                values = values_with_single_relationship(values, item, child_key, parent_key)
     if type(collection) == dict:
         if (child_key in collection) and (parent_key in collection):
             values.add((collection[child_key], collection[parent_key]))
         for obj in collection:
             if (type(collection[obj]) == dict) or (type(collection[obj]) == list):
-                values = values_with_relationship(values, collection[obj], child_key, parent_key)
+                values = values_with_single_relationship(values, collection[obj], child_key, parent_key)
     return values
 
 
-def write_categories_to_dat(categories, dat_filepath):
-    file = open(dat_filepath, 'w')
-    if type(categories) == list:
-        for index in range(len(categories)):
-            if index == len(categories) - 1:
-                file.write(f'{index + 1}|{categories[index]}')
-            else:
-                file.write(f'{index + 1}|{categories[index]}\n')
-    if type(categories) == set:
-        starting_length = len(categories)
-        while len(categories) > 0:
-            value = categories.pop()
-            if len(categories) == 0:
-                file.write(f'{starting_length}|"{stringify(value[0])}"|"{stringify(value[1])}"')
-            else:
-                file.write(f'{starting_length - len(categories)}|"{stringify(value[0])}"|"{stringify(value[1])}"\n')
-    file.close()
+def values_with_many_collocated_relationships(
+        values,
+        collection,
+        child_keys,
+        parent_key
+):
+    parents = values_from_json_file(
+        [],
+        collection,
+        parent_key
+    )
+    for parent in parents:
+        values[parent] = dict()
+    for child in child_keys:
+        sub_values = values_with_single_relationship(
+            set(),
+            collection,
+            child,
+            parent_key
+        )
+        for sub_value in sub_values:
+            values[sub_value[1]][child] = (sub_value[0])
+    for key in list(values):
+        if len(values[key]) != len(child_keys):
+            del values[key]
+    return values
 
 
-def remove_duplicates(dedupe_list):
+def values_with_dislocated_relationships(
+        values,
+        collection,
+        child_keys,
+        parent_key,
+        disjointed_children_keys,
+        parent_unique_id
+):
+    for item in collection:
+        uid = item[parent_key][parent_unique_id]
+        values[uid] = dict()
+        for child in child_keys:
+            values[uid][child] = item[parent_key][child]
+        for disjointed_child in disjointed_children_keys:
+            values[uid][disjointed_child] = item[disjointed_child]
+    return values
+
+
+def remove_duplicates(
+        dedupe_list
+):
     return list(dict.fromkeys(dedupe_list))
 
 
-def dedupe(tuple_list):
+def dedupe(
+        tuple_list
+):
     return set(tuple_list)
 
 
-def extract_nested_values_from_json_with_key(values, json_object, key):
+def extract_nested_values_from_json_with_key(
+        values,
+        json_object,
+        key
+):
     if type(json_object) == str:
         return values
     if key in json_object:
@@ -72,12 +125,3 @@ def extract_nested_values_from_json_with_key(values, json_object, key):
                     values = extract_nested_values_from_json_with_key(values, list_item, key)
 
     return values
-
-
-def stringify(string):
-    index_of_quote = string.find('"')
-    if string.find('"') < 0:
-        return string
-    left = string[:index_of_quote + 1]
-    right = string[index_of_quote + 1:]
-    return left + '"' + stringify(right)
