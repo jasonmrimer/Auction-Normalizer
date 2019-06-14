@@ -223,24 +223,33 @@
       <Position>2</Position>
       <DataType>integer|0s</DataType>
     </column>
-    <column id="60" parent="14" name="location_name">
+    <column id="60" parent="14" name="location_id">
       <Position>3</Position>
-      <DataType>varchar(128)|0s</DataType>
+      <DataType>integer|0s</DataType>
     </column>
-    <column id="61" parent="14" name="country_name">
+    <column id="61" parent="14" name="seller">
       <Position>4</Position>
-      <DataType>varchar(64)|0s</DataType>
+      <DataType>boolean|0s</DataType>
     </column>
-    <index id="62" parent="14" name="sqlite_autoindex_user_1">
+    <column id="62" parent="14" name="bidder">
+      <Position>5</Position>
+      <DataType>boolean|0s</DataType>
+    </column>
+    <index id="63" parent="14" name="sqlite_autoindex_user_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="63" parent="14">
+    <key id="64" parent="14">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_user_1</UnderlyingIndexName>
     </key>
+    <foreign-key id="65" parent="14">
+      <ColNames>location_id</ColNames>
+      <RefTableName>location</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
   </database-model>
 </dataSource>

@@ -2,24 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a80d482a-d7c2-4e81-9ab6-8c8503312284" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/flyway-5.2.4/sql/V4__Create_User_table.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/flyway-5.2.4/sql/V5__Create_Bidder_and_Seller_tables.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/flyway-5.2.4/sql/import_bidders_and_sellers.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/flyway-5.2.4/sql/queries.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/d206b192-1f9a-41f9-81b7-145720ad636f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d206b192-1f9a-41f9-81b7-145720ad636f.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/ebay_db" beforeDir="false" afterPath="$PROJECT_DIR$/data/ebay_db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flyway-5.2.4/sql/bidders.dat" beforeDir="false" afterPath="$PROJECT_DIR$/flyway-5.2.4/sql/bidders.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flyway-5.2.4/sql/locations.dat" beforeDir="false" afterPath="$PROJECT_DIR$/flyway-5.2.4/sql/locations.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flyway-5.2.4/sql/sellers.dat" beforeDir="false" afterPath="$PROJECT_DIR$/flyway-5.2.4/sql/sellers.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IngestJSON.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/IngestJSON.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Writer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Writer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/IngestJSON_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/IngestJSON_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/JSONParser_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/JSONParser_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/TestItems" beforeDir="false" afterPath="$PROJECT_DIR$/test/TestItems" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Writer_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Writer_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test_values.dat" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_values.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flyway-5.2.4/sql/import_bidders_and_sellers.sql" beforeDir="false" afterPath="$PROJECT_DIR$/flyway-5.2.4/sql/import_bidders_and_sellers.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flyway-5.2.4/sql/queries.sql" beforeDir="false" afterPath="$PROJECT_DIR$/flyway-5.2.4/sql/queries.sql" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -66,129 +53,57 @@
     </expanded>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/test/TestItems">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="502">
-                  <caret line="31" column="28" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/test/test_values.dat">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="68">
-                  <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/test/IngestJSON_test.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="618">
-                  <caret line="147" column="17" selection-start-line="147" selection-start-column="17" selection-end-line="147" selection-end-column="17" />
-                  <folding>
-                    <element signature="e#0#15#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/bidders.dat">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="731">
-                  <caret line="3730" column="43" selection-start-line="3730" selection-start-column="43" selection-end-line="3730" selection-end-column="43" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/IngestApp.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="380">
-                  <caret line="31" column="18" lean-forward="true" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$USER_HOME$/.conda/envs/cecs535project1/lib/python3.7/unittest/case.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="274">
-                  <caret line="691" selection-start-line="691" selection-end-line="691" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/test/JSONParser_test.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="199">
-                  <caret line="285" column="32" selection-start-line="285" selection-start-column="32" selection-end-line="285" selection-end-column="32" />
-                  <folding>
-                    <element signature="e#207#277#0" />
-                    <element signature="e#350#875#0" />
-                    <element signature="e#947#1403#0" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/test/Writer_test.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="665">
-                  <caret line="139" column="20" selection-start-line="139" selection-start-column="20" selection-end-line="139" selection-end-column="20" />
-                  <folding>
-                    <element signature="e#0#15#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/Writer.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="469">
-                  <caret line="50" column="75" selection-start-line="50" selection-start-column="75" selection-end-line="50" selection-end-column="75" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/IngestJSON.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="604">
-                  <caret line="115" column="55" lean-forward="true" selection-start-line="109" selection-start-column="10" selection-end-line="115" selection-end-column="55" />
-                  <folding>
-                    <element signature="e#0#24#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/queries.sql">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/import_bidders_and_sellers.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="531">
+              <caret line="45" selection-start-line="45" selection-end-line="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/user">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state projectRestartId="c3379ccb-a520-48ff-a562-fc7da17e7e78">
+              <filtering>
+                <filter text="" />
+              </filtering>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/seller">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state projectRestartId="c3379ccb-a520-48ff-a562-fc7da17e7e78">
+              <filtering>
+                <filter text="" />
+              </filtering>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/queries.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="21" selection-start-line="21" selection-end-line="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/json/items-3.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="281">
+              <caret column="174532" selection-start-column="174532" selection-end-column="174532" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -208,6 +123,7 @@
       <find>jtvfeather</find>
       <find>feather</find>
       <find>location</find>
+      <find>BEAUTY29</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -244,7 +160,6 @@
         <option value="$PROJECT_DIR$/src/JSONParser.py" />
         <option value="$PROJECT_DIR$/test/TestItems2" />
         <option value="$PROJECT_DIR$/flyway-5.2.4/sql/V4__Create_User_table.sql" />
-        <option value="$PROJECT_DIR$/flyway-5.2.4/sql/import_bidders_and_sellers.sql" />
         <option value="$PROJECT_DIR$/src/Writer.py" />
         <option value="$PROJECT_DIR$/flyway-5.2.4/sql/sellers.dat" />
         <option value="$PROJECT_DIR$/flyway-5.2.4/sql/V5__Create_Bidder_and_Seller_tables.sql" />
@@ -254,12 +169,14 @@
         <option value="$PROJECT_DIR$/flyway-5.2.4/sql/bidders.dat" />
         <option value="$PROJECT_DIR$/src/IngestApp.py" />
         <option value="$PROJECT_DIR$/test/IngestJSON_test.py" />
-        <option value="$PROJECT_DIR$/flyway-5.2.4/sql/queries.sql" />
         <option value="$PROJECT_DIR$/src/IngestJSON.py" />
+        <option value="$PROJECT_DIR$/flyway-5.2.4/sql/import_bidders_and_sellers.sql" />
+        <option value="$PROJECT_DIR$/flyway-5.2.4/sql/queries.sql" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1280" />
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="1388" />
@@ -457,6 +374,7 @@
       <workItem from="1560297233067" duration="2674000" />
       <workItem from="1560302287002" duration="10563000" />
       <workItem from="1560384283553" duration="7500000" />
+      <workItem from="1560466753822" duration="4757000" />
     </task>
     <servers />
   </component>
@@ -493,7 +411,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67322000" />
+    <option name="totallyTimeSpent" value="72535000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -505,16 +423,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="2560" height="1388" extended-state="6" />
+    <frame x="1280" y="23" width="1280" height="1388" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.07625099" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.07664813" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Database Console" order="0" weight="0.3287037" />
+      <window_info active="true" anchor="bottom" id="Database Console" order="0" visible="true" weight="0.3287037" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.3287037" />
-      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.3294753" />
+      <window_info anchor="bottom" id="Run" order="3" weight="0.3294753" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -529,7 +447,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24980143" />
       <window_info anchor="right" id="SciView" order="3" />
-      <window_info anchor="right" id="Database" order="4" weight="0.1183479" />
+      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.11793215" />
       <window_info anchor="right" id="SQL Formatter" order="5" weight="0.32962668" />
     </layout>
     <layout-to-restore>
@@ -613,14 +531,6 @@
     <SUITE FILE_PATH="coverage/cecs535project1$Unittests_for_JSONParser_test_JSONParserTestCase_test_extractsValuesWithDislocatedRelationships.coverage" NAME="Unittests for JSONParser_test.JSONParserTestCase.test_extractsValuesWithDislocatedRelationships Coverage Results" MODIFIED="1560304966945" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/data/json/items-37.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="24" selection-start-column="11" selection-end-column="1270" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/item" />
     <entry file="file://$USER_HOME$/.conda/envs/cecs535project1/lib/python3.7/unittest/loader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="274">
@@ -738,13 +648,6 @@
       </provider>
     </entry>
     <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/location2" />
-    <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/location">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="40ee2b7a-6815-413f-be20-fde144206fe1">
-          <filtering />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/json/items_schema.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="752">
@@ -800,20 +703,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/import_bidders_and_sellers.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" lean-forward="true" selection-end-column="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/relate_location_to_country.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/V2__Create_Country_table.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -825,31 +714,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/user">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="cd2bcecf-9cae-4858-a619-dd688c6dfc3c">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/seller">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="cd2bcecf-9cae-4858-a619-dd688c6dfc3c">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/V5__Create_Bidder_and_Seller_tables.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="29" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -874,10 +738,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/TestItems">
+    <entry file="file://$PROJECT_DIR$/src/IngestJSON.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
-          <caret line="31" column="28" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
+        <state relative-caret-position="333">
+          <caret line="67" column="21" selection-start-line="67" selection-start-column="21" selection-end-line="67" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/IngestApp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="31" column="18" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -885,20 +759,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="731">
           <caret line="3730" column="43" selection-start-line="3730" selection-start-column="43" selection-end-line="3730" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Writer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="50" column="75" selection-start-line="50" selection-start-column="75" selection-end-line="50" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_values.dat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -912,20 +772,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/queries.sql">
+    <entry file="file://$PROJECT_DIR$/test/test_values.dat">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        <state relative-caret-position="68">
+          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/Writer_test.py">
+    <entry file="file://$PROJECT_DIR$/test/TestItems">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="665">
-          <caret line="139" column="20" selection-start-line="139" selection-start-column="20" selection-end-line="139" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="502">
+          <caret line="31" column="28" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.conda/envs/cecs535project1/lib/python3.7/unittest/case.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="691" selection-start-line="691" selection-end-line="691" />
         </state>
       </provider>
     </entry>
@@ -941,27 +805,94 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.conda/envs/cecs535project1/lib/python3.7/unittest/case.py">
+    <entry file="file://$PROJECT_DIR$/test/Writer_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="691" selection-start-line="691" selection-end-line="691" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/IngestApp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="31" column="18" lean-forward="true" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/IngestJSON.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="604">
-          <caret line="115" column="55" lean-forward="true" selection-start-line="109" selection-start-column="10" selection-end-line="115" selection-end-column="55" />
+        <state relative-caret-position="665">
+          <caret line="139" column="20" selection-start-line="139" selection-start-column="20" selection-end-line="139" selection-end-column="20" />
           <folding>
-            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Writer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="469">
+          <caret line="50" column="75" selection-start-line="50" selection-start-column="75" selection-end-line="50" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/json/items-3.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret column="174532" selection-start-column="174532" selection-end-column="174532" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/temp_user2">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="c3379ccb-a520-48ff-a562-fc7da17e7e78">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/relate_location_to_country.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/location">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="c3379ccb-a520-48ff-a562-fc7da17e7e78">
+          <filtering>
+            <filter text="id=3249" />
+            <filter text="id=3952" />
+            <filter text="3952" />
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/V5__Create_Bidder_and_Seller_tables.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="29" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/import_bidders_and_sellers.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="531">
+          <caret line="45" selection-start-line="45" selection-end-line="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/user">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="c3379ccb-a520-48ff-a562-fc7da17e7e78">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://d206b192-1f9a-41f9-81b7-145720ad636f/schema/main/table/seller">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="c3379ccb-a520-48ff-a562-fc7da17e7e78">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyway-5.2.4/sql/queries.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
         </state>
       </provider>
     </entry>
