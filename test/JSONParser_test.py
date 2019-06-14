@@ -17,7 +17,7 @@ class JSONParserTestCase(unittest.TestCase):
     def test_readAllCategoriesFromFileWithoutDuplicates(self):
         categories = values_from_json_file(
             [],
-            dictionary_from_json_file(
+            list_of_objects_from_json_file(
                 self.test_items,
                 self.top_key
             ),
@@ -35,7 +35,7 @@ class JSONParserTestCase(unittest.TestCase):
     def test_readAllCountriesFromFileWithoutDuplicates(self):
         countries = values_from_json_file(
             [],
-            dictionary_from_json_file(
+            list_of_objects_from_json_file(
                 self.test_items,
                 self.top_key
             ),
@@ -52,7 +52,7 @@ class JSONParserTestCase(unittest.TestCase):
     def test_readsValuesWithSingleRelationshipNoDuplicates(self):
         values = values_with_single_relationship(
             set(),
-            dictionary_from_json_file(self.test_items, self.top_key),
+            list_of_objects_from_json_file(self.test_items, self.top_key),
             'Location',
             'Country'
         )
@@ -65,7 +65,7 @@ class JSONParserTestCase(unittest.TestCase):
     def test_extractsValuesWithManyRelationships(self):
         users = values_with_many_collocated_relationships(
             dict(),
-            dictionary_from_json_file(
+            list_of_objects_from_json_file(
                 self.test_items,
                 self.top_key
             ),
@@ -113,11 +113,10 @@ class JSONParserTestCase(unittest.TestCase):
             )
         )
 
-
     def test_extractsValuesWithDislocatedRelationships(self):
         users = values_with_dislocated_relationships(
             dict(),
-            dictionary_from_json_file(
+            list_of_objects_from_json_file(
                 self.test_items,
                 self.top_key
             ),
@@ -175,7 +174,7 @@ class JSONParserTestCase(unittest.TestCase):
                 'cat4',
                 'cat5',
             ],
-            dictionary_from_json_file(
+            list_of_objects_from_json_file(
                 self.test_items,
                 self.top_key
             ),
@@ -307,11 +306,62 @@ class JSONParserTestCase(unittest.TestCase):
         self.assertEqual(
             list,
             type(
-                dictionary_from_json_file(
+                list_of_objects_from_json_file(
                     self.test_items,
                     self.top_key
                 )
             )
+        )
+
+    def test_getBids(self):
+        bids = get_bids(
+            list_of_objects_from_json_file(
+                self.test_items,
+                self.top_key
+            )
+        )
+        self.assertEqual(
+            3,
+            len(bids)
+        )
+        self.assertEqual(
+            {
+                'Bidder': {
+                    'UserID': 'dpaustintx',
+                    'Rating': '100',
+                    'Location': 'SEE MY OTHER AUCTIONS',
+                    'Country': 'Croatia'
+                },
+                'Time': 'Dec-10-01 10:25:30',
+                'Amount': '$13.99'
+            },
+            bids[('dpaustintx', 'Dec-10-01 10:25:30', '$13.99')]
+        )
+        self.assertEqual(
+            {
+                'Bidder': {
+                    'UserID': 'torrisattic',
+                    'Rating': '223',
+                    'Location': 'Sunny South',
+                    'Country': 'USA'
+                },
+                'Time': 'Dec-10-01 10:23:53',
+                'Amount': '$14.50'
+            },
+            bids[('torrisattic', 'Dec-10-01 10:23:53', '$14.50')]
+        )
+        self.assertEqual(
+            {
+                'Bidder': {
+                    'UserID': 'bidder1',
+                    'Rating': '223',
+                    'Location': 'Sunny South',
+                    'Country': 'USA'
+                },
+                'Time': 'Dec-10-01 10:23:53',
+                'Amount': '$14.50'
+            },
+            bids[('bidder1', 'Dec-10-01 10:23:53', '$14.50')]
         )
 
 

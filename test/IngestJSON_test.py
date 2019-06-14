@@ -101,6 +101,22 @@ class MyTestCase(unittest.TestCase):
         self.assertTrue(contents.__contains__('"do-south"|"21"|"Sunny South"|"USA"'))
         file.close()
 
+    def test_IngestBids(self):
+        ingest_bids([
+            'TestItems',
+            'TestItems2'
+        ],
+            self.dat_filepath
+        )
+        file = open(self.dat_filepath, 'r')
+        contents = file.read()
+        self.assertTrue(contents.__contains__('"torrisattic"|"2001-12-10 10:23:53"|"14.50"'))
+        self.assertTrue(contents.__contains__('"bidder1"|"2001-12-10 10:23:53"|"14.50"'))
+        self.assertTrue(contents.__contains__('"dpaustintx"|"2001-12-10 10:25:30"|"13.99"'))
+        self.assertTrue(contents.__contains__('"test_user1"|"2001-12-10 10:23:53"|"14.50"'))
+        self.assertTrue(contents.__contains__('"test_user2"|"2001-12-10 10:25:30"|"13.99"'))
+        file.close()
+
     def test_printsMaxLengthFromList(self):
         self.assertEqual(
             9,
@@ -119,7 +135,7 @@ class MyTestCase(unittest.TestCase):
             9,
             max_length(
                 {
-                    ('1','1'),
+                    ('1', '1'),
                     ('12', '12'),
                     ('12345', '12'),
                     ('123456789', '12')

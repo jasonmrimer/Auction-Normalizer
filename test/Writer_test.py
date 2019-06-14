@@ -139,11 +139,80 @@ class MyTestCase(unittest.TestCase):
         )
         file.close()
 
+    def test_writes_bids(self):
+        bids = {
+            ('torrisattic', 'Dec-10-01 10:23:53', '$14.50'):
+                {
+                    'Bidder': {
+                        'UserID': 'torrisattic',
+                        'Rating': '223',
+                        'Location': 'Sunny South',
+                        'Country': 'USA'
+                    },
+                    'Time': 'Dec-10-01 10:23:53',
+                    'Amount': '$14.50'
+                },
+            ('dpaustintx', 'Dec-10-01 10:25:30', '$13.99'):
+                {
+                    'Bidder': {
+                        'UserID': 'dpaustintx',
+                        'Rating': '100',
+                        'Location': 'SEE MY OTHER AUCTIONS',
+                        'Country': 'Croatia'
+                    },
+                    'Time': 'Dec-10-01 10:25:30',
+                    'Amount': '$13.99'
+                },
+
+        }
+        write_bids_to_dat(
+            bids,
+            self.dat_filepath
+        )
+        file = open(
+            self.dat_filepath,
+            'r'
+        )
+        contents = file.read()
+        self.assertEqual(
+            contents,
+            '"dpaustintx"|"2001-12-10 10:25:30"|"13.99"\n'
+            '"torrisattic"|"2001-12-10 10:23:53"|"14.50"'
+        )
+        file.close()
+
     def test_addsQuotationMarkToExistingQuotation(self):
         self.assertEqual(
             '29"" bike with 2"" tires',
             stringify('29" bike with 2" tires')
         )
+
+    def test_transformsMonthToValue(self):
+        self.assertEqual(
+            '08',
+            json_month_to_sqlite('Aug')
+        )
+
+    def test_transformDateToSQL(self):
+        self.assertEqual(
+            '2002-01-01 11:12:13',
+            json_date_to_sqlite('Jan-01-02 11:12:13')
+        )
+
+    def test_transformDollarToFloat(self):
+        self.assertEqual(
+            '',
+            json_cash_to_sql('')
+        )
+        self.assertEqual(
+            '3.50',
+            json_cash_to_sql('$3.50')
+        )
+        self.assertEqual(
+            '1234.56',
+            json_cash_to_sql('$1234.56')
+        )
+
 
 if __name__ == '__main__':
     unittest.main()

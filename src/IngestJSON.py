@@ -25,7 +25,7 @@ def ingest_single_value_from_files(filepaths, dat_filepath, top_key, key):
     for filepath in filepaths:
         values = values_from_json_file(
             values,
-            dictionary_from_json_file(
+            list_of_objects_from_json_file(
                 filepath,
                 top_key
             ),
@@ -49,14 +49,14 @@ def ingest_related_values_from_files(filepaths, dat_filepath, top_key, child_key
         if type(child_keys) == str:
             values = values_with_single_relationship(
                 values,
-                dictionary_from_json_file(filepath, top_key),
+                list_of_objects_from_json_file(filepath, top_key),
                 child_keys,
                 parent_key
             )
         else:
             values = values_with_many_collocated_relationships(
                 values,
-                dictionary_from_json_file(filepath, top_key),
+                list_of_objects_from_json_file(filepath, top_key),
                 child_keys,
                 parent_key
             )
@@ -82,7 +82,7 @@ def ingest_related_dislocated_values_from_files(
     for filepath in filepaths:
         values = values_with_dislocated_relationships(
             values,
-            dictionary_from_json_file(
+            list_of_objects_from_json_file(
                 filepath,
                 top_key
             ),
@@ -96,6 +96,22 @@ def ingest_related_dislocated_values_from_files(
             print(f'max length of {key}: {max_length(values)}')
     print(f'max length of {parent_unique_id}: {max_length(list(values.keys()))}')
     write_values_to_dat(values, dat_filepath)
+
+
+def ingest_bids(
+    filepaths,
+    dat_filepath
+):
+    bids = dict()
+    for filepath in filepaths:
+        bids = get_bids(
+            bids,
+            list_of_objects_from_json_file(
+                filepath,
+                'Items'
+            )
+        )
+        write_bids_to_dat(bids, dat_filepath)
 
 
 def max_length(values, current_max=0):

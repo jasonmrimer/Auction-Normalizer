@@ -1,3 +1,6 @@
+from re import sub
+
+
 def write_values_to_dat(
         values,
         dat_filepath
@@ -55,6 +58,31 @@ def write_values_to_dat(
     file.close()
 
 
+def write_bids_to_dat(
+        bids,
+        dat_filepath
+):
+    file = open(
+        dat_filepath,
+        'w'
+    )
+    keys = list(bids.keys())
+    bidder ='Bidder'
+    user_id = 'UserID'
+    time = 'Time'
+    amount = 'Amount'
+    while len(keys) > 0:
+        key = keys.pop()
+        bid = bids[key]
+        print_line = f'' \
+            f'"{stringify(bid[bidder][user_id])}"' \
+            f'|"{stringify(json_date_to_sqlite(bid[time]))}"' \
+            f'|"{stringify(json_cash_to_sql(bid[amount]))}"'
+        if len(keys) > 0:
+            print_line = f'{print_line}\n'
+        file.write(print_line)
+    file.close()
+
 def stringify(
         string
 ):
@@ -64,3 +92,38 @@ def stringify(
     left = string[:index_of_quote + 1]
     right = string[index_of_quote + 1:]
     return left + '"' + stringify(right)
+
+
+def json_month_to_sqlite(mon):
+    months = {
+        'Jan': '01',
+        'Feb': '02',
+        'Mar': '03',
+        'Apr': '04',
+        'May': '05',
+        'Jun': '06',
+        'Jul': '07',
+        'Aug': '08',
+        'Sep': '09',
+        'Oct': '10',
+        'Nov': '11',
+        'Dec': '12'
+    }
+
+    if mon in months:
+        return months[mon]
+    else:
+        return mon
+
+
+def json_date_to_sqlite(date):
+    date = date.strip().split(' ')
+    dt = date[0].split('-')
+    date = f'20{dt[2]}-{json_month_to_sqlite(dt[0])}-{dt[1]} {date[1]}'
+    return date
+
+
+def json_cash_to_sql(cash):
+    if cash is None or len(cash) == 0:
+        return cash
+    return sub(r'[^\d.]', '', cash)

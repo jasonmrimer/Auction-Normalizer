@@ -1,7 +1,7 @@
 from json import loads
 
 
-def dictionary_from_json_file(
+def list_of_objects_from_json_file(
         filepath,
         top_key
 ):
@@ -125,3 +125,23 @@ def extract_nested_values_from_json_with_key(
                     values = extract_nested_values_from_json_with_key(values, list_item, key)
 
     return values
+
+
+def get_bids(
+        bids,
+        collection
+):
+    for item in collection:
+        for key in item:
+            if key == 'Bids':
+                if item[key] is not None:
+                    for bid in item[key]:
+                        b = bid['Bid']
+                        bids[
+                            (
+                                b['Bidder']['UserID'],
+                                b['Time'],
+                                b['Amount']
+                            )
+                        ] = b
+    return bids
