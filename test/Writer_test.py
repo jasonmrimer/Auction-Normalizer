@@ -141,8 +141,9 @@ class MyTestCase(unittest.TestCase):
 
     def test_writes_bids(self):
         bids = {
-            ('torrisattic', 'Dec-10-01 10:23:53', '$14.50'):
+            ('1045770692', 'torrisattic', 'Dec-10-01 10:23:53', '$14.50'):
                 {
+                    'ItemID': '1045770692',
                     'Bidder': {
                         'UserID': 'torrisattic',
                         'Rating': '223',
@@ -152,8 +153,9 @@ class MyTestCase(unittest.TestCase):
                     'Time': 'Dec-10-01 10:23:53',
                     'Amount': '$14.50'
                 },
-            ('dpaustintx', 'Dec-10-01 10:25:30', '$13.99'):
+            ('1045769659', 'dpaustintx', 'Dec-10-01 10:25:30', '$13.99'):
                 {
+                    'ItemID': '1045769659',
                     'Bidder': {
                         'UserID': 'dpaustintx',
                         'Rating': '100',
@@ -176,8 +178,8 @@ class MyTestCase(unittest.TestCase):
         contents = file.read()
         self.assertEqual(
             contents,
-            '"dpaustintx"|"2001-12-10 10:25:30"|"13.99"\n'
-            '"torrisattic"|"2001-12-10 10:23:53"|"14.50"'
+            '"1045769659"|"dpaustintx"|"2001-12-10 10:25:30"|"13.99"\n'
+            '"1045770692"|"torrisattic"|"2001-12-10 10:23:53"|"14.50"'
         )
         file.close()
 

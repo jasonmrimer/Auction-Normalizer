@@ -67,6 +67,7 @@ def write_bids_to_dat(
         'w'
     )
     keys = list(bids.keys())
+    item_id = 'ItemID'
     bidder ='Bidder'
     user_id = 'UserID'
     time = 'Time'
@@ -75,7 +76,8 @@ def write_bids_to_dat(
         key = keys.pop()
         bid = bids[key]
         print_line = f'' \
-            f'"{stringify(bid[bidder][user_id])}"' \
+            f'"{stringify(bid[item_id])}"'\
+            f'|"{stringify(bid[bidder][user_id])}"' \
             f'|"{stringify(json_date_to_sqlite(bid[time]))}"' \
             f'|"{stringify(json_cash_to_sql(bid[amount]))}"'
         if len(keys) > 0:

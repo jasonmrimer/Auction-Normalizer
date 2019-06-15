@@ -110,11 +110,11 @@ class MyTestCase(unittest.TestCase):
         )
         file = open(self.dat_filepath, 'r')
         contents = file.read()
-        self.assertTrue(contents.__contains__('"torrisattic"|"2001-12-10 10:23:53"|"14.50"'))
-        self.assertTrue(contents.__contains__('"bidder1"|"2001-12-10 10:23:53"|"14.50"'))
-        self.assertTrue(contents.__contains__('"dpaustintx"|"2001-12-10 10:25:30"|"13.99"'))
-        self.assertTrue(contents.__contains__('"test_user1"|"2001-12-10 10:23:53"|"14.50"'))
-        self.assertTrue(contents.__contains__('"test_user2"|"2001-12-10 10:25:30"|"13.99"'))
+        self.assertTrue(contents.__contains__('"1045769659"|"torrisattic"|"2001-12-10 10:23:53"|"14.50"'))
+        self.assertTrue(contents.__contains__('"1045769659"|"bidder1"|"2001-12-10 10:23:53"|"14.50"'))
+        self.assertTrue(contents.__contains__('"1045770692"|"dpaustintx"|"2001-12-10 10:25:30"|"13.99"'))
+        self.assertTrue(contents.__contains__('"1045769659777"|"test_user1"|"2001-12-10 10:23:53"|"14.50"'))
+        self.assertTrue(contents.__contains__('"1045770692777"|"test_user2"|"2001-12-10 10:25:30"|"13.99"'))
         file.close()
 
     def test_printsMaxLengthFromList(self):

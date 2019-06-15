@@ -315,6 +315,7 @@ class JSONParserTestCase(unittest.TestCase):
 
     def test_getBids(self):
         bids = get_bids(
+            {},
             list_of_objects_from_json_file(
                 self.test_items,
                 self.top_key
@@ -326,6 +327,7 @@ class JSONParserTestCase(unittest.TestCase):
         )
         self.assertEqual(
             {
+                'ItemID': '1045770692',
                 'Bidder': {
                     'UserID': 'dpaustintx',
                     'Rating': '100',
@@ -335,10 +337,11 @@ class JSONParserTestCase(unittest.TestCase):
                 'Time': 'Dec-10-01 10:25:30',
                 'Amount': '$13.99'
             },
-            bids[('dpaustintx', 'Dec-10-01 10:25:30', '$13.99')]
+            bids[('1045770692', 'dpaustintx', 'Dec-10-01 10:25:30', '$13.99')]
         )
         self.assertEqual(
             {
+                'ItemID': '1045769659',
                 'Bidder': {
                     'UserID': 'torrisattic',
                     'Rating': '223',
@@ -348,10 +351,11 @@ class JSONParserTestCase(unittest.TestCase):
                 'Time': 'Dec-10-01 10:23:53',
                 'Amount': '$14.50'
             },
-            bids[('torrisattic', 'Dec-10-01 10:23:53', '$14.50')]
+            bids[('1045769659', 'torrisattic', 'Dec-10-01 10:23:53', '$14.50')]
         )
         self.assertEqual(
             {
+                'ItemID': '1045769659',
                 'Bidder': {
                     'UserID': 'bidder1',
                     'Rating': '223',
@@ -361,7 +365,7 @@ class JSONParserTestCase(unittest.TestCase):
                 'Time': 'Dec-10-01 10:23:53',
                 'Amount': '$14.50'
             },
-            bids[('bidder1', 'Dec-10-01 10:23:53', '$14.50')]
+            bids[('1045769659', 'bidder1', 'Dec-10-01 10:23:53', '$14.50')]
         )
 
 

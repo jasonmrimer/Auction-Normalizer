@@ -139,9 +139,15 @@ def get_bids(
                         b = bid['Bid']
                         bids[
                             (
+                                item['ItemID'],
                                 b['Bidder']['UserID'],
                                 b['Time'],
                                 b['Amount']
                             )
-                        ] = b
+                        ] = {
+                            'ItemID': item['ItemID'],
+                            'Bidder': b['Bidder'],
+                            'Time': b['Time'],
+                            'Amount': b['Amount'],
+                        }
     return bids
