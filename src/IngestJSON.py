@@ -114,6 +114,27 @@ def ingest_bids(
         write_bids_to_dat(bids, dat_filepath)
 
 
+def ingest_auctions(
+        filepaths,
+        dat_filepath
+):
+    auctions = dict()
+    for filepath in filepaths:
+        auctions = get_auctions(
+            auctions,
+            list_of_objects_from_json_file(
+                filepath,
+                'Items'
+            )
+        )
+    write_values_to_dat(
+        auctions,
+        dat_filepath,
+        ['Buy_Price', 'First_Bid'],
+        ['Started', 'Ends']
+    )
+
+
 def max_length(values, current_max=0):
     max_len = 0
     if type(values) == str:

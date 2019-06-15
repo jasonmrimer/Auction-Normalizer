@@ -51,6 +51,11 @@ def main():
         '/Users/engineer/workspace/cecs535project1/flyway-5.2.4/sql/bids.dat',
     )
 
+    ingest_auctions(
+        filepaths,
+        '/Users/engineer/workspace/cecs535project1/flyway-5.2.4/sql/auctions.dat',
+    )
+
 
 if __name__ == "__main__":
     main()

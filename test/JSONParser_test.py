@@ -64,7 +64,13 @@ class JSONParserTestCase(unittest.TestCase):
 
     def test_extractsValuesWithManyRelationships(self):
         users = values_with_many_collocated_relationships(
-            dict(),
+            {
+                'user1': {
+                    'Rating': '1',
+                    'Location': 'loc1',
+                    'Country': 'country1'
+                }
+            },
             list_of_objects_from_json_file(
                 self.test_items,
                 self.top_key
@@ -73,8 +79,20 @@ class JSONParserTestCase(unittest.TestCase):
             'UserID'
         )
         self.assertEqual(
-            3,
+            4,
             len(users)
+        )
+        self.assertEqual(
+            (
+                '1',
+                'loc1',
+                'country1'
+            ),
+            (
+                users['user1']['Rating'],
+                users['user1']['Location'],
+                users['user1']['Country']
+            )
         )
         self.assertEqual(
             (
@@ -366,6 +384,58 @@ class JSONParserTestCase(unittest.TestCase):
                 'Amount': '$14.50'
             },
             bids[('1045769659', 'bidder1', 'Dec-10-01 10:23:53', '$14.50')]
+        )
+
+    def test_get_auctions(self):
+        auctions = get_auctions(
+            dict(),
+            list_of_objects_from_json_file(
+                self.test_items,
+                'Items'
+            )
+        )
+        self.assertEqual(
+            3,
+            len(auctions)
+        )
+        self.assertEqual(
+            {
+                'Name': 'SPRINGERLE COOKIE BOARD ** NO RESERVE**',
+                'First_Bid': '$14.50',
+                'Buy_Price': None,
+                'Started': 'Dec-08-01 16:23:53',
+                'Ends': 'Dec-15-01 16:23:53',
+                'Seller': 'do-south',
+                'Description': 'Wood Springerle cookie borad depicting a FISH, flowers & birds. It will imprint 8 '
+                               'designs in all. It is app. 3\" x 8\" in size. Nice patina...no cracks. Payment '
+                               'Details See item description and Payment Instructions, or contact seller for more '
+                               'information. Payment Instructions Contact must be made within 3 days of close of '
+                               'auction. Item must be paid for within 10 days by PayPal or Money Order for next day '
+                               'shipping. Personal checks must clear bank prior to shipping. International buyers '
+                               'must pay by PayPal or Postal Money Orders for US dollars. Buyer to pay '
+                               'shipping/handling and insurance if desired. Satisfaction is guaranteed if notified '
+                               'within 3 days of receipt of item.'
+            },
+            auctions['1045769659']
+        )
+        self.assertEqual(
+            {
+                'Name': 'Lanam Co. Lid to fit Longaberger Envelope NEW',
+                'First_Bid': '$13.99',
+                'Buy_Price': None,
+                'Started': 'Dec-08-01 16:25:30',
+                'Ends': 'Dec-15-01 16:25:30',
+                'Seller': 'dog415@msn.com',
+                'Description': 'You are bidding on an oak lid made by the Lanam Company to fit the Longaberger '
+                               'Envelope Basket. This lid has never been used or displayed, stored in my smoke free '
+                               'home. It features laser engraving and hand painting and is just what you need to '
+                               'complete your basket. Buyer to pay actual shipping. I will accept money order, '
+                               'paypal or personal check but will hold until check clears. Over the next few days, '
+                               'I will be selling several baskets and lids from my personal collection. Most have '
+                               'never been used or displayed. Be sure to check my other auctions. Feel free to email '
+                               'me with questions. Thanks for lookig!'
+            },
+            auctions['1045770692']
         )
 
 

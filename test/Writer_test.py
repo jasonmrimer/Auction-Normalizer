@@ -20,9 +20,9 @@ class MyTestCase(unittest.TestCase):
         )
         self.assertEqual(
             file.read(),
-            '1|Val1\n'
-            '2|Val2\n'
-            '3|Val3'
+            '"1"|"Val1"\n'
+            '"2"|"Val2"\n'
+            '"3"|"Val3"'
         )
         file.close()
 

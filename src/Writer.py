@@ -3,7 +3,9 @@ from re import sub
 
 def write_values_to_dat(
         values,
-        dat_filepath
+        dat_filepath,
+        cash_keys=[],
+        date_keys=[]
 ):
     file = open(
         dat_filepath,
@@ -13,13 +15,13 @@ def write_values_to_dat(
         for index in range(len(values)):
             if index == len(values) - 1:
                 file.write(
-                    f'{index + 1}'
-                    f'|{values[index]}'
+                    f'"{index + 1}"'
+                    f'|"{stringify(values[index])}"'
                 )
             else:
                 file.write(
-                    f'{index + 1}'
-                    f'|{values[index]}\n'
+                    f'"{index + 1}"'
+                    f'|"{stringify(values[index])}"\n'
                 )
     if type(values) == set:
         starting_length = len(values)
@@ -51,7 +53,12 @@ def write_values_to_dat(
             elif type(value) == dict:
                 print_line = f'"{stringify(key)}"'
                 for child in value:
-                    print_line = f'{print_line}|"{stringify(value[child])}"'
+                    if cash_keys.__contains__(child):
+                        print_line = f'{print_line}|"{stringify(json_cash_to_sql(value[child]))}"'
+                    elif date_keys.__contains__(child):
+                        print_line = f'{print_line}|"{stringify(json_date_to_sqlite(value[child]))}"'
+                    else:
+                        print_line = f'{print_line}|"{stringify(value[child])}"'
                 if len(keys) > 0:
                     print_line = f'{print_line}\n'
             file.write(f'{print_line}')
@@ -68,7 +75,7 @@ def write_bids_to_dat(
     )
     keys = list(bids.keys())
     item_id = 'ItemID'
-    bidder ='Bidder'
+    bidder = 'Bidder'
     user_id = 'UserID'
     time = 'Time'
     amount = 'Amount'
@@ -76,7 +83,7 @@ def write_bids_to_dat(
         key = keys.pop()
         bid = bids[key]
         print_line = f'' \
-            f'"{stringify(bid[item_id])}"'\
+            f'"{stringify(bid[item_id])}"' \
             f'|"{stringify(bid[bidder][user_id])}"' \
             f'|"{stringify(json_date_to_sqlite(bid[time]))}"' \
             f'|"{stringify(json_cash_to_sql(bid[amount]))}"'
@@ -85,9 +92,14 @@ def write_bids_to_dat(
         file.write(print_line)
     file.close()
 
+
 def stringify(
         string
 ):
+    if string is None:
+        return 'NULL'
+    if type(string) != str:
+        return string
     index_of_quote = string.find('"')
     if string.find('"') < 0:
         return string

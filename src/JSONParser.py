@@ -48,7 +48,8 @@ def values_with_many_collocated_relationships(
         values,
         collection,
         child_keys,
-        parent_key
+        parent_key,
+        old_implementation_for_users_without_location=True
 ):
     parents = values_from_json_file(
         [],
@@ -66,9 +67,10 @@ def values_with_many_collocated_relationships(
         )
         for sub_value in sub_values:
             values[sub_value[1]][child] = (sub_value[0])
-    for key in list(values):
-        if len(values[key]) != len(child_keys):
-            del values[key]
+    if old_implementation_for_users_without_location:
+        for key in list(values):
+            if len(values[key]) != len(child_keys):
+                del values[key]
     return values
 
 
@@ -151,3 +153,23 @@ def get_bids(
                             'Amount': b['Amount'],
                         }
     return bids
+
+
+def get_auctions(
+        auctions,
+        collection
+):
+    auctions = values_with_many_collocated_relationships(
+        auctions,
+        collection,
+        ['Name', 'First_Bid', 'Started', 'Ends', 'Description'],
+        'ItemID',
+        False
+    )
+    for item in collection:
+        if list(item.keys()).__contains__('Buy_Price'):
+            auctions[item['ItemID']]['Buy_Price'] = item['Buy_Price']
+        else:
+            auctions[item['ItemID']]['Buy_Price'] = None
+        auctions[item['ItemID']]['Seller'] = item['Seller']['UserID']
+    return auctions
