@@ -438,6 +438,31 @@ class JSONParserTestCase(unittest.TestCase):
             auctions['1045770692']
         )
 
+    def test_join(self):
+        joins = join(
+            {
+                (
+                    'item1',
+                    'cat1'
+                )
+            },
+            list_of_objects_from_json_file(
+                self.test_items,
+                self.top_key
+            )
+        )
+        self.assertTrue(
+            joins ==
+            {
+                ('item1', 'cat1'),
+                ('1045769659', 'Collectibles'),
+                ('1045769659', 'Kitchenware'),
+                ('1045770692', 'Test'),
+                ('1046316741', 'Collectibles'),
+                ('1046316741', 'Dept 56'),
+            }
+        )
+
 
 if __name__ == '__main__':
     unittest.main()

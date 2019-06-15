@@ -3,6 +3,7 @@ from IngestJSON import *
 
 def main():
     filepaths = []
+
     for i in range(40):
         filepaths.append(f'/Users/engineer/workspace/cecs535project1/data/json/items-{i}.json')
 
@@ -54,6 +55,11 @@ def main():
     ingest_auctions(
         filepaths,
         '/Users/engineer/workspace/cecs535project1/flyway-5.2.4/sql/auctions.dat',
+    )
+
+    join_auction_category(
+        filepaths,
+        '/Users/engineer/workspace/cecs535project1/flyway-5.2.4/sql/join_auction_category.dat',
     )
 
 

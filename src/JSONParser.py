@@ -173,3 +173,18 @@ def get_auctions(
             auctions[item['ItemID']]['Buy_Price'] = None
         auctions[item['ItemID']]['Seller'] = item['Seller']['UserID']
     return auctions
+
+
+def join(
+        joins,
+        collection
+):
+    for item in collection:
+        for cat in item['Category']:
+            joins.add(
+                (
+                    item['ItemID'],
+                    cat
+                )
+            )
+    return joins

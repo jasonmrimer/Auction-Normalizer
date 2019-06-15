@@ -135,6 +135,25 @@ def ingest_auctions(
     )
 
 
+def join_auction_category(
+        filepaths,
+        dat_filepath
+):
+    joins = set()
+    for filepath in filepaths:
+        joins = join(
+            joins,
+            list_of_objects_from_json_file(
+                filepath,
+                'Items'
+            )
+        )
+    write_values_to_dat(
+        joins,
+        dat_filepath
+    )
+
+
 def max_length(values, current_max=0):
     max_len = 0
     if type(values) == str:

@@ -117,138 +117,201 @@ class MyTestCase(unittest.TestCase):
         file = open(self.dat_filepath, 'r')
         contents = file.read()
         self.assertTrue(
-            contents.__contains__(''
-                                  '"1045769659"'
-                                  '|"SPRINGERLE COOKIE BOARD ** NO RESERVE**"'
-                                  '|"14.50"'
-                                  '|"2001-12-08 16:23:53"'
-                                  '|"2001-12-15 16:23:53"'
-                                  '|"Wood Springerle cookie borad depicting a FISH, flowers & birds. It '
-                                  'will imprint 8 designs in all. It is app. 3"" x 8"" in size. Nice '
-                                  'patina...no cracks. Payment Details See item description and Payment '
-                                  'Instructions, or contact seller for more information. Payment '
-                                  'Instructions Contact must be made within 3 days of close of auction. '
-                                  'Item must be paid for within 10 days by PayPal or Money Order for next '
-                                  'day shipping. Personal checks must clear bank prior to shipping. '
-                                  'International buyers must pay by PayPal or Postal Money Orders for US '
-                                  'dollars. Buyer to pay shipping/handling and insurance if desired. '
-                                  'Satisfaction is guaranteed if notified within 3 days of receipt of '
-                                  'item."'
-                                  '|"NULL"'
-                                  '|"do-south"'
-                                  )
+            contents.__contains__(
+                '"1045769659"'
+                '|"SPRINGERLE COOKIE BOARD ** NO RESERVE**"'
+                '|"14.50"'
+                '|"2001-12-08 16:23:53"'
+                '|"2001-12-15 16:23:53"'
+                '|"Wood Springerle cookie borad depicting a FISH, flowers & birds. It '
+                'will imprint 8 designs in all. It is app. 3"" x 8"" in size. Nice '
+                'patina...no cracks. Payment Details See item description and Payment '
+                'Instructions, or contact seller for more information. Payment '
+                'Instructions Contact must be made within 3 days of close of auction. '
+                'Item must be paid for within 10 days by PayPal or Money Order for next '
+                'day shipping. Personal checks must clear bank prior to shipping. '
+                'International buyers must pay by PayPal or Postal Money Orders for US '
+                'dollars. Buyer to pay shipping/handling and insurance if desired. '
+                'Satisfaction is guaranteed if notified within 3 days of receipt of '
+                'item."'
+                '|"NULL"'
+                '|"do-south"'
+            )
         )
         self.assertTrue(
-            contents.__contains__(''
-                                  '"1045770692"'
-                                  '|"Lanam Co. Lid to fit Longaberger Envelope NEW"'
-                                  '|"13.99"'
-                                  '|"2001-12-08 16:25:30"'
-                                  '|"2001-12-15 16:25:30"'
-                                  '|"You are bidding on an oak lid made by the Lanam Company to fit the '
-                                  'Longaberger Envelope Basket. This lid has never been used or '
-                                  'displayed, stored in my smoke free home. It features laser engraving '
-                                  'and hand painting and is just what you need to complete your basket. '
-                                  'Buyer to pay actual shipping. I will accept money order, '
-                                  'paypal or personal check but will hold until check clears. Over the '
-                                  'next few days, I will be selling several baskets and lids from my '
-                                  'personal collection. Most have never been used or displayed. Be sure '
-                                  'to check my other auctions. Feel free to email me with questions. '
-                                  'Thanks for lookig!"'
-                                  '|"NULL"'
-                                  '|"dog415@msn.com"'
-                                  )
+            contents.__contains__(
+                '"1045770692"'
+                '|"Lanam Co. Lid to fit Longaberger Envelope NEW"'
+                '|"13.99"'
+                '|"2001-12-08 16:25:30"'
+                '|"2001-12-15 16:25:30"'
+                '|"You are bidding on an oak lid made by the Lanam Company to fit the '
+                'Longaberger Envelope Basket. This lid has never been used or '
+                'displayed, stored in my smoke free home. It features laser engraving '
+                'and hand painting and is just what you need to complete your basket. '
+                'Buyer to pay actual shipping. I will accept money order, '
+                'paypal or personal check but will hold until check clears. Over the '
+                'next few days, I will be selling several baskets and lids from my '
+                'personal collection. Most have never been used or displayed. Be sure '
+                'to check my other auctions. Feel free to email me with questions. '
+                'Thanks for lookig!"'
+                '|"NULL"'
+                '|"dog415@msn.com"'
+            )
         )
         self.assertTrue(
-            contents.__contains__(''
-                                  '"1046316741"'
-                                  '|"NP Acc,I\'LL NEED MORE TOYS,**NRFB**"'
-                                  '|"5.00"'
-                                  '|"2001-12-09 16:41:48"'
-                                  '|"2001-12-16 16:41:48"'
-                                  '|"* MINT! Never Removed From Box. Original packing and wrapping. Two piece set. '
-                                  'Wonderful NEW CONCEPT-Porcelain and Acrylic. You have to see this one! Issued in '
-                                  '1995 and retired in 1998, this is one of the earlier accessories issued. Box and '
-                                  'sleeve are in very good condition. These pieces are in MINT condition. No chips,'
-                                  'cracks or repairs. From a smoke-free environment. Selling many pieces from North '
-                                  'Pole collection. Check out my other auctions. Multiple purchase will be shipped '
-                                  'together to save you postage. Please email me with the pieces you want shipped '
-                                  'together. I accept PAYPAL, BILLPOINT, MONEY ORDERS, Personal Checks(must clear '
-                                  'before shipping). I will ship all packages the next day. Priority Mail (2-3 days) '
-                                  'w/ Delivery Confirmation and insurance $6.00. May your holidays be healthy and '
-                                  'happy. Looking forward to hearing from you. Good Luck!!*LOW, LOW RESERVE! TWO WAYS '
-                                  'TO GO. EITHER BUY IT NOW FOR 20% OFF THE GREENBOOK VALUE 0R WIN IT AT THE EVEN '
-                                  'LOWER RESERVE PRICE. EITHER WAY YOU CAN\'T LOSE"'
-                                  '|"30.52"'
-                                  '|"z00ke0pler"'
-                                  )
+            contents.__contains__(
+                '"1046316741"'
+                '|"NP Acc,I\'LL NEED MORE TOYS,**NRFB**"'
+                '|"5.00"'
+                '|"2001-12-09 16:41:48"'
+                '|"2001-12-16 16:41:48"'
+                '|"* MINT! Never Removed From Box. Original packing and wrapping. Two piece set. '
+                'Wonderful NEW CONCEPT-Porcelain and Acrylic. You have to see this one! Issued in '
+                '1995 and retired in 1998, this is one of the earlier accessories issued. Box and '
+                'sleeve are in very good condition. These pieces are in MINT condition. No chips,'
+                'cracks or repairs. From a smoke-free environment. Selling many pieces from North '
+                'Pole collection. Check out my other auctions. Multiple purchase will be shipped '
+                'together to save you postage. Please email me with the pieces you want shipped '
+                'together. I accept PAYPAL, BILLPOINT, MONEY ORDERS, Personal Checks(must clear '
+                'before shipping). I will ship all packages the next day. Priority Mail (2-3 days) '
+                'w/ Delivery Confirmation and insurance $6.00. May your holidays be healthy and '
+                'happy. Looking forward to hearing from you. Good Luck!!*LOW, LOW RESERVE! TWO WAYS '
+                'TO GO. EITHER BUY IT NOW FOR 20% OFF THE GREENBOOK VALUE 0R WIN IT AT THE EVEN '
+                'LOWER RESERVE PRICE. EITHER WAY YOU CAN\'T LOSE"'
+                '|"30.52"'
+                '|"z00ke0pler"'
+            )
         )
         self.assertTrue(
-            contents.__contains__(''
-                                  '"1045769659777"'
-                                  '|"SPRINGERLE COOKIE BOARD ** NO RESERVE**"'
-                                  '|"14.50"'
-                                  '|"2001-12-08 16:23:53"'
-                                  '|"2001-12-15 16:23:53"'
-                                  '|"Wood Springerle cookie borad depicting a FISH, flowers & birds. It '
-                                  'will imprint 8 designs in all. It is app. 3"" x 8"" in size. Nice '
-                                  'patina...no cracks. Payment Details See item description and Payment '
-                                  'Instructions, or contact seller for more information. Payment '
-                                  'Instructions Contact must be made within 3 days of close of auction. '
-                                  'Item must be paid for within 10 days by PayPal or Money Order for next '
-                                  'day shipping. Personal checks must clear bank prior to shipping. '
-                                  'International buyers must pay by PayPal or Postal Money Orders for US '
-                                  'dollars. Buyer to pay shipping/handling and insurance if desired. '
-                                  'Satisfaction is guaranteed if notified within 3 days of receipt of '
-                                  'item."'
-                                  '|"NULL"'
-                                  '|"german-guy"'
-                                  )
+            contents.__contains__(
+                '"1045769659777"'
+                '|"SPRINGERLE COOKIE BOARD ** NO RESERVE**"'
+                '|"14.50"'
+                '|"2001-12-08 16:23:53"'
+                '|"2001-12-15 16:23:53"'
+                '|"Wood Springerle cookie borad depicting a FISH, flowers & birds. It '
+                'will imprint 8 designs in all. It is app. 3"" x 8"" in size. Nice '
+                'patina...no cracks. Payment Details See item description and Payment '
+                'Instructions, or contact seller for more information. Payment '
+                'Instructions Contact must be made within 3 days of close of auction. '
+                'Item must be paid for within 10 days by PayPal or Money Order for next '
+                'day shipping. Personal checks must clear bank prior to shipping. '
+                'International buyers must pay by PayPal or Postal Money Orders for US '
+                'dollars. Buyer to pay shipping/handling and insurance if desired. '
+                'Satisfaction is guaranteed if notified within 3 days of receipt of '
+                'item."'
+                '|"NULL"'
+                '|"german-guy"'
+            )
         )
         self.assertTrue(
-            contents.__contains__(''
-                                  '"1045770692777"'
-                                  '|"Lanam Co. Lid to fit Longaberger Envelope NEW"'
-                                  '|"13.99"'
-                                  '|"2001-12-08 16:25:30"'
-                                  '|"2001-12-15 16:25:30"'
-                                  '|"You are bidding on an oak lid made by the Lanam Company to fit the '
-                                  'Longaberger Envelope Basket. This lid has never been used or '
-                                  'displayed, stored in my smoke free home. It features laser engraving '
-                                  'and hand painting and is just what you need to complete your basket. '
-                                  'Buyer to pay actual shipping. I will accept money order, '
-                                  'paypal or personal check but will hold until check clears. Over the '
-                                  'next few days, I will be selling several baskets and lids from my '
-                                  'personal collection. Most have never been used or displayed. Be sure '
-                                  'to check my other auctions. Feel free to email me with questions. '
-                                  'Thanks for lookig!"'
-                                  '|"NULL"'
-                                  '|"dog415@msn.com"'
-                                  )
+            contents.__contains__(
+                '"1045770692777"'
+                '|"Lanam Co. Lid to fit Longaberger Envelope NEW"'
+                '|"13.99"'
+                '|"2001-12-08 16:25:30"'
+                '|"2001-12-15 16:25:30"'
+                '|"You are bidding on an oak lid made by the Lanam Company to fit the '
+                'Longaberger Envelope Basket. This lid has never been used or '
+                'displayed, stored in my smoke free home. It features laser engraving '
+                'and hand painting and is just what you need to complete your basket. '
+                'Buyer to pay actual shipping. I will accept money order, '
+                'paypal or personal check but will hold until check clears. Over the '
+                'next few days, I will be selling several baskets and lids from my '
+                'personal collection. Most have never been used or displayed. Be sure '
+                'to check my other auctions. Feel free to email me with questions. '
+                'Thanks for lookig!"'
+                '|"NULL"'
+                '|"dog415@msn.com"'
+            )
         )
         self.assertTrue(
-            contents.__contains__(''
-                                  '"1046316741777"'
-                                  '|"NP Acc,I\'LL NEED MORE TOYS,**NRFB**"'
-                                  '|"5.00"'
-                                  '|"2001-12-09 16:41:48"'
-                                  '|"2001-12-16 16:41:48"'
-                                  '|"* MINT! Never Removed From Box. Original packing and wrapping. Two piece set. '
-                                  'Wonderful NEW CONCEPT-Porcelain and Acrylic. You have to see this one! Issued in '
-                                  '1995 and retired in 1998, this is one of the earlier accessories issued. Box and '
-                                  'sleeve are in very good condition. These pieces are in MINT condition. No chips,'
-                                  'cracks or repairs. From a smoke-free environment. Selling many pieces from North '
-                                  'Pole collection. Check out my other auctions. Multiple purchase will be shipped '
-                                  'together to save you postage. Please email me with the pieces you want shipped '
-                                  'together. I accept PAYPAL, BILLPOINT, MONEY ORDERS, Personal Checks(must clear '
-                                  'before shipping). I will ship all packages the next day. Priority Mail (2-3 days) '
-                                  'w/ Delivery Confirmation and insurance $6.00. May your holidays be healthy and '
-                                  'happy. Looking forward to hearing from you. Good Luck!!*LOW, LOW RESERVE! TWO WAYS '
-                                  'TO GO. EITHER BUY IT NOW FOR 20% OFF THE GREENBOOK VALUE 0R WIN IT AT THE EVEN '
-                                  'LOWER RESERVE PRICE. EITHER WAY YOU CAN\'T LOSE"'
-                                  '|"30.52"'
-                                  '|"test_user3"'
-                                  )
+            contents.__contains__(
+                '"1046316741777"'
+                '|"NP Acc,I\'LL NEED MORE TOYS,**NRFB**"'
+                '|"5.00"'
+                '|"2001-12-09 16:41:48"'
+                '|"2001-12-16 16:41:48"'
+                '|"* MINT! Never Removed From Box. Original packing and wrapping. Two piece set. '
+                'Wonderful NEW CONCEPT-Porcelain and Acrylic. You have to see this one! Issued in '
+                '1995 and retired in 1998, this is one of the earlier accessories issued. Box and '
+                'sleeve are in very good condition. These pieces are in MINT condition. No chips,'
+                'cracks or repairs. From a smoke-free environment. Selling many pieces from North '
+                'Pole collection. Check out my other auctions. Multiple purchase will be shipped '
+                'together to save you postage. Please email me with the pieces you want shipped '
+                'together. I accept PAYPAL, BILLPOINT, MONEY ORDERS, Personal Checks(must clear '
+                'before shipping). I will ship all packages the next day. Priority Mail (2-3 days) '
+                'w/ Delivery Confirmation and insurance $6.00. May your holidays be healthy and '
+                'happy. Looking forward to hearing from you. Good Luck!!*LOW, LOW RESERVE! TWO WAYS '
+                'TO GO. EITHER BUY IT NOW FOR 20% OFF THE GREENBOOK VALUE 0R WIN IT AT THE EVEN '
+                'LOWER RESERVE PRICE. EITHER WAY YOU CAN\'T LOSE"'
+                '|"30.52"'
+                '|"test_user3"'
+            )
+        )
+        file.close()
+
+    def test_join_auction_category(self):
+        join_auction_category(
+            self.auction_filepaths,
+            self.dat_filepath
+        )
+        file = open(self.dat_filepath, 'r')
+        contents = file.read()
+        self.assertTrue(
+            contents.__contains__(
+                '"1045769659"'
+                '|"Collectibles"'
+            )
+        )
+        self.assertTrue(
+            contents.__contains__(
+                '"1045769659"'
+                '|"Kitchenware"'
+            )
+        )
+        self.assertTrue(
+            contents.__contains__(
+                '"1045770692"'
+                '|"Test"'
+            )
+        )
+        self.assertTrue(
+            contents.__contains__(
+                '"1046316741"'
+                '|"Collectibles"'
+            )
+        )
+        self.assertTrue(
+            contents.__contains__(
+                '"1046316741"'
+                '|"Dept 56"'
+            )
+        )
+        self.assertTrue(
+            contents.__contains__(
+                '"1045769659777"'
+                '|"cat5"'
+            )
+        )
+        self.assertTrue(
+            contents.__contains__(
+                '"1045769659777"'
+                '|"cat6"'
+            )
+        )
+        self.assertTrue(
+            contents.__contains__(
+                '"1045770692777"'
+                '|"cat5"'
+            )
+        )
+        self.assertTrue(
+            contents.__contains__(
+                '"1046316741777"'
+                '|"cat7"'
+            )
         )
         file.close()
 
