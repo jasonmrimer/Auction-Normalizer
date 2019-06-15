@@ -37,36 +37,3 @@ alter table temp_user2
 
 alter table user
     add column seller boolean;
-
-update user
-set seller =
-        (
-            select true
-            from seller
-            where seller.id = user.id
-        )
-where exists
-          (
-              select *
-              from seller
-              where seller.id = user.id
-          );
-
-alter table user
-    add column bidder boolean;
-
-update user
-set bidder =
-        (
-            select true
-            from bidder
-            where bidder.id = user.id
-        )
-where exists
-          (
-              select *
-              from bidder
-              where bidder.id = user.id
-          );
-
-

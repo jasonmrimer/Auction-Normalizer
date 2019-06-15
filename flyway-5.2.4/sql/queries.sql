@@ -1,6 +1,6 @@
 -- 1. Find the number of users in the database.
 -- Answer: 13422
--- my answer: 13419 (pending email with professor whether this is common error)
+-- my answer: 13422
 select count(*)
 from user;
 
@@ -32,8 +32,9 @@ from (
 
 -- 4. Find the ID(s) of auction(s) with the highest current price.
 -- Answer: 1046871451
--- my answer: 1046740686 (reference email with professor, my answer is the correct answer)
-select item_id
+-- my answer: 1046740686*
+-- * reference email with professor, my answer is the correct answer
+select auction_id
 from (select *, max(amount) from bid);
 
 
@@ -41,30 +42,37 @@ from (select *, max(amount) from bid);
 -- Answer: 3130
 -- my answer: 3130
 select count(*)
-from user
-where seller = true
-  and rating > 1000;
+from (
+         select distinct seller_id
+         from auction
+                  inner join user on user.id = seller_id
+         where user.rating > 1000
+     );
 
 
 -- 6. Find the number of users who are both sellers and bidders.
 -- Answer: 6717
--- my answer: 3442
+-- my answer: 6717
 select count(*)
-from user
-where seller = true
-  and bidder = true;
+from (
+         select distinct auction.seller_id
+         from auction
+                  inner join bid on bid.user_id = auction.seller_id
+     );
 
 
 -- 7. Find the number of categories that include at least one item with a bid of more than $100.
 -- Answer: 150
 -- my answer: 150
-select category_id
-from join_auction_category jac
-         inner join
-     (
-         select distinct bid.item_id
-         from bid
-         where amount > 100
-     ) bid
-     on jac.auction_id = bid.item_id
-group by category_id;
+select count(*)
+from (
+         select distinct category_id
+         from join_auction_category jac
+                  inner join
+              (
+                  select bid.auction_id
+                  from bid
+                  where amount > 100
+              ) b
+              on jac.auction_id = b.auction_id
+     );

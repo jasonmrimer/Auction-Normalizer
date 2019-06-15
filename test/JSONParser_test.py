@@ -65,8 +65,8 @@ class JSONParserTestCase(unittest.TestCase):
     def test_extractsValuesWithManyRelationships(self):
         users = values_with_many_collocated_relationships(
             {
-                'user1': {
-                    'Rating': '1',
+                'item1': {
+                    'Name': 'name1',
                     'Location': 'loc1',
                     'Country': 'country1'
                 }
@@ -75,8 +75,8 @@ class JSONParserTestCase(unittest.TestCase):
                 self.test_items,
                 self.top_key
             ),
-            ['Rating', 'Location', 'Country'],
-            'UserID'
+            ['Name', 'Location', 'Country'],
+            'ItemID'
         )
         self.assertEqual(
             4,
@@ -84,50 +84,50 @@ class JSONParserTestCase(unittest.TestCase):
         )
         self.assertEqual(
             (
-                '1',
+                'name1',
                 'loc1',
                 'country1'
             ),
             (
-                users['user1']['Rating'],
-                users['user1']['Location'],
-                users['user1']['Country']
+                users['item1']['Name'],
+                users['item1']['Location'],
+                users['item1']['Country']
             )
         )
         self.assertEqual(
             (
-                '223',
+                'SPRINGERLE COOKIE BOARD ** NO RESERVE**',
                 'Sunny South',
                 'USA'
             ),
             (
-                users['torrisattic']['Rating'],
-                users['torrisattic']['Location'],
-                users['torrisattic']['Country']
+                users['1045769659']['Name'],
+                users['1045769659']['Location'],
+                users['1045769659']['Country']
             )
         )
         self.assertEqual(
             (
-                '223',
-                'Sunny South',
+                'Lanam Co. Lid to fit Longaberger Envelope NEW',
+                'Ohio - The Buckeye State!',
                 'USA'
             ),
             (
-                users['bidder1']['Rating'],
-                users['bidder1']['Location'],
-                users['bidder1']['Country']
+                users['1045770692']['Name'],
+                users['1045770692']['Location'],
+                users['1045770692']['Country']
             )
         )
         self.assertEqual(
             (
-                '100',
-                'SEE MY OTHER AUCTIONS',
-                'Croatia'
+                'NP Acc,I\'LL NEED MORE TOYS,**NRFB**',
+                'Sunny South',
+                'Czech Republic'
             ),
             (
-                users['dpaustintx']['Rating'],
-                users['dpaustintx']['Location'],
-                users['dpaustintx']['Country']
+                users['1046316741']['Name'],
+                users['1046316741']['Location'],
+                users['1046316741']['Country']
             )
         )
 
@@ -378,7 +378,6 @@ class JSONParserTestCase(unittest.TestCase):
                     'UserID': 'bidder1',
                     'Rating': '223',
                     'Location': 'Sunny South',
-                    'Country': 'USA'
                 },
                 'Time': 'Dec-10-01 10:23:53',
                 'Amount': '$14.50'
@@ -461,6 +460,104 @@ class JSONParserTestCase(unittest.TestCase):
                 ('1046316741', 'Collectibles'),
                 ('1046316741', 'Dept 56'),
             }
+        )
+
+    def test_get_bidders(self):
+        bids = {
+            ('1045770692', 'dpaustintx', 'Dec-10-01 10:25:30', '$13.99'):
+                {
+                    'ItemID': '1045770692',
+                    'Bidder': {
+                        'UserID': 'dpaustintx',
+                        'Rating': '100',
+                        'Location': 'SEE MY OTHER AUCTIONS',
+                        'Country': 'Croatia'
+                    },
+                    'Time': 'Dec-10-01 10:25:30',
+                    'Amount': '$13.99'
+                },
+            ('1045769659', 'torrisattic', 'Dec-10-01 10:23:53', '$14.50'):
+                {
+                    'ItemID': '1045769659',
+                    'Bidder': {
+                        'UserID': 'torrisattic',
+                        'Location': 'Sunny South',
+                        'Country': 'USA'
+                    },
+                    'Time': 'Dec-10-01 10:23:53',
+                    'Amount': '$14.50'
+                },
+            ('1045769659', 'bidder1', 'Dec-10-01 10:23:53', '$14.50'):
+                {
+                    'ItemID': '1045769659',
+                    'Bidder': {
+                        'UserID': 'bidder1',
+                        'Rating': '223',
+                        'Country': 'USA'
+                    },
+                    'Time': 'Dec-10-01 10:23:53',
+                    'Amount': '$14.50'
+                }
+        }
+        bidders = get_bidders(bids)
+        self.assertEqual(
+            3,
+            len(bidders)
+        )
+        self.assertEqual(
+            (
+                '100',
+                'SEE MY OTHER AUCTIONS',
+                'Croatia'
+            ),
+            (
+                bidders['dpaustintx']['Rating'],
+                bidders['dpaustintx']['Location'],
+                bidders['dpaustintx']['Country']
+            )
+        )
+        self.assertEqual(
+            (
+                None,
+                'Sunny South',
+                'USA'
+            ),
+            (
+                bidders['torrisattic']['Rating'],
+                bidders['torrisattic']['Location'],
+                bidders['torrisattic']['Country']
+            )
+        )
+
+        self.assertEqual(
+            (
+                '223',
+                None,
+                'USA'
+            ),
+            (
+                bidders['bidder1']['Rating'],
+                bidders['bidder1']['Location'],
+                bidders['bidder1']['Country']
+            )
+        )
+
+    def test_return_optional_value_from_dictionary(self):
+        test_dict = {
+            'opt1': 1,
+            'opt2': '2',
+        }
+        self.assertEqual(
+            1,
+            optional_value_from_dictionary(test_dict, 'opt1')
+        )
+        self.assertEqual(
+            '2',
+            optional_value_from_dictionary(test_dict, 'opt2')
+        )
+        self.assertEqual(
+            None,
+            optional_value_from_dictionary(test_dict, 'opt3')
         )
 
 

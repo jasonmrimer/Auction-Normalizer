@@ -188,3 +188,26 @@ def join(
                 )
             )
     return joins
+
+
+def get_bidders(
+        bids
+):
+    bidders = dict()
+    for bid in bids:
+        bidders[bids[bid]['Bidder']['UserID']] = {
+            'Rating': optional_value_from_dictionary(bids[bid]['Bidder'], 'Rating'),
+            'Location': optional_value_from_dictionary(bids[bid]['Bidder'], 'Location'),
+            'Country': optional_value_from_dictionary(bids[bid]['Bidder'], 'Country')
+        }
+    return bidders
+
+
+def optional_value_from_dictionary(
+        dictionary,
+        optional_key
+):
+    if list(dictionary.keys()).__contains__(optional_key):
+        return dictionary[optional_key]
+    else:
+        return None

@@ -59,22 +59,39 @@ class MyTestCase(unittest.TestCase):
         self.assertTrue(contents.__contains__('|"Elwood,New York"|"USA"'))
         file.close()
 
-    def test_ConvertsValuesWithManyCollocatedRelationships(self):
-        ingest_related_values_from_files(
+    def test_ingest_bidders(self):
+        ingest_bidders(
             self.auction_filepaths,
-            self.dat_filepath,
-            'Items',
-            ['Rating', 'Location', 'Country'],
-            'UserID'
+            self.dat_filepath
         )
         file = open(self.dat_filepath, 'r')
         contents = file.read()
         self.assertTrue(contents.__contains__('"torrisattic"|"223"|"Sunny South"|"USA"'))
-        self.assertTrue(contents.__contains__('"bidder1"|"223"|"Sunny South"|"USA"'))
+        self.assertTrue(contents.__contains__('"bidder1"|"223"|"Sunny South"|"NULL"'))
         self.assertTrue(contents.__contains__('"dpaustintx"|"100"|"SEE MY OTHER AUCTIONS"|"Croatia"'))
         self.assertTrue(contents.__contains__('"test_user1"|"223"|"Happy Holidays"|"USA"'))
         self.assertTrue(contents.__contains__('"test_user2"|"100"|"SEE MY OTHER AUCTIONS"|"Japan"'))
         file.close()
+
+    def test_ingest_users(self):
+        ingest_users(
+            self.auction_filepaths,
+            self.dat_filepath
+        )
+        file = open(self.dat_filepath, 'r')
+        contents = file.read()
+        self.assertTrue(contents.__contains__('"torrisattic"|"223"|"Sunny South"|"USA"'))
+        self.assertTrue(contents.__contains__('"bidder1"|"223"|"Sunny South"|"NULL"'))
+        self.assertTrue(contents.__contains__('"dpaustintx"|"100"|"SEE MY OTHER AUCTIONS"|"Croatia"'))
+        self.assertTrue(contents.__contains__('"test_user1"|"223"|"Happy Holidays"|"USA"'))
+        self.assertTrue(contents.__contains__('"test_user2"|"100"|"SEE MY OTHER AUCTIONS"|"Japan"'))
+        self.assertTrue(contents.__contains__('"german-guy"|"21"|"Sunny South"|"Germany"'))
+        self.assertTrue(contents.__contains__('"dog415@msn.com"|"178"|"Ohio - The Buckeye State!"|"USA"'))
+        self.assertTrue(contents.__contains__('"z00ke0pler"|"85"|"Sunny South"|"Czech Republic"'))
+        self.assertTrue(contents.__contains__('"test_user3"|"85"|"Elwood,New York"|"USA"'))
+        self.assertTrue(contents.__contains__('"do-south"|"21"|"Sunny South"|"USA"'))
+        file.close()
+
 
     def test_ConvertsValuesWithManyDislocatedRelationships(self):
         ingest_related_dislocated_values_from_files(

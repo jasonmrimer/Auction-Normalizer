@@ -99,8 +99,8 @@ def ingest_related_dislocated_values_from_files(
 
 
 def ingest_bids(
-    filepaths,
-    dat_filepath
+        filepaths,
+        dat_filepath
 ):
     bids = dict()
     for filepath in filepaths:
@@ -150,6 +150,63 @@ def join_auction_category(
         )
     write_values_to_dat(
         joins,
+        dat_filepath
+    )
+
+
+def ingest_bidders(
+        filepaths,
+        dat_filepath
+):
+    bids = dict()
+    for filepath in filepaths:
+        bids = get_bids(
+            bids,
+            list_of_objects_from_json_file(
+                filepath,
+                'Items'
+            )
+        )
+    bidders = get_bidders(bids)
+    write_values_to_dat(
+        bidders,
+        dat_filepath
+    )
+
+
+def ingest_users(
+        filepaths,
+        dat_filepath
+):
+    bids = dict()
+    for filepath in filepaths:
+        bids = get_bids(
+            bids,
+            list_of_objects_from_json_file(
+                filepath,
+                'Items'
+            )
+        )
+    bidders = get_bidders(bids)
+
+    sellers = dict()
+    for filepath in filepaths:
+        sellers = values_with_dislocated_relationships(
+            sellers,
+            list_of_objects_from_json_file(
+                filepath,
+                'Items'
+            ),
+            ['Rating'],
+            'Seller',
+            ['Location', 'Country'],
+            'UserID'
+        )
+
+    users = {**bidders, **sellers}
+
+    write_values_to_dat(
+        users,
         dat_filepath
     )
 

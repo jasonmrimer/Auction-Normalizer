@@ -29,22 +29,9 @@ def main():
         'Country'
     )
 
-    ingest_related_values_from_files(
+    ingest_users(
         filepaths,
-        '/Users/engineer/workspace/cecs535project1/flyway-5.2.4/sql/bidders.dat',
-        'Items',
-        ['Rating', 'Location', 'Country'],
-        'UserID'
-    )
-
-    ingest_related_dislocated_values_from_files(
-        filepaths,
-        '/Users/engineer/workspace/cecs535project1/flyway-5.2.4/sql/sellers.dat',
-        'Items',
-        ['Rating'],
-        'Seller',
-        ['Location', 'Country'],
-        'UserID'
+        '/Users/engineer/workspace/cecs535project1/flyway-5.2.4/sql/users.dat',
     )
 
     ingest_bids(

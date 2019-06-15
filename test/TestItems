@@ -28,8 +28,7 @@
             "Bidder": {
               "UserID": "bidder1",
               "Rating": "223",
-              "Location": "Sunny South",
-              "Country": "USA"
+              "Location": "Sunny South"
             },
             "Time": "Dec-10-01 10:23:53",
             "Amount": "$14.50"
