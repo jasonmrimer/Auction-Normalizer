@@ -11,7 +11,7 @@ class MyTestCase(unittest.TestCase):
     dat_filepath = 'test_values.dat'
 
     def test_convertsValueWithNoRelationship(self):
-        convert_json_to_dat(
+        ingest_single_value_from_files(
             self.auction_filepaths,
             self.dat_filepath,
             'Items',
@@ -20,18 +20,18 @@ class MyTestCase(unittest.TestCase):
         file = open(self.dat_filepath, 'r')
         self.assertEqual(
             file.read(),
-            '"1"|"Collectibles"\n'
-            '"2"|"Kitchenware"\n'
-            '"3"|"Test"\n'
+            '"1"|"cat7"\n'
+            '"2"|"cat6"\n'
+            '"3"|"cat5"\n'
             '"4"|"Dept 56"\n'
-            '"5"|"cat5"\n'
-            '"6"|"cat6"\n'
-            '"7"|"cat7"'
+            '"5"|"Test"\n'
+            '"6"|"Kitchenware"\n'
+            '"7"|"Collectibles"'
         )
         file.close()
 
     def test_convertsValueWithOneRelationship(self):
-        convert_json_to_dat(
+        ingest_related_values_from_files(
             self.auction_filepaths,
             self.dat_filepath,
             'Items',
@@ -59,20 +59,6 @@ class MyTestCase(unittest.TestCase):
         self.assertTrue(contents.__contains__('|"Elwood,New York"|"USA"'))
         file.close()
 
-    def test_ingest_bidders(self):
-        ingest_bidders(
-            self.auction_filepaths,
-            self.dat_filepath
-        )
-        file = open(self.dat_filepath, 'r')
-        contents = file.read()
-        self.assertTrue(contents.__contains__('"torrisattic"|"223"|"Sunny South"|"USA"'))
-        self.assertTrue(contents.__contains__('"bidder1"|"223"|"Sunny South"|"NULL"'))
-        self.assertTrue(contents.__contains__('"dpaustintx"|"100"|"SEE MY OTHER AUCTIONS"|"Croatia"'))
-        self.assertTrue(contents.__contains__('"test_user1"|"223"|"Happy Holidays"|"USA"'))
-        self.assertTrue(contents.__contains__('"test_user2"|"100"|"SEE MY OTHER AUCTIONS"|"Japan"'))
-        file.close()
-
     def test_ingest_users(self):
         ingest_users(
             self.auction_filepaths,
@@ -85,26 +71,6 @@ class MyTestCase(unittest.TestCase):
         self.assertTrue(contents.__contains__('"dpaustintx"|"100"|"SEE MY OTHER AUCTIONS"|"Croatia"'))
         self.assertTrue(contents.__contains__('"test_user1"|"223"|"Happy Holidays"|"USA"'))
         self.assertTrue(contents.__contains__('"test_user2"|"100"|"SEE MY OTHER AUCTIONS"|"Japan"'))
-        self.assertTrue(contents.__contains__('"german-guy"|"21"|"Sunny South"|"Germany"'))
-        self.assertTrue(contents.__contains__('"dog415@msn.com"|"178"|"Ohio - The Buckeye State!"|"USA"'))
-        self.assertTrue(contents.__contains__('"z00ke0pler"|"85"|"Sunny South"|"Czech Republic"'))
-        self.assertTrue(contents.__contains__('"test_user3"|"85"|"Elwood,New York"|"USA"'))
-        self.assertTrue(contents.__contains__('"do-south"|"21"|"Sunny South"|"USA"'))
-        file.close()
-
-
-    def test_ConvertsValuesWithManyDislocatedRelationships(self):
-        ingest_related_dislocated_values_from_files(
-            self.auction_filepaths,
-            self.dat_filepath,
-            'Items',
-            ['Rating'],
-            'Seller',
-            ['Location', 'Country'],
-            'UserID'
-        )
-        file = open(self.dat_filepath, 'r')
-        contents = file.read()
         self.assertTrue(contents.__contains__('"german-guy"|"21"|"Sunny South"|"Germany"'))
         self.assertTrue(contents.__contains__('"dog415@msn.com"|"178"|"Ohio - The Buckeye State!"|"USA"'))
         self.assertTrue(contents.__contains__('"z00ke0pler"|"85"|"Sunny South"|"Czech Republic"'))
@@ -331,54 +297,6 @@ class MyTestCase(unittest.TestCase):
             )
         )
         file.close()
-
-    def test_printsMaxLengthFromList(self):
-        self.assertEqual(
-            9,
-            max_length(
-                [
-                    '1',
-                    '12',
-                    '12345',
-                    '123456789'
-                ]
-            )
-        )
-
-    def test_printsMaxLengthFromTwoValueSet(self):
-        self.assertEqual(
-            9,
-            max_length(
-                {
-                    ('1', '1'),
-                    ('12', '12'),
-                    ('12345', '12'),
-                    ('123456789', '12')
-                }
-            )
-        )
-
-    def test_printsMaxLengthFromSimpleDictionary(self):
-        self.assertEqual(
-            9,
-            max_length(
-                {
-                    '1': '1',
-                    '2': '12',
-                    '3': '12',
-                    '4': '123456789'
-                }
-            )
-        )
-
-    def test_printsMaxLengthFromExistingMax(self):
-        self.assertEqual(
-            9,
-            max_length(
-                '123456789',
-                8
-            )
-        )
 
 
 if __name__ == '__main__':

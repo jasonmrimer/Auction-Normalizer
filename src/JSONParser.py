@@ -98,12 +98,6 @@ def remove_duplicates(
     return list(dict.fromkeys(dedupe_list))
 
 
-def dedupe(
-        tuple_list
-):
-    return set(tuple_list)
-
-
 def extract_nested_values_from_json_with_key(
         values,
         json_object,

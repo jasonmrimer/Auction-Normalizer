@@ -1,67 +1,70 @@
 from re import sub
 
 
+def new_line(
+        values
+):
+    return '\n' if len(values) > 0 else ''
+
+
 def write_values_to_dat(
         values,
         dat_filepath,
-        cash_keys=[],
-        date_keys=[]
+        cash_keys=None,
+        date_keys=None
 ):
+    if cash_keys is None:
+        cash_keys = []
+    if date_keys is None:
+        date_keys = []
     file = open(
         dat_filepath,
         'w'
     )
     if type(values) == list:
-        for index in range(len(values)):
-            if index == len(values) - 1:
-                file.write(
-                    f'"{index + 1}"'
-                    f'|"{stringify(values[index])}"'
-                )
-            else:
-                file.write(
-                    f'"{index + 1}"'
-                    f'|"{stringify(values[index])}"\n'
-                )
+        starting_length = len(values)
+        while len(values) > 0:
+            value = values.pop()
+            file.write(
+                f'"{starting_length - len(values)}"'
+                f'|"{stringify(value)}"'
+                f'{new_line(values)}'
+            )
     if type(values) == set:
         starting_length = len(values)
         while len(values) > 0:
             value = values.pop()
-            if len(values) == 0:
-                file.write(
-                    f'{starting_length}'
-                    f'|"{stringify(value[0])}"'
-                    f'|"{stringify(value[1])}"'
-                )
-            else:
-                file.write(
-                    f'{starting_length - len(values)}'
-                    f'|"{stringify(value[0])}"'
-                    f'|"{stringify(value[1])}"\n'
-                )
+            file.write(
+                f'{starting_length - len(values)}'
+                f'|"{stringify(value[0])}"'
+                f'|"{stringify(value[1])}"'
+                f'{new_line(values)}'
+            )
     if type(values) == dict:
         keys = list(values.keys())
         while len(keys) > 0:
             key = keys.pop()
             value = values[key]
-            print_line = str
+            print_line = ''
             if type(value) == str:
-                if len(keys) > 0:
-                    print_line = f'"{stringify(key)}"|"{stringify(value)}"\n'
-                else:
-                    print_line = f'"{stringify(key)}"|"{stringify(value)}"'
+                print_line = f'"{stringify(key)}"|"{stringify(value)}"'
             elif type(value) == dict:
                 print_line = f'"{stringify(key)}"'
-                for child in value:
-                    if cash_keys.__contains__(child):
-                        print_line = f'{print_line}|"{stringify(json_cash_to_sql(value[child]))}"'
-                    elif date_keys.__contains__(child):
-                        print_line = f'{print_line}|"{stringify(json_date_to_sqlite(value[child]))}"'
+                child_keys = list(value.keys())
+                child_keys.reverse()
+                while len(child_keys) > 0:
+                    child_key = child_keys.pop()
+                    child_value = value[child_key]
+                    if cash_keys.__contains__(child_key):
+                        print_line = f'{print_line}|"{stringify(json_cash_to_sql(child_value))}"'
+                    elif date_keys.__contains__(child_key):
+                        print_line = f'{print_line}|"{stringify(json_date_to_sqlite(child_value))}"'
                     else:
-                        print_line = f'{print_line}|"{stringify(value[child])}"'
-                if len(keys) > 0:
-                    print_line = f'{print_line}\n'
-            file.write(f'{print_line}')
+                        print_line = f'{print_line}|"{stringify(child_value)}"'
+            file.write(
+                f'{print_line}'
+                f'{new_line(keys)}'
+            )
     file.close()
 
 

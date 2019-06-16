@@ -5,6 +5,16 @@ from Writer import *
 class MyTestCase(unittest.TestCase):
     dat_filepath = 'test_values.dat'
 
+    def test_new_line(self):
+        self.assertEqual(
+            '\n',
+            new_line([1, 2, 3])
+        )
+        self.assertEqual(
+            '',
+            new_line([])
+        )
+
     def test_writeListToFile(self):
         write_values_to_dat(
             [
@@ -20,9 +30,9 @@ class MyTestCase(unittest.TestCase):
         )
         self.assertEqual(
             file.read(),
-            '"1"|"Val1"\n'
+            '"1"|"Val3"\n'
             '"2"|"Val2"\n'
-            '"3"|"Val3"'
+            '"3"|"Val1"'
         )
         file.close()
 
