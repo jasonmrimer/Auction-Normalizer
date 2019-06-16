@@ -35,5 +35,31 @@ from bid
 
 drop table bid;
 
-alter table temp_bid rename to bid;
+alter table temp_bid
+    rename to bid;
 
+alter table auction
+    add column number_of_bids integer;
+
+alter table auction
+    add column highest_bid float;
+
+update auction
+set number_of_bids =
+        (
+            select count(*)
+            from bid
+            where bid.auction_id = auction.id
+        );
+
+update auction
+set highest_bid =
+        (
+            select max(amount)
+            from bid
+            where bid.auction_id = auction.id
+        );
+
+update auction
+set buy_price = null
+where buy_price = 'NULL';
