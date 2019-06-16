@@ -1,29 +1,44 @@
 from IngestJSON import *
+import logging
+import sys
+import os
 
 
-def main():
+def is_json(f):
+    return len(f) > 5 and f[-5:] == '.json'
+
+
+def main(argv):
     filepaths = []
+    if len(argv) != 3:
+        logging.warning('Usage: python IngestApp.py <path to json files> <path to save dat files>')
+        sys.exit(1)
 
-    for i in range(40):
-        filepaths.append(f'/Users/engineer/workspace/cecs535project1/data/json/items-{i}.json')
+    directory = os.fsencode(argv[1])
+    for file in os.listdir(directory):
+        filename = os.fsdecode(file)
+        if is_json(filename):
+            filepaths.append(os.path.join(argv[1], filename))
+
+    dat_filepath = os.fsdecode(argv[2])
 
     ingest_single_value_from_files(
         filepaths,
-        '/Users/engineer/workspace/cecs535project1/flyway-5.2.4/sql/categories.dat',
+        f'{dat_filepath}/categories.dat',
         'Items',
         'Category'
     )
 
     ingest_single_value_from_files(
         filepaths,
-        '/Users/engineer/workspace/cecs535project1/flyway-5.2.4/sql/countries.dat',
+        f'{dat_filepath}/countries.dat',
         'Items',
         'Country'
     )
 
     ingest_related_values_from_files(
         filepaths,
-        '/Users/engineer/workspace/cecs535project1/flyway-5.2.4/sql/locations.dat',
+        f'{dat_filepath}/locations.dat',
         'Items',
         'Location',
         'Country'
@@ -31,24 +46,24 @@ def main():
 
     ingest_users(
         filepaths,
-        '/Users/engineer/workspace/cecs535project1/flyway-5.2.4/sql/users.dat',
+        f'{dat_filepath}/users.dat',
     )
 
     ingest_bids(
         filepaths,
-        '/Users/engineer/workspace/cecs535project1/flyway-5.2.4/sql/bids.dat',
+        f'{dat_filepath}/bids.dat',
     )
 
     ingest_auctions(
         filepaths,
-        '/Users/engineer/workspace/cecs535project1/flyway-5.2.4/sql/auctions.dat',
+        f'{dat_filepath}/auctions.dat',
     )
 
     join_auction_category(
         filepaths,
-        '/Users/engineer/workspace/cecs535project1/flyway-5.2.4/sql/join_auction_category.dat',
+        f'{dat_filepath}/join_auction_category.dat',
     )
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv)
