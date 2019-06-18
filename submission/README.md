@@ -7,7 +7,7 @@ CECS 535-50, University of Louisville | June 18, 2019
 - `sqlite3`
 
 ##Expect files
-- commands.sql
+- create.sql
 - normalize.sql
 - parser.py
 - query1.sql

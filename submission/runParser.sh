@@ -25,7 +25,7 @@ do
 done
 
 echo -e "Setup 3 of 5: \n\tCreating SQLite tables in ebay_db and importing dat files..."
-sqlite3 ./ebay_db < commands.sql
+sqlite3 ./ebay_db < create.sql
 
 sqlite3 ./ebay_db <<END_SQL
 .import ${dat_filepath}/categories.dat category
