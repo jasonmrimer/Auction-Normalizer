@@ -1,12 +1,12 @@
 # Parse & Normalize eBay Auctions JSON 
-##Jason Rimer
+## Jason Rimer
 CECS 535-50, University of Louisville | June 18, 2019
 
-##Required Libraries
+## Required Libraries
 - `python3`
 - `sqlite3`
 
-##Expect files
+## Expect files
 - create.sql
 - normalize.sql
 - parser.py
@@ -20,7 +20,7 @@ CECS 535-50, University of Louisville | June 18, 2019
 - README.md
 - runParser.sh
  
-##Execute
+## Execute
 Navigate to where you saved the `submission` directory then execute
 
 `$ cd <?/submission>`
