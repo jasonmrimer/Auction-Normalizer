@@ -2,7 +2,8 @@
 
 echo -e "**NOTE: This parser requires Python 3\n"
 
-printf 'Setup 1 of 5: \n\tEnter the directory containing Items json files > '
+echo -e "Setup 1 of 5: \n\tEnter the directory containing Items json files"
+printf "\t(navigate up using ../.. or use complete path but do NOT use ~/) > "
 read -e -r json_filepath
 echo -e "Setup 2 of 5: \n\tEnter the directory to save dat files"
 printf "\t(or hit ENTER to save in current directory) > "

@@ -1,10 +1,32 @@
-use IngestApp to create all dat files
+# Parse & Normalize eBay Auctions JSON 
+##Jason Rimer
+CECS 535-50, University of Louisville | June 18, 2019
 
-use Terminal to import dat files:
-sqlite3
-.open ebay_db.db
-.import 'filepath/file.dat' table_name
+##Required Libraries
+- `python3`
+- `sqlite3`
 
-JSONParser runs anonymous parsing methods when passed JSON files
+##Expect files
+- create.sql
+- normalize.sql
+- parser.py
+- query1.sql
+- query2.sql
+- query3.sql
+- query4.sql
+- query5.sql
+- query6.sql
+- query7.sql
+- README.md
+- runParser.sh
+ 
+##Execute
+Navigate to where you saved the `submission` directory then execute
 
-IngestJSON combines the extraction from many files and writes the results to a dat file 
+`$ cd <?/submission>`
+ 
+`$ ./runParser.sh`
+
+
+
+Follow prompts and reach out if needed!
