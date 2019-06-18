@@ -20,9 +20,9 @@ create table country
 
 create table location
 (
-    id   integer PRIMARY KEY autoincrement,
-    name varchar(128),
-    country_name varchar(64)
+    id           integer primary key autoincrement,
+    name         text,
+    country_name text
 );
 
 create table user

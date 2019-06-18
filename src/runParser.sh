@@ -25,7 +25,7 @@ do
 done
 
 echo -e "Setup 3 of 4: \n\tCreating SQLite tables in ebay_db and importing dat files..."
-sqlite3 < commands.sql
+sqlite3 ./ebay_db < commands.sql
 
 sqlite3 ./ebay_db <<END_SQL
 .import ${dat_filepath}/categories.dat category
@@ -38,4 +38,7 @@ sqlite3 ./ebay_db <<END_SQL
 END_SQL
 
 echo -e "Setup 4 of 4: \n\tNormalizing database relationships..."
+
+sqlite3 ./ebay_db < normalize.sql
+
 echo -e "Complete."
