@@ -1,5 +1,3 @@
-drop table temp_user;
-
 create table temp_user
 (
     id            varchar(64) primary key,
@@ -34,6 +32,3 @@ drop table temp_user;
 
 alter table temp_user2
     rename to user;
-
-alter table user
-    add column seller boolean;
