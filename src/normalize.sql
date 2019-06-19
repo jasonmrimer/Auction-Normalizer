@@ -1,3 +1,5 @@
+pragma foreign_keys = on;
+
 create table location2
 (
     id         integer primary key,
@@ -126,7 +128,7 @@ select auction.id,
 from auction
          left join user on auction.seller_id = user.id;
 
-drop table auction;
+drop table if exists auction;
 
 alter table temp_auction
 rename to auction;
