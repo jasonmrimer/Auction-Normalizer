@@ -44,19 +44,19 @@ echo -e "Setup 4 of 5: \n\tNormalizing database relationships..."
 
 echo -e "Step 5: Testing queries...\n"
 echo -e '1. Find the number of users in the database.'
-echo -e "\tCorrect Answer > 13422 | $(sqlite3 ./ebay_db < query1.sql) < My Answer"
+echo -e "\tCorrect Answer > 13422 | $(sqlite3 ./ebay_db < ./queries/query1.sql) < My Answer"
 echo -e '2. Find the number of users from New York (i.e., users whose location is the string ”New York”).'
-echo -e "\tCorrect Answer > 80 | $(sqlite3 ./ebay_db < query2.sql) < My Answer"
+echo -e "\tCorrect Answer > 80 | $(sqlite3 ./ebay_db < ./queries/query2.sql) < My Answer"
 echo -e '3. Find the number of auctions belonging to exactly four categories.'
-echo -e "\tCorrect Answer > 8365 | $(sqlite3 ./ebay_db < query3.sql) < My Answer"
+echo -e "\tCorrect Answer > 8365 | $(sqlite3 ./ebay_db < ./queries/query3.sql) < My Answer"
 echo -e '4. Find the ID(s) of auction(s) with the highest current price.'
-echo -e "\tCorrect Answer > 1046871451 | $(sqlite3 ./ebay_db < query4.sql)* < My Answer"
+echo -e "\tCorrect Answer > 1046871451 | $(sqlite3 ./ebay_db < ./queries/query4.sql)* < My Answer"
 echo -e '5. Find the number of sellers whose rating is higher than 1000.'
-echo -e "\tCorrect Answer > 3130 | $(sqlite3 ./ebay_db < query5.sql) < My Answer"
+echo -e "\tCorrect Answer > 3130 | $(sqlite3 ./ebay_db < ./queries/query5.sql) < My Answer"
 echo -e '6. Find the number of users who are both sellers and bidders.'
-echo -e "\tCorrect Answer > 6717 | $(sqlite3 ./ebay_db < query6.sql) < My Answer"
+echo -e "\tCorrect Answer > 6717 | $(sqlite3 ./ebay_db < ./queries/query6.sql) < My Answer"
 echo -e '7. Find the number of categories that include at least one item with a bid of more than $100.'
-echo -e "\tCorrect Answer > 150 | $(sqlite3 ./ebay_db < query7.sql) < My Answer"
+echo -e "\tCorrect Answer > 150 | $(sqlite3 ./ebay_db < ./queries/query7.sql) < My Answer"
 echo -e "\n*The given answer to #4 (1046871451) is an incorrect highest price due 1NF db."
 echo -e "Through discussions with Professor Khalefa on June 14, this normalized answer is preferred."
 
