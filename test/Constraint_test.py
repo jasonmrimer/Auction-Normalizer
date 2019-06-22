@@ -106,6 +106,13 @@ class MyTestCase(unittest.TestCase):
             ).fetchall()
         )
 
+    def test_cannot_add_duplicate_country(self):
+        self.denies_duplicates(
+            'country',
+            'name',
+            ['id', 'name']
+        )
+
     def test_category_name_is_unique(self):
         self.assertCountEqual(
             [],
@@ -123,6 +130,56 @@ class MyTestCase(unittest.TestCase):
             'name',
             ['id', 'name']
         )
+
+    def test_every_bid_must_correspond_to_an_auction(self):
+        self.assertEqual(
+            [],
+            self.cursor.execute(
+                "select auction_id "
+                "from bid "
+                "where not exists("
+                "select id "
+                "from auction"
+                ");"
+            ).fetchall()
+        )
+        user_id = self.cursor.execute(
+            "select id "
+            "from user;"
+        ).fetchone()[0]
+
+        try:
+            self.cursor.execute(
+                "insert into bid "
+                f"values (null, '{user_id}', '2001-12-13 16:28:34','7.75');"
+            )
+        except sqlite3.IntegrityError as e:
+            self.assertTrue(
+                str(e).__contains__(
+                    "NOT NULL constraint failed: bid.auction_id"
+                )
+            )
+
+        self.assertEqual(
+            [],
+            self.cursor.execute(
+                "select * "
+                "from auction "
+                "where id=123456789"
+            ).fetchall()
+        )
+
+        try:
+            self.cursor.execute(
+                "insert into bid "
+                f"values (123456789, '{user_id}', '2001-12-13 16:28:34','7.75');"
+            )
+        except sqlite3.IntegrityError as e:
+            self.assertTrue(
+                str(e).__contains__(
+                    "FOREIGN KEY constraint failed"
+                )
+            )
 
     def denies_duplicates(
             self,

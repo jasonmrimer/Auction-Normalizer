@@ -94,7 +94,7 @@ rename to auction;
 
 create table temp_bid
 (
-    auction_id integer,
+    auction_id integer not null,
     user_id    integer,
     time       datetime,
     amount     float,
