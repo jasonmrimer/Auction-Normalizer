@@ -55,7 +55,7 @@ create table auction(
 
 create table join_auction_category
 (
-    id integer primary key,
+    id integer primary key autoincrement,
     auction_id integer,
     category text
 );

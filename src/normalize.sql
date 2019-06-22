@@ -136,7 +136,7 @@ where buy_price = 'NULL';
 
 create table temp_join_a_c
 (
-    id          integer primary key,
+    id          integer primary key autoincrement ,
     auction_id  integer,
     category_id integer,
     foreign key (auction_id) references auction (id),

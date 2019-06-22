@@ -131,6 +131,48 @@ class MyTestCase(unittest.TestCase):
             ['id', 'name']
         )
 
+    def test_items_must_exist_for_category_matches(self):
+        self.assertEqual(
+            [],
+            self.cursor.execute(
+                "select auction_id "
+                "from join_auction_category "
+                "where not exists("
+                "select id "
+                "from auction"
+                ");"
+            ).fetchall()
+        )
+
+        join_count = self.cursor.execute(
+            "select count(*) "
+            "from join_auction_category;"
+        ).fetchone()[0]
+
+        try:
+            self.cursor.execute(
+                "insert into join_auction_category "
+                "values (null, 123456789, 1);"
+            )
+            self.assertTrue(
+                False,
+                f"Database failed to throw error on Foreign Key for auction ID: 123456789"
+            )
+        except sqlite3.IntegrityError as e:
+            self.assertTrue(
+                str(e).__contains__(
+                    "FOREIGN KEY constraint failed"
+                )
+            )
+
+        self.assertEqual(
+            join_count,
+            self.cursor.execute(
+                "select count(*) "
+                "from join_auction_category;"
+            ).fetchone()[0]
+        )
+
     def test_every_bid_must_correspond_to_an_auction(self):
         self.assertEqual(
             [],
