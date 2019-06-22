@@ -40,7 +40,7 @@ END_SQL
 
 echo -e "Setup 4 of 5: \n\tNormalizing database relationships..."
 
-sqlite3 ./ebay_db < normalize.sql
+#sqlite3 ./ebay_db < normalize.sql
 
 echo -e "Step 5: Testing queries...\n"
 echo -e '1. Find the number of users in the database.'

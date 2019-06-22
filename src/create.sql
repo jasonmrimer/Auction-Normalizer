@@ -35,7 +35,7 @@ create table user
 
 create table bid
 (
-    item_id integer,
+    auction_id integer,
     user_id varchar(64),
     time    datetime,
     amount  float
@@ -48,7 +48,7 @@ create table auction(
     start datetime,
     end datetime,
     description text,
-    buy_price text,
+    buy_price float,
     seller_id text
 );
 
