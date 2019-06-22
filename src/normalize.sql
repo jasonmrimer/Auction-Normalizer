@@ -5,7 +5,8 @@ create table location2
     id         integer primary key,
     name       text,
     country_id integer,
-    foreign key (country_id) references country (id)
+    foreign key (country_id) references country (id),
+    UNIQUE (name, country_id) on conflict abort
 );
 
 insert into location2

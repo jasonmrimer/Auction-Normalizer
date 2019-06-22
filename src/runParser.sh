@@ -11,11 +11,11 @@ read -e -r dat_filepath
 
 if ["$dat_filepath" == '']
 then
-    dat_filepath="${PWD}/dat"
-    mkdir ${dat_filepath} 2>/dev/null
+    dat_filepath="$PWD/dat"
+    mkdir "$dat_filepath" 2>/dev/null
 fi
 
-python3 ./parser.py ${json_filepath} ${dat_filepath} & pid=$!
+python3 ./parser.py "$json_filepath" "$dat_filepath" & pid=$!
 
 while kill -0 ${pid} 2>/dev/null
 do
@@ -29,18 +29,18 @@ echo -e "Setup 3 of 5: \n\tCreating SQLite tables in ebay_db and importing dat f
 sqlite3 ./ebay_db < create.sql
 
 sqlite3 ./ebay_db <<END_SQL
-.import ${dat_filepath}/categories.dat category
-.import ${dat_filepath}/countries.dat country
-.import ${dat_filepath}/locations.dat location
-.import ${dat_filepath}/users.dat user
-.import ${dat_filepath}/bids.dat bid
-.import ${dat_filepath}/auctions.dat auction
-.import ${dat_filepath}/join_auction_category.dat join_auction_category
+.import "${dat_filepath}/categories.dat" category
+.import "${dat_filepath}/countries.dat" country
+.import "${dat_filepath}/locations.dat" location
+.import "${dat_filepath}/users.dat" user
+.import "${dat_filepath}/bids.dat" bid
+.import "${dat_filepath}/auctions.dat" auction
+.import "${dat_filepath}/join_auction_category.dat" join_auction_category
 END_SQL
 
 echo -e "Setup 4 of 5: \n\tNormalizing database relationships..."
 
-#sqlite3 ./ebay_db < normalize.sql
+sqlite3 ./ebay_db < normalize.sql
 
 echo -e "Step 5: Testing queries...\n"
 echo -e '1. Find the number of users in the database.'

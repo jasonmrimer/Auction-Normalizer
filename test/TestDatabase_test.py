@@ -2,7 +2,7 @@ import unittest
 from test.TestDatabase import create_test_database
 
 
-class MyTestCase(unittest.TestCase):
+class TestDatabaseCase(unittest.TestCase):
 
     def setUp(self) -> None:
         self.conn = create_test_database()
@@ -19,17 +19,8 @@ class MyTestCase(unittest.TestCase):
                 "from category;"
             ).fetchall()[0][0]
         )
-        self.assertCountEqual(
-            [],
-            self.cursor.executescript(
-                "select id "
-                "from category "
-                "group by id "
-                "having count (*) > 1;"
-            ).fetchall()
-        )
 
-    def test_import_all_countries_with_unique_id(self):
+    def test_import_all_countries(self):
         self.assertEqual(
             44,
             self.cursor.execute(
@@ -37,32 +28,14 @@ class MyTestCase(unittest.TestCase):
                 "from country;"
             ).fetchall()[0][0]
         )
-        self.assertCountEqual(
-            [],
-            self.cursor.executescript(
-                "select id "
-                "from country "
-                "group by id "
-                "having count (*) > 1;"
-            ).fetchall()
-        )
 
-    def test_import_all_locations_with_unique_id(self):
+    def test_import_all_locations(self):
         self.assertEqual(
             9007,
             self.cursor.execute(
                 "select count(*) "
                 "from location;"
             ).fetchall()[0][0]
-        )
-        self.assertCountEqual(
-            [],
-            self.cursor.executescript(
-                "select id "
-                "from location "
-                "group by id "
-                "having count (*) > 1;"
-            ).fetchall()
         )
 
     def test_import_all_auction_category_joins(self):
@@ -75,20 +48,9 @@ class MyTestCase(unittest.TestCase):
         )
         self.assertCountEqual(
             [],
-            self.cursor.executescript(
+            self.cursor.execute(
                 "select id "
                 "from join_auction_category "
-                "group by id "
-                "having count (*) > 1;"
-            ).fetchall()
-        )
-
-    def test_no_two_users_share_same_id(self):
-        self.assertCountEqual(
-            [],
-            self.cursor.executescript(
-                "select id "
-                "from user "
                 "group by id "
                 "having count (*) > 1;"
             ).fetchall()
@@ -103,17 +65,6 @@ class MyTestCase(unittest.TestCase):
             ).fetchall()[0][0]
         )
 
-    def test_bid_composite_primary_key_is_unique(self):
-        self.assertCountEqual(
-            [],
-            self.cursor.executescript(
-                "select auction_id, user_id, amount "
-                "from bid "
-                "group by auction_id, user_id, amount "
-                "having count (*) > 1;"
-            ).fetchall()
-        )
-
     def test_all_auctions_import(self):
         self.assertEqual(
             19532,
@@ -121,17 +72,6 @@ class MyTestCase(unittest.TestCase):
                 "select count(*) "
                 "from auction;"
             ).fetchall()[0][0]
-        )
-
-    def test_auction_id_is_unique(self):
-        self.assertCountEqual(
-            [],
-            self.cursor.executescript(
-                "select id "
-                "from auction "
-                "group by id "
-                "having count (*) > 1;"
-            ).fetchall()
         )
 
 

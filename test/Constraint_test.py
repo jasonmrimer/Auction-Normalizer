@@ -1,19 +1,10 @@
-import csv
-import sqlite3
 import unittest
+import sqlite3
 
-# insert users ./
-# insert bids ./
-# insert auctions ./
-# create trigger ./
-# test adding a bid without a user ./
-# test adding an auction with a seller who is not a user
-# test bids and auctions with existing user
-# test that all current auctions and bids' users exist
 from test.TestDatabase import create_test_database
 
 
-class ConstraintTestCase(unittest.TestCase):
+class MyTestCase(unittest.TestCase):
     def setUp(self) -> None:
         self.conn = create_test_database()
         self.cursor = self.conn.cursor()
@@ -21,115 +12,209 @@ class ConstraintTestCase(unittest.TestCase):
     def tearDown(self) -> None:
         self.conn.close()
 
-    def test_new_bid_with_existing_user(self):
-        user_id = self.cursor.execute(
-            "select id "
-            "from user;"
-        ).fetchone()[0]
-        auction_id = self.cursor.execute(
-            "select id "
-            "from auction;"
-        ).fetchone()[0]
-        self.cursor.execute(
-            f'insert into bid '
-            f'values ({auction_id}, \'{user_id}\', \'2001-12-13 16:28:34\', 7.75);'
+    def test_no_two_users_share_same_id(self):
+        self.assertCountEqual(
+            [],
+            self.cursor.execute(
+                "select id "
+                "from user "
+                "group by id "
+                "having count (*) > 1;"
+            ).fetchall()
         )
+
+    def test_cannot_add_duplicate_user(self):
+        self.denies_duplicates(
+            'user',
+            'id',
+            ['id', 'rating', 'location']
+        )
+
+    def test_auction_id_is_unique(self):
+        self.assertCountEqual(
+            [],
+            self.cursor.execute(
+                "select id "
+                "from auction "
+                "group by id "
+                "having count (*) > 1;"
+            ).fetchall()
+        )
+
+    def test_cannot_add_duplicate_auction(self):
+        self.denies_duplicates(
+            'auction',
+            'id',
+            [
+                'id',
+                'name',
+                'starting_price',
+                'start',
+                'end',
+                'description',
+                'buy_price',
+                'seller_id',
+                'number_of_bids',
+                'highest_bid'
+            ]
+        )
+
+    def test_bid_composite_primary_key_is_unique(self):
+        self.assertCountEqual(
+            [],
+            self.cursor.execute(
+                "select auction_id, user_id, amount "
+                "from bid "
+                "group by auction_id, user_id, amount "
+                "having count (*) > 1;"
+            ).fetchall()
+        )
+
+    def test_location_id_is_unique(self):
+        self.assertCountEqual(
+            [],
+            self.cursor.execute(
+                "select id "
+                "from location "
+                "group by id "
+                "having count (*) > 1;"
+            ).fetchall()
+        )
+
+    def test_cannot_add_duplicate_location(self):
+        self.denies_duplicates(
+            'location',
+            [
+                'name',
+                'country_id'
+            ],
+            [
+                'id',
+                'name',
+                'country_id'
+            ]
+        )
+
+    def test_country_id_is_unique(self):
+        self.assertCountEqual(
+            [],
+            self.cursor.execute(
+                "select id "
+                "from country "
+                "group by id "
+                "having count (*) > 1;"
+            ).fetchall()
+        )
+
+    def test_category_name_is_unique(self):
+        self.assertCountEqual(
+            [],
+            self.cursor.execute(
+                "select name "
+                "from category "
+                "group by name "
+                "having count (*) > 1;"
+            ).fetchall()
+        )
+
+    def test_cannot_add_duplicate_category(self):
+        self.denies_duplicates(
+            'category',
+            'name',
+            ['id', 'name']
+        )
+
+    def denies_duplicates(
+            self,
+            table_name,
+            unique_columns,
+            column_names
+    ):
+        item_count = self.cursor.execute(
+            "select count(*) "
+            f"from {table_name};"
+        ).fetchone()[0]
+
+        if type(unique_columns) == list:
+            for column in range(0, len(unique_columns)):
+                if column == 0:
+                    concatenated_uniques = f'{unique_columns[column]}'
+                    if len(unique_columns) == 1:
+                        break
+                else:
+                    concatenated_uniques = f'{concatenated_uniques},{unique_columns[column]}'
+            existing_item = self.cursor.execute(
+                f"select {concatenated_uniques} "
+                f"from {table_name};"
+            ).fetchone()
+        else:
+            existing_item = self.cursor.execute(
+                f"select {unique_columns} "
+                f"from {table_name};"
+            ).fetchone()[0]
+
+        for column_index in range(0, len(column_names)):
+            if type(unique_columns) == list:
+                column_name = column_names[column_index]
+                if column_index == 0:
+                    if unique_columns.__contains__(column_name):
+                        concatenated_values = f"'{existing_item[unique_columns.index(column_name)]}'"
+                    else:
+                        concatenated_values = f"'123456789'"
+                else:
+                    if unique_columns.__contains__(column_name):
+                        concatenated_values = \
+                            f"{concatenated_values}, " \
+                                f"'{existing_item[unique_columns.index(column_name)]}'"
+                    else:
+                        concatenated_values = f"{concatenated_values}, '123456789'"
+
+            else:
+                if column_index == 0:
+                    if column_names[column_index] == unique_columns:
+                        concatenated_values = f"'{existing_item}'"
+                    else:
+                        concatenated_values = f"'123456789'"
+                    if len(column_names) == 1:
+                        break
+                else:
+                    if column_names[column_index] == unique_columns:
+                        concatenated_values = f"{concatenated_values}, '{existing_item}'"
+                    else:
+                        concatenated_values = f"{concatenated_values}, '123456789'"
+
+        try:
+            self.cursor.execute(
+                f'insert into {table_name} '
+                f'values ({concatenated_values});'
+            )
+        except sqlite3.IntegrityError as e:
+            if type(unique_columns) == list:
+                for column_index in range(0, len(unique_columns)):
+                    if column_index == 0:
+                        concatenated_error = \
+                            f"{table_name}" \
+                                f".{unique_columns[column_index]}"
+                    else:
+                        concatenated_error = \
+                            f"{concatenated_error}" \
+                                f", {table_name}" \
+                                f".{unique_columns[column_index]}"
+
+                self.assertTrue(
+                    str(e).__contains__(f"UNIQUE constraint failed: {concatenated_error}")
+                )
+            else:
+                self.assertTrue(
+                    str(e).__contains__(f"UNIQUE constraint failed: {table_name}.{unique_columns}")
+                )
+
         self.assertEqual(
-            9875,
-            self.conn.execute(
+            item_count,
+            self.cursor.execute(
                 "select count(*) "
-                "from bid;"
-            ).fetchall()[0][0]
-        )
-
-    def test_bidding_with_new_user_triggers_user_creation(self):
-        trigger = open('../src/triggers/trigger1_add.sql', 'r')
-        sql = trigger.read()
-        trigger.close()
-        self.cursor.executescript(
-            sql
-        )
-        new_user = 'newuserwhoisdefinitelynotalreadyinthedatabase'
-        self.assertEqual(
-            [],
-            self.cursor.execute(
-                f'select * '
-                f'from user '
-                f'where id=\'{new_user}\';'
-            ).fetchall()
-        )
-
-        auction_id = self.cursor.execute(
-            "select id "
-            "from auction;"
-        ).fetchone()[0]
-        self.cursor.execute(
-            f'insert into bid '
-            f'values ({auction_id}, \'{new_user}\', \'2001-12-13 16:28:34\', 7.75);'
-        )
-
-        self.assertEqual(
-            1,
-            len(
-                self.cursor.execute(
-                    f'select * '
-                    f'from user '
-                    f'where id=\'{new_user}\';'
-                ).fetchall()
-            )
-        )
-
-    def test_new_auction_with_new_seller_triggers_user_creation(self):
-        trigger = open('../src/triggers/trigger2_add.sql', 'r')
-        sql = trigger.read()
-        trigger.close()
-        self.cursor.executescript(
-            sql
-        )
-        new_seller = 'newuserwhoisdefinitelynotalreadyinthedatabase'
-        self.assertEqual(
-            [],
-            self.cursor.execute(
-                f'select * '
-                f'from user '
-                f'where id=\'{new_seller}\';'
-            ).fetchall()
-        )
-
-        new_auction = 123456789
-        self.assertEqual(
-            [],
-            self.cursor.execute(
-                f'select * '
-                f'from auction '
-                f'where id=\'{new_auction}\';'
-            ).fetchall()
-        )
-        self.cursor.execute(
-            f"insert into auction "
-            f"values ("
-            f"{new_auction}, "
-            f"'name of the auction', "
-            f"7.75, "
-            f"'2001-12-13 16:28:34', "
-            f"'2001-12-15 16:28:34', "
-            f"'description of the auction', "
-            f"70.00, "
-            f"'{new_seller}', "
-            f"0, "
-            f"0 "
-            f");"
-        )
-
-        self.assertEqual(
-            1,
-            len(
-                self.cursor.execute(
-                    f'select * '
-                    f'from user '
-                    f'where id=\'{new_seller}\';'
-                ).fetchall()
-            )
+                f"from {table_name};"
+            ).fetchone()[0]
         )
 
 
