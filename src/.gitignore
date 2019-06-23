@@ -1,3 +1,4 @@
 *ebay_db
 *.dat
 *.pyc
+*/test/__pycache*

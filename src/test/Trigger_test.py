@@ -1,6 +1,7 @@
 import unittest
 
 from test.TestDatabase import create_test_database
+import datetime
 
 
 class ConstraintTestCase(unittest.TestCase):
@@ -33,12 +34,7 @@ class ConstraintTestCase(unittest.TestCase):
         )
 
     def test_bidding_with_new_user_triggers_user_creation(self):
-        trigger = open('../src/triggers/trigger1_add.sql', 'r')
-        sql = trigger.read()
-        trigger.close()
-        self.cursor.executescript(
-            sql
-        )
+        self.add_trigger('../src/triggers/trigger1_add.sql')
         new_user = 'newuserwhoisdefinitelynotalreadyinthedatabase'
         self.assertEqual(
             [],
@@ -70,12 +66,7 @@ class ConstraintTestCase(unittest.TestCase):
         )
 
     def test_new_auction_with_new_seller_triggers_user_creation(self):
-        trigger = open('../src/triggers/trigger2_add.sql', 'r')
-        sql = trigger.read()
-        trigger.close()
-        self.cursor.executescript(
-            sql
-        )
+        self.add_trigger('../src/triggers/trigger2_add.sql')
         new_seller = 'newuserwhoisdefinitelynotalreadyinthedatabase'
         self.assertEqual(
             [],
@@ -120,6 +111,67 @@ class ConstraintTestCase(unittest.TestCase):
                     f'where id=\'{new_seller}\';'
                 ).fetchall()
             )
+        )
+
+    def test_auction_current_price_always_matches_most_recent_bid_for_auction(self):
+        self.add_trigger('../src/triggers/trigger3_add.sql')
+        auction_id = self.cursor.execute(
+            "select id "
+            "from auction "
+            "where highest_bid < 123456;"
+        ).fetchone()[0]
+        user_id = self.cursor.execute(
+            "select id "
+            "from user;"
+        ).fetchone()[0]
+
+        self.cursor.execute(
+            f"insert into bid "
+            f"values ("
+            f"{auction_id}, "
+            f"'{user_id}', "
+            f"'{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%d')}', "
+            f"123456"
+            f");"
+        )
+
+        self.assertEqual(
+            123456,
+            self.cursor.execute(
+                f"select highest_bid "
+                f"from auction "
+                f"where id={auction_id}"
+            ).fetchone()[0]
+        )
+
+        self.cursor.execute(
+            f"insert into bid "
+            f"values ("
+            f"{auction_id}, "
+            f"'{user_id}', "
+            f"'{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%d')}', "
+            f"1"
+            f");"
+        )
+
+        self.assertEqual(
+            1,
+            self.cursor.execute(
+                f"select highest_bid "
+                f"from auction "
+                f"where id={auction_id}"
+            ).fetchone()[0]
+        )
+
+    def add_trigger(
+            self,
+            trigger_path
+    ):
+        trigger = open(trigger_path, 'r')
+        sql = trigger.read()
+        trigger.close()
+        self.cursor.executescript(
+            sql
         )
 
 
