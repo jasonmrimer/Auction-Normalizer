@@ -1,7 +1,9 @@
+import sqlite3
 import unittest
 
 from test.TestDatabase import create_test_database
-import datetime
+
+from test.helper import *
 
 
 class ConstraintTestCase(unittest.TestCase):
@@ -22,8 +24,9 @@ class ConstraintTestCase(unittest.TestCase):
             "from auction;"
         ).fetchone()[0]
         self.cursor.execute(
-            f'insert into bid '
-            f'values ({auction_id}, \'{user_id}\', \'2001-12-13 16:28:34\', 7.75);'
+            f"insert into bid "
+            f"values ({auction_id}, '{user_id}', '{now()}', 7.75);"
+
         )
         self.assertEqual(
             9875,
@@ -50,8 +53,8 @@ class ConstraintTestCase(unittest.TestCase):
             "from auction;"
         ).fetchone()[0]
         self.cursor.execute(
-            f'insert into bid '
-            f'values ({auction_id}, \'{new_user}\', \'2001-12-13 16:28:34\', 7.75);'
+            f"insert into bid "
+            f"values ({auction_id}, '{new_user}', '{now()}', 7.75);"
         )
 
         self.assertEqual(
@@ -92,8 +95,8 @@ class ConstraintTestCase(unittest.TestCase):
             f"{new_auction}, "
             f"'name of the auction', "
             f"7.75, "
-            f"'2001-12-13 16:28:34', "
-            f"'2001-12-15 16:28:34', "
+            f"'{now()}', "
+            f"'{now(2)}', "
             f"'description of the auction', "
             f"70.00, "
             f"'{new_seller}', "
@@ -130,7 +133,7 @@ class ConstraintTestCase(unittest.TestCase):
             f"values ("
             f"{auction_id}, "
             f"'{user_id}', "
-            f"'{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%d')}', "
+            f"'{now()}', "
             f"123456"
             f");"
         )
@@ -149,7 +152,7 @@ class ConstraintTestCase(unittest.TestCase):
             f"values ("
             f"{auction_id}, "
             f"'{user_id}', "
-            f"'{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%d')}', "
+            f"'{now()}', "
             f"1"
             f");"
         )
@@ -163,21 +166,59 @@ class ConstraintTestCase(unittest.TestCase):
             ).fetchone()[0]
         )
 
+    def test_no_bids_belong_to_auction_sellers(self):
+        self.assertEqual(
+            [],
+            self.cursor.execute(
+                "select * "
+                "from bid "
+                "where user_id = "
+                "(select seller_id from auction where id = bid.auction_id);"
+            ).fetchall()
+        )
+
     def test_seller_may_not_bid_on_auction(self):
-        bid_count = self.cursor.execute(
-            "select count(*) "
-            "from bid;"
-        ).fetchone()[0]
+        self.add_trigger('../src/triggers/trigger4_add.sql')
+        bid_count = count_from_table(
+            self.cursor,
+            'bid'
+        )
 
         auction = self.cursor.execute(
             "select id, seller_id "
             "from auction;"
         ).fetchone()
         auction_id = auction[0]
-        seller_id = auction[2]
+        seller_id = auction[1]
 
+        try:
+            self.cursor.execute(
+                f"insert into bid "
+                f"values ("
+                f"{auction_id}, "
+                f"'{seller_id}', "
+                f"'{now()}', "
+                f"123456"
+                f")"
+            )
+            self.assertTrue(
+                False,
+                "Database failed to deny bid on an auction from the seller of that auction."
+            )
+        except sqlite3.IntegrityError as e:
+            self.assertEqual(
+                str(e),
+                "Sellers may not bid on their own auction."
+            )
 
-
+        self.assertEqual(
+            bid_count,
+            count_from_table(
+                self.cursor,
+                'bid'
+            ),
+            "Database allowed new bid from seller of auction."
+        )
 
     def add_trigger(
             self,

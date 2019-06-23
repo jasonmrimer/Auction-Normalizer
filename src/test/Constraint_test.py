@@ -4,7 +4,7 @@ from test.TestDatabase import *
 from test.helper import *
 
 
-class MyTestCase(unittest.TestCase):
+class TestConstraints(unittest.TestCase):
     def setUp(self) -> None:
         self.conn = create_test_database()
         self.cursor = self.conn.cursor()
@@ -295,11 +295,9 @@ class MyTestCase(unittest.TestCase):
                         concatenated_values = f"'{existing_item}'"
                     else:
                         if column_name == 'start':
-                            print(str(datetime.datetime.now)[:19])
-                            concatenated_values = str(datetime.datetime.now)[:19]
+                            concatenated_values = f"'{now()}"
                         elif column_name == 'end':
-                            concatenated_values = str(datetime.datetime.now + 100000)[:19]
-                            print(concatenated_values)
+                            concatenated_values = f"'{now(1)}"
                         else:
                             concatenated_values = f"'123456789'"
                     if len(column_names) == 1:
@@ -309,10 +307,10 @@ class MyTestCase(unittest.TestCase):
                         concatenated_values = f"{concatenated_values}, '{existing_item}'"
                     elif column_name == 'start':
                         concatenated_values = f"{concatenated_values}, " \
-                            f"'{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%d')}'"
+                            f"'{now()}'"
                     elif column_name == 'end':
                         concatenated_values = f"{concatenated_values}, " \
-                            f"'{(datetime.datetime.now() + datetime.timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%d')}'"
+                            f"'{now(1)}'"
                     else:
                         concatenated_values = f"{concatenated_values}, '123456789'"
 

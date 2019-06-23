@@ -1,5 +1,4 @@
-import sqlite3
-import unittest
+import datetime
 
 
 def count_from_table(
@@ -26,3 +25,9 @@ def duplicate_rows_from_table(
         f"group by {column_names} "
         f"having count (*) > 1;"
     ).fetchall()
+
+
+def now(
+        add_days=0
+):
+    return (datetime.datetime.now() + datetime.timedelta(days=add_days)).strftime('%Y-%m-%d %H:%M:%d')
