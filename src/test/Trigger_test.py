@@ -220,6 +220,128 @@ class ConstraintTestCase(unittest.TestCase):
             "Database allowed new bid from seller of auction."
         )
 
+    def test_all_bids_occur_within_auction_start_and_end(self):
+        self.add_trigger('../src/triggers/trigger5_add.sql')
+        bid_count = count_from_table(
+            self.cursor,
+            'bid'
+        )
+
+        self.assertEqual(
+            [],
+            self.cursor.execute(
+                "select * "
+                "from bid "
+                "where "
+                "time < (select start from auction where id = auction_id)"
+                "and "
+                "time > ( select end from auction where id = auction_id);"
+            ).fetchall()
+        )
+        auction = self.cursor.execute(
+            "select id, start, end "
+            "from auction;"
+        ).fetchone()
+        auction_id = auction[0]
+        auction_start = auction[1]
+        auction_end = auction[2]
+        user_id = self.cursor.execute(
+            "select id "
+            "from user;"
+        ).fetchone()[0]
+
+        self.cursor.execute(
+            f"insert into bid "
+            f"values ("
+            f"{auction_id}, "
+            f"'{user_id}', "
+            f"'{auction_start}',"
+            f"123456"
+            f");"
+        )
+
+        bid_count += 1
+        self.assertEqual(
+            bid_count,
+            count_from_table(
+                self.cursor,
+                'bid'
+            )
+        )
+
+        try:
+            self.cursor.execute(
+                f"insert into bid "
+                f"values ("
+                f"{auction_id}, "
+                f"'{user_id}', "
+                f"'{add_hours_to_datestring(auction_start, -4)}',"
+                f"123456"
+                f");"
+            )
+            self.assertTrue(
+                False,
+                "Databased failed to check bid time is after auction start"
+            )
+        except sqlite3.IntegrityError as e:
+            self.assertEqual(
+                "Bids must be after the auction starts.",
+                str(e)
+            )
+
+        self.assertEqual(
+            bid_count,
+            count_from_table(
+                self.cursor,
+                'bid'
+            )
+        )
+
+        self.cursor.execute(
+            f"insert into bid "
+            f"values ("
+            f"{auction_id}, "
+            f"'{user_id}', "
+            f"'{auction_end}',"
+            f"123456"
+            f");"
+        )
+        bid_count += 1
+        self.assertEqual(
+            bid_count,
+            count_from_table(
+                self.cursor,
+                'bid'
+            )
+        )
+
+        try:
+            self.cursor.execute(
+                f"insert into bid "
+                f"values ("
+                f"{auction_id}, "
+                f"'{user_id}', "
+                f"'{add_hours_to_datestring(auction_end, 4)}',"
+                f"123456"
+                f");"
+            )
+            self.assertTrue(
+                False,
+                "Databased failed to check bid time is before auction end"
+            )
+        except sqlite3.IntegrityError as e:
+            self.assertEqual(
+                "Bids must be before the auction ends.",
+                str(e)
+            )
+        self.assertEqual(
+            bid_count,
+            count_from_table(
+                self.cursor,
+                'bid'
+            )
+        )
+
     def add_trigger(
             self,
             trigger_path

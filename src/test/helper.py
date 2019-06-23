@@ -30,4 +30,15 @@ def duplicate_rows_from_table(
 def now(
         add_days=0
 ):
-    return (datetime.datetime.now() + datetime.timedelta(days=add_days)).strftime('%Y-%m-%d %H:%M:%d')
+    return (datetime.datetime.now() + datetime.timedelta(days=add_days)).strftime('%Y-%m-%d %H:%M:%S')
+
+
+def add_hours_to_datestring(
+        datestring,
+        add_hours=0
+):
+    datetime_object = \
+        datetime.datetime.strptime(datestring, '%Y-%m-%d %H:%M:%S') \
+        + datetime.timedelta(hours=add_hours)
+    return datetime_object.strftime('%Y-%m-%d %H:%M:%S')
+
