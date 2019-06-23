@@ -140,7 +140,8 @@ create table temp_join_a_c
     auction_id  integer,
     category_id integer,
     foreign key (auction_id) references auction (id),
-    foreign key (category_id) references category (id)
+    foreign key (category_id) references category (id),
+    unique (auction_id, category_id) on conflict abort
 );
 
 insert into temp_join_a_c

@@ -122,6 +122,22 @@ class MyTestCase(unittest.TestCase):
             ).fetchall()
         )
 
+    def test_auction_cannot_belong_to_category_more_than_once(self):
+        self.assertEqual(
+            [],
+            self.cursor.execute(
+                "select auction_id, category_id "
+                "from join_auction_category "
+                "group by auction_id, category_id "
+                "having count(*) > 1;"
+            ).fetchall()
+        )
+        self.denies_duplicates(
+            'join_auction_category',
+            ['auction_id', 'category_id'],
+            ['id', 'auction_id', 'category_id']
+        )
+
     def test_cannot_add_duplicate_category(self):
         self.denies_duplicates(
             'category',
