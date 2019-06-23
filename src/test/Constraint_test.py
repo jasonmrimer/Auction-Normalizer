@@ -1,4 +1,5 @@
 import unittest
+import datetime
 from test.TestDatabase import *
 
 
@@ -55,6 +56,60 @@ class MyTestCase(unittest.TestCase):
                 'number_of_bids',
                 'highest_bid'
             ]
+        )
+
+    def test_cannot_add_auctions_with_end_time_before_or_equal_to_start_time(self):
+        self.assertEqual(
+            [],
+            self.cursor.execute(
+                "select * "
+                "from auction "
+                "where end <= start;"
+            ).fetchall()
+        )
+
+        auction_count = self.cursor.execute(
+            "select count(*) "
+            "from auction;"
+        ).fetchone()[0]
+
+        seller_id = self.cursor.execute(
+            "select id "
+            "from user;"
+        ).fetchone()[0]
+
+        try:
+            self.cursor.execute(
+                f"insert into auction "
+                f"values ("
+                f"null, "
+                f"'name', "
+                f"0.01, "
+                f"'2000-01-01 00:00:01', "
+                f"'1999-12-31 23:59:59', "
+                f"'description', "
+                f"10.00, "
+                f"'{seller_id}', "
+                f"0, "
+                f"0.00);"
+            )
+            self.assertTrue(
+                False,
+                "Database failed to deny auction with end time before start time."
+            )
+        except sqlite3.IntegrityError as e:
+            self.assertTrue(
+                str(e).__contains__(
+                    "CHECK constraint failed: auction"
+                )
+            )
+
+        self.assertEqual(
+            auction_count,
+            self.cursor.execute(
+                "select count(*) "
+                "from auction;"
+            ).fetchone()[0]
         )
 
     def test_bid_composite_primary_key_is_unique(self):
@@ -267,8 +322,8 @@ class MyTestCase(unittest.TestCase):
             ).fetchone()[0]
 
         for column_index in range(0, len(column_names)):
+            column_name = column_names[column_index]
             if type(unique_columns) == list:
-                column_name = column_names[column_index]
                 if column_index == 0:
                     if unique_columns.__contains__(column_name):
                         concatenated_values = f"'{existing_item[unique_columns.index(column_name)]}'"
@@ -284,15 +339,28 @@ class MyTestCase(unittest.TestCase):
 
             else:
                 if column_index == 0:
-                    if column_names[column_index] == unique_columns:
+                    if column_name == unique_columns:
                         concatenated_values = f"'{existing_item}'"
                     else:
-                        concatenated_values = f"'123456789'"
+                        if column_name == 'start':
+                            print(str(datetime.datetime.now)[:19])
+                            concatenated_values = str(datetime.datetime.now)[:19]
+                        elif column_name == 'end':
+                            concatenated_values = str(datetime.datetime.now + 100000)[:19]
+                            print(concatenated_values)
+                        else:
+                            concatenated_values = f"'123456789'"
                     if len(column_names) == 1:
                         break
                 else:
-                    if column_names[column_index] == unique_columns:
+                    if column_name == unique_columns:
                         concatenated_values = f"{concatenated_values}, '{existing_item}'"
+                    elif column_name == 'start':
+                        concatenated_values = f"{concatenated_values}, " \
+                            f"'{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%d')}'"
+                    elif column_name == 'end':
+                        concatenated_values = f"{concatenated_values}, " \
+                            f"'{(datetime.datetime.now()+datetime.timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%d')}'"
                     else:
                         concatenated_values = f"{concatenated_values}, '123456789'"
 

@@ -68,7 +68,8 @@ create table temp_auction
     seller_id      text,
     number_of_bids integer,
     highest_bid float,
-    foreign key (seller_id) references user (id)
+    foreign key (seller_id) references user (id),
+    check ( end > start )
 );
 
 insert into temp_auction
