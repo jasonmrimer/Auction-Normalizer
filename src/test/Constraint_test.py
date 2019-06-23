@@ -1,6 +1,7 @@
 import unittest
 import datetime
 from test.TestDatabase import *
+from test.helper import *
 
 
 class MyTestCase(unittest.TestCase):
@@ -12,14 +13,9 @@ class MyTestCase(unittest.TestCase):
         self.conn.close()
 
     def test_no_two_users_share_same_id(self):
-        self.assertCountEqual(
-            [],
-            self.cursor.execute(
-                "select id "
-                "from user "
-                "group by id "
-                "having count (*) > 1;"
-            ).fetchall()
+        self.is_table_unique_on_columns(
+            'user',
+            'id'
         )
 
     def test_cannot_add_duplicate_user(self):
@@ -30,14 +26,9 @@ class MyTestCase(unittest.TestCase):
         )
 
     def test_auction_id_is_unique(self):
-        self.assertCountEqual(
-            [],
-            self.cursor.execute(
-                "select id "
-                "from auction "
-                "group by id "
-                "having count (*) > 1;"
-            ).fetchall()
+        self.is_table_unique_on_columns(
+            'auction',
+            'id'
         )
 
     def test_cannot_add_duplicate_auction(self):
@@ -68,10 +59,7 @@ class MyTestCase(unittest.TestCase):
             ).fetchall()
         )
 
-        auction_count = self.cursor.execute(
-            "select count(*) "
-            "from auction;"
-        ).fetchone()[0]
+        auction_count = count_from_table(self.cursor, 'auction')
 
         seller_id = self.cursor.execute(
             "select id "
@@ -106,32 +94,19 @@ class MyTestCase(unittest.TestCase):
 
         self.assertEqual(
             auction_count,
-            self.cursor.execute(
-                "select count(*) "
-                "from auction;"
-            ).fetchone()[0]
+            count_from_table(self.cursor, 'auction')
         )
 
     def test_bid_composite_primary_key_is_unique(self):
-        self.assertCountEqual(
-            [],
-            self.cursor.execute(
-                "select auction_id, user_id, amount "
-                "from bid "
-                "group by auction_id, user_id, amount "
-                "having count (*) > 1;"
-            ).fetchall()
+        self.is_table_unique_on_columns(
+                'bid',
+                ['auction_id', 'user_id', 'amount']
         )
 
     def test_location_id_is_unique(self):
-        self.assertCountEqual(
-            [],
-            self.cursor.execute(
-                "select id "
-                "from location "
-                "group by id "
-                "having count (*) > 1;"
-            ).fetchall()
+        self.is_table_unique_on_columns(
+                'location',
+                'id'
         )
 
     def test_cannot_add_duplicate_location(self):
@@ -149,14 +124,9 @@ class MyTestCase(unittest.TestCase):
         )
 
     def test_country_id_is_unique(self):
-        self.assertCountEqual(
-            [],
-            self.cursor.execute(
-                "select id "
-                "from country "
-                "group by id "
-                "having count (*) > 1;"
-            ).fetchall()
+        self.is_table_unique_on_columns(
+                'country',
+                'id'
         )
 
     def test_cannot_add_duplicate_country(self):
@@ -167,26 +137,17 @@ class MyTestCase(unittest.TestCase):
         )
 
     def test_category_name_is_unique(self):
-        self.assertCountEqual(
-            [],
-            self.cursor.execute(
-                "select name "
-                "from category "
-                "group by name "
-                "having count (*) > 1;"
-            ).fetchall()
+        self.is_table_unique_on_columns(
+                'category',
+                'name'
         )
 
     def test_auction_cannot_belong_to_category_more_than_once(self):
-        self.assertEqual(
-            [],
-            self.cursor.execute(
-                "select auction_id, category_id "
-                "from join_auction_category "
-                "group by auction_id, category_id "
-                "having count(*) > 1;"
-            ).fetchall()
+        self.is_table_unique_on_columns(
+            'join_auction_category',
+            ['auction_id', 'category_id']
         )
+
         self.denies_duplicates(
             'join_auction_category',
             ['auction_id', 'category_id'],
@@ -213,10 +174,7 @@ class MyTestCase(unittest.TestCase):
             ).fetchall()
         )
 
-        join_count = self.cursor.execute(
-            "select count(*) "
-            "from join_auction_category;"
-        ).fetchone()[0]
+        join_count = count_from_table(self.cursor, 'join_auction_category')
 
         try:
             self.cursor.execute(
@@ -236,10 +194,7 @@ class MyTestCase(unittest.TestCase):
 
         self.assertEqual(
             join_count,
-            self.cursor.execute(
-                "select count(*) "
-                "from join_auction_category;"
-            ).fetchone()[0]
+            count_from_table(self.cursor, 'join_auction_category')
         )
 
     def test_every_bid_must_correspond_to_an_auction(self):
@@ -298,10 +253,7 @@ class MyTestCase(unittest.TestCase):
             unique_columns,
             column_names
     ):
-        item_count = self.cursor.execute(
-            "select count(*) "
-            f"from {table_name};"
-        ).fetchone()[0]
+        item_count = count_from_table(self.cursor, table_name)
 
         if type(unique_columns) == list:
             for column in range(0, len(unique_columns)):
@@ -360,7 +312,7 @@ class MyTestCase(unittest.TestCase):
                             f"'{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%d')}'"
                     elif column_name == 'end':
                         concatenated_values = f"{concatenated_values}, " \
-                            f"'{(datetime.datetime.now()+datetime.timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%d')}'"
+                            f"'{(datetime.datetime.now() + datetime.timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%d')}'"
                     else:
                         concatenated_values = f"{concatenated_values}, '123456789'"
 
@@ -392,10 +344,21 @@ class MyTestCase(unittest.TestCase):
 
         self.assertEqual(
             item_count,
-            self.cursor.execute(
-                "select count(*) "
-                f"from {table_name};"
-            ).fetchone()[0]
+            count_from_table(self.cursor, table_name)
+        )
+
+    def is_table_unique_on_columns(
+            self,
+            table_name,
+            unique_on_column_names
+    ):
+        self.assertEqual(
+            [],
+            duplicate_rows_from_table(
+                self.cursor,
+                table_name,
+                unique_on_column_names
+            )
         )
 
 

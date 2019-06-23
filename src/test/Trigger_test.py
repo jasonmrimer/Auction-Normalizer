@@ -163,6 +163,22 @@ class ConstraintTestCase(unittest.TestCase):
             ).fetchone()[0]
         )
 
+    def test_seller_may_not_bid_on_auction(self):
+        bid_count = self.cursor.execute(
+            "select count(*) "
+            "from bid;"
+        ).fetchone()[0]
+
+        auction = self.cursor.execute(
+            "select id, seller_id "
+            "from auction;"
+        ).fetchone()
+        auction_id = auction[0]
+        seller_id = auction[2]
+
+
+
+
     def add_trigger(
             self,
             trigger_path
