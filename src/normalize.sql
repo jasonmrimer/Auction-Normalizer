@@ -101,7 +101,8 @@ create table temp_bid
     amount     float,
     foreign key (auction_id) references auction (id),
     foreign key (user_id) references user (id),
-    primary key (auction_id, user_id, time, amount)
+    primary key (auction_id, user_id, time, amount),
+    unique (auction_id, time) on conflict abort
 );
 
 insert into temp_bid

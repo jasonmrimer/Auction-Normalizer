@@ -99,14 +99,77 @@ class TestConstraints(unittest.TestCase):
 
     def test_bid_composite_primary_key_is_unique(self):
         self.is_table_unique_on_columns(
-                'bid',
-                ['auction_id', 'user_id', 'amount']
+            'bid',
+            ['auction_id', 'user_id', 'amount']
+        )
+
+    def test_bid_cannot_be_at_the_same_time_for_same_auction(self):
+        bid_count = count_from_table(
+            self.cursor,
+            'bid'
+        )
+        self.is_table_unique_on_columns(
+            'bid',
+            ['auction_id', 'time']
+        )
+        auction_id = self.cursor.execute(
+            "select id "
+            "from auction;"
+        ).fetchone()[0]
+        user_ids = self.cursor.execute(
+            "select id "
+            "from user;"
+        ).fetchall()
+        first_user_id = user_ids[0][0]
+        second_user_id = user_ids[1][0]
+        time = now()
+        self.cursor.execute(
+            f"insert into bid "
+            f"values ("
+            f"{auction_id}, "
+            f"'{first_user_id}', "
+            f"'{time}', "
+            f"123456);"
+        )
+        bid_count += 1
+        self.assertEqual(
+            bid_count,
+            count_from_table(
+                self.cursor,
+                'bid'
+            )
+        )
+        try:
+            self.cursor.execute(
+                f"insert into bid "
+                f"values ("
+                f"{auction_id}, "
+                f"'{second_user_id}', "
+                f"'{time}', "
+                f"1234567);"
+            )
+            self.assertTrue(
+                False,
+                "Database failed to deny bid for the same auction at the same time"
+            )
+        except sqlite3.IntegrityError as e:
+            self.assertEqual(
+                str(e),
+                "UNIQUE constraint failed: bid.auction_id, bid.time"
+            )
+
+        self.assertEqual(
+            bid_count,
+            count_from_table(
+                self.cursor,
+                'bid'
+            )
         )
 
     def test_location_id_is_unique(self):
         self.is_table_unique_on_columns(
-                'location',
-                'id'
+            'location',
+            'id'
         )
 
     def test_cannot_add_duplicate_location(self):
@@ -125,8 +188,8 @@ class TestConstraints(unittest.TestCase):
 
     def test_country_id_is_unique(self):
         self.is_table_unique_on_columns(
-                'country',
-                'id'
+            'country',
+            'id'
         )
 
     def test_cannot_add_duplicate_country(self):
@@ -138,8 +201,8 @@ class TestConstraints(unittest.TestCase):
 
     def test_category_name_is_unique(self):
         self.is_table_unique_on_columns(
-                'category',
-                'name'
+            'category',
+            'name'
         )
 
     def test_auction_cannot_belong_to_category_more_than_once(self):

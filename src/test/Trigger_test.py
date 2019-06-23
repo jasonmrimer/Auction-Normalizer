@@ -152,7 +152,7 @@ class ConstraintTestCase(unittest.TestCase):
             f"values ("
             f"{auction_id}, "
             f"'{user_id}', "
-            f"'{now()}', "
+            f"'{now(1)}', "
             f"1"
             f");"
         )
