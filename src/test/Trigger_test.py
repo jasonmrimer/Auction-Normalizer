@@ -6,7 +6,7 @@ from test.TestDatabase import create_test_database
 from test.helper import *
 
 
-class ConstraintTestCase(unittest.TestCase):
+class TestTriggers(unittest.TestCase):
     def setUp(self) -> None:
         self.conn = create_test_database()
         self.cursor = self.conn.cursor()
@@ -303,7 +303,7 @@ class ConstraintTestCase(unittest.TestCase):
             f"{auction_id}, "
             f"'{user_id}', "
             f"'{auction_end}',"
-            f"123456"
+            f"1234567"
             f");"
         )
         bid_count += 1
@@ -341,6 +341,86 @@ class ConstraintTestCase(unittest.TestCase):
                 'bid'
             )
         )
+
+    def test_all_triggers(self):
+        self.add_trigger('../src/triggers/trigger1_add.sql')
+        self.add_trigger('../src/triggers/trigger2_add.sql')
+        self.add_trigger('../src/triggers/trigger3_add.sql')
+        self.add_trigger('../src/triggers/trigger4_add.sql')
+        self.add_trigger('../src/triggers/trigger5_add.sql')
+        try:
+            self.cursor.execute(
+                "insert into category "
+                "values (null, 'Test Category');"
+            )
+
+            category_id = self.cursor.execute(
+                "select last_insert_rowid();"
+            ).fetchone()[0]
+
+            self.cursor.execute(
+                "insert into country "
+                "values (null, 'Test Country');"
+            )
+            country_id = self.cursor.execute(
+                "select last_insert_rowid();"
+            ).fetchone()[0]
+
+            self.cursor.execute(
+                f"insert into location "
+                f"values (null, 'Test Location', {country_id});"
+            )
+            location_id = self.cursor.execute(
+                "select last_insert_rowid();"
+            ).fetchone()[0]
+
+            seller_id = "testuser1234567890"
+            buyer_id = "987654321testuser"
+            self.cursor.execute(
+                "insert into user "
+                f"values ('{seller_id}', 0, {location_id});"
+            )
+
+            self.cursor.execute(
+                "insert into auction "
+                f"values "
+                f"("
+                f"null, "
+                f"'test name', "
+                f"10.00, "
+                f"'{now()}', "
+                f"'{now(4)}', "
+                f"'test description', "
+                f"99.99, "
+                f"'{seller_id}', "
+                f"0, "
+                f"0.00"
+                f");"
+            )
+            auction_id = self.cursor.execute(
+                "select last_insert_rowid();"
+            ).fetchone()[0]
+
+            self.cursor.execute(
+                "insert into bid "
+                f"values ({auction_id}, '{buyer_id}', '{now()}', 12.00)"
+            )
+
+            self.cursor.execute(
+                "insert into join_auction_category "
+                f"values (null, {auction_id}, {category_id})"
+            )
+
+        except sqlite3.IntegrityError as e:
+            self.assertTrue(
+                False,
+                f"All triggers failed an addition on a valid condition:\n{e}"
+            )
+        except sqlite3.Error as e:
+            self.assertTrue(
+                False,
+                f"All triggers failed an addition on a valid condition:\n{e}"
+            )
 
     def add_trigger(
             self,

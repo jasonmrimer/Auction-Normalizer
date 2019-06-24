@@ -102,6 +102,11 @@ class TestConstraints(unittest.TestCase):
             'bid',
             ['auction_id', 'user_id', 'amount']
         )
+        self.denies_duplicates(
+            'bid',
+            ['auction_id', 'user_id', 'amount'],
+            ['auction_id', 'user_id', 'time', 'amount']
+        )
 
     def test_bid_cannot_be_at_the_same_time_for_same_auction(self):
         bid_count = count_from_table(
