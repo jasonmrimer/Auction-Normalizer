@@ -1,6 +1,5 @@
 import sqlite3
 import unittest
-import glob
 import os
 
 from test.TestDatabase import create_test_database
@@ -15,6 +14,85 @@ class TestTriggers(unittest.TestCase):
 
     def tearDown(self) -> None:
         self.conn.close()
+
+    def test_all_triggers_still_allow_happy_path(self):
+        for trigger in os.listdir("../src/triggers"):
+            self.add_trigger(f"../src/triggers/{trigger}")
+        try:
+            self.cursor.execute(
+                "insert into category "
+                "values (null, 'Test Category');"
+            )
+
+            category_id = self.cursor.execute(
+                "select last_insert_rowid();"
+            ).fetchone()[0]
+
+            self.cursor.execute(
+                "insert into country "
+                "values (null, 'Test Country');"
+            )
+            country_id = self.cursor.execute(
+                "select last_insert_rowid();"
+            ).fetchone()[0]
+
+            self.cursor.execute(
+                f"insert into location "
+                f"values (null, 'Test Location', {country_id});"
+            )
+            location_id = self.cursor.execute(
+                "select last_insert_rowid();"
+            ).fetchone()[0]
+
+            seller_id = "testuser1234567890"
+            bidder_id = "987654321testuser"
+            self.cursor.execute(
+                "insert into user "
+                f"values "
+                f"('{seller_id}', 0, {location_id}),"
+                f"('{bidder_id}', 0, {location_id});"
+            )
+
+            self.cursor.execute(
+                "insert into auction "
+                f"values "
+                f"("
+                f"null, "
+                f"'test name', "
+                f"10.00, "
+                f"'{now()}', "
+                f"'{now(4)}', "
+                f"'test description', "
+                f"99.99, "
+                f"'{seller_id}', "
+                f"0, "
+                f"0.00"
+                f");"
+            )
+            auction_id = self.cursor.execute(
+                "select last_insert_rowid();"
+            ).fetchone()[0]
+
+            self.cursor.execute(
+                "insert into bid "
+                f"values ({auction_id}, '{bidder_id}', '{now()}', 12.00)"
+            )
+
+            self.cursor.execute(
+                "insert into join_auction_category "
+                f"values (null, {auction_id}, {category_id})"
+            )
+
+        except sqlite3.IntegrityError as e:
+            self.assertTrue(
+                False,
+                f"All triggers failed an addition on a valid condition:\n{e}"
+            )
+        except sqlite3.Error as e:
+            self.assertTrue(
+                False,
+                f"All triggers failed an addition on a valid condition:\n{e}"
+            )
 
     def test_new_bid_with_existing_user(self):
         user_id = self.cursor.execute(
@@ -394,83 +472,78 @@ class TestTriggers(unittest.TestCase):
             ).fetchone()[0]
         )
 
-    def test_all_triggers_still_allow_happy_path(self):
-        for trigger in os.listdir("../src/triggers"):
-            self.add_trigger(f"../src/triggers/{trigger}")
+    def test_new_bid_price_must_exceed_current_highest_bid(self):
+        self.add_trigger("../src/triggers/trigger7_add.sql")
+        seller_id = "testuser1234567890"
+        bidder_id = "987654321testuser"
+        self.cursor.execute(
+            "insert into user "
+            f"values "
+            f"('{seller_id}', 0, null),"
+            f"('{bidder_id}', 0, null);"
+        )
+
+        self.cursor.execute(
+            "insert into auction "
+            f"values "
+            f"("
+            f"null, "
+            f"'test name', "
+            f"10.00, "
+            f"'{now()}', "
+            f"'{now(4)}', "
+            f"'test description', "
+            f"99.99, "
+            f"'{seller_id}', "
+            f"0, "
+            f"0.00"
+            f");"
+        )
+        auction_id = self.cursor.execute(
+            "select last_insert_rowid();"
+        ).fetchone()[0]
+
+        self.cursor.execute(
+            "insert into bid "
+            f"values "
+            f"("
+            f"{auction_id}, "
+            f"'{bidder_id}', "
+            f"'{now()}', "
+            f"10.00"
+            f")"
+        )
+
         try:
             self.cursor.execute(
-                "insert into category "
-                "values (null, 'Test Category');"
+                "insert into bid "
+                f"values ({auction_id}, '{bidder_id}','{now()}', 3.50);"
+            )
+            self.assertTrue(
+                False,
+                "Database failed to deny low bid."
+            )
+        except sqlite3.IntegrityError as e:
+            self.assertEqual(
+                "New bids must exceed the current highest bid.",
+                str(e)
             )
 
-            category_id = self.cursor.execute(
-                "select last_insert_rowid();"
-            ).fetchone()[0]
-
-            self.cursor.execute(
-                "insert into country "
-                "values (null, 'Test Country');"
-            )
-            country_id = self.cursor.execute(
-                "select last_insert_rowid();"
-            ).fetchone()[0]
-
-            self.cursor.execute(
-                f"insert into location "
-                f"values (null, 'Test Location', {country_id});"
-            )
-            location_id = self.cursor.execute(
-                "select last_insert_rowid();"
-            ).fetchone()[0]
-
-            seller_id = "testuser1234567890"
-            bidder_id = "987654321testuser"
-            self.cursor.execute(
-                "insert into user "
-                f"values "
-                f"('{seller_id}', 0, {location_id}),"
-                f"('{bidder_id}', 0, {location_id});"
-            )
-
-            self.cursor.execute(
-                "insert into auction "
-                f"values "
-                f"("
-                f"null, "
-                f"'test name', "
-                f"10.00, "
-                f"'{now()}', "
-                f"'{now(4)}', "
-                f"'test description', "
-                f"99.99, "
-                f"'{seller_id}', "
-                f"0, "
-                f"0.00"
-                f");"
-            )
-            auction_id = self.cursor.execute(
-                "select last_insert_rowid();"
-            ).fetchone()[0]
-
+        try:
             self.cursor.execute(
                 "insert into bid "
-                f"values ({auction_id}, '{bidder_id}', '{now()}', 12.00)"
+                f"values "
+                f"("
+                f"{auction_id}, "
+                f"'{bidder_id}', "
+                f"'{now(1)}', "
+                f"40.00"
+                f")"
             )
-
-            self.cursor.execute(
-                "insert into join_auction_category "
-                f"values (null, {auction_id}, {category_id})"
-            )
-
         except sqlite3.IntegrityError as e:
             self.assertTrue(
                 False,
-                f"All triggers failed an addition on a valid condition:\n{e}"
-            )
-        except sqlite3.Error as e:
-            self.assertTrue(
-                False,
-                f"All triggers failed an addition on a valid condition:\n{e}"
+                "Database failed to allow valid bid that exceeded current highest."
             )
 
     def add_trigger(
