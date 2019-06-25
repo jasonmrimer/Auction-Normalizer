@@ -1,5 +1,7 @@
 import sqlite3
 import unittest
+import glob
+import os
 
 from test.TestDatabase import create_test_database
 
@@ -342,12 +344,59 @@ class TestTriggers(unittest.TestCase):
             )
         )
 
-    def test_all_triggers(self):
-        self.add_trigger('../src/triggers/trigger1_add.sql')
-        self.add_trigger('../src/triggers/trigger2_add.sql')
-        self.add_trigger('../src/triggers/trigger3_add.sql')
-        self.add_trigger('../src/triggers/trigger4_add.sql')
-        self.add_trigger('../src/triggers/trigger5_add.sql')
+    def test_all_auctions_maintain_accurate_number_of_bids(self):
+        self.add_trigger("../src/triggers/trigger6_add.sql")
+        seller_id = "testuser1234567890"
+        bidder_id = "987654321testuser"
+        self.cursor.execute(
+            "insert into user "
+            f"values "
+            f"('{seller_id}', 0, null),"
+            f"('{bidder_id}', 0, null);"
+        )
+
+        self.cursor.execute(
+            "insert into auction "
+            f"values "
+            f"("
+            f"null, "
+            f"'test name', "
+            f"10.00, "
+            f"'{now()}', "
+            f"'{now(4)}', "
+            f"'test description', "
+            f"99.99, "
+            f"'{seller_id}', "
+            f"0, "
+            f"0.00"
+            f");"
+        )
+        auction_id = self.cursor.execute(
+            "select last_insert_rowid();"
+        ).fetchone()[0]
+
+        self.cursor.execute(
+            "insert into bid "
+            f"values "
+            f"("
+            f"{auction_id}, "
+            f"'{bidder_id}', "
+            f"'{now()}', "
+            f"10.00"
+            f")"
+        )
+        self.assertEqual(
+            1,
+            self.cursor.execute(
+                "select number_of_bids "
+                "from auction "
+                f"where id={auction_id}"
+            ).fetchone()[0]
+        )
+
+    def test_all_triggers_still_allow_happy_path(self):
+        for trigger in os.listdir("../src/triggers"):
+            self.add_trigger(f"../src/triggers/{trigger}")
         try:
             self.cursor.execute(
                 "insert into category "
@@ -375,10 +424,12 @@ class TestTriggers(unittest.TestCase):
             ).fetchone()[0]
 
             seller_id = "testuser1234567890"
-            buyer_id = "987654321testuser"
+            bidder_id = "987654321testuser"
             self.cursor.execute(
                 "insert into user "
-                f"values ('{seller_id}', 0, {location_id});"
+                f"values "
+                f"('{seller_id}', 0, {location_id}),"
+                f"('{bidder_id}', 0, {location_id});"
             )
 
             self.cursor.execute(
@@ -403,7 +454,7 @@ class TestTriggers(unittest.TestCase):
 
             self.cursor.execute(
                 "insert into bid "
-                f"values ({auction_id}, '{buyer_id}', '{now()}', 12.00)"
+                f"values ({auction_id}, '{bidder_id}', '{now()}', 12.00)"
             )
 
             self.cursor.execute(
