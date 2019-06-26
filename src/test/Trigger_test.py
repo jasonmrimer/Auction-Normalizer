@@ -558,7 +558,6 @@ class TestTriggers(unittest.TestCase):
         ).fetchone()
         auction_id = auction[0]
         start = auction[1]
-        end = auction[2]
         seller_id = auction[3]
         bid_price = 1 if auction[4] is None else float(auction[4]) + 1
 
@@ -572,8 +571,7 @@ class TestTriggers(unittest.TestCase):
         pseudo_now = add_hours_to_datestring(start, 1)
         self.cursor.execute(
             "update pseudo_time "
-            f"set now='{pseudo_now}' "
-            f"where true=true;"
+            f"set now='{pseudo_now}';"
         )
 
         self.cursor.execute(
@@ -599,6 +597,31 @@ class TestTriggers(unittest.TestCase):
             pseudo_now,
             bid_time
         )
+
+    def test_pseudo_time_only_moves_forward(self):
+        self.add_trigger(9)
+
+        try:
+            self.cursor.execute(
+                f"insert into pseudo_time "
+                f"values ('{now()}');"
+            )
+        except sqlite3.IntegrityError as e:
+            self.assertTrue(
+                False,
+                "Database failed to accept forward modification of pseudo time."
+            )
+
+        try:
+            self.cursor.execute(
+                f"insert into pseudo_time "
+                f"values ('{now(-1)}');"
+            )
+        except sqlite3.IntegrityError as e:
+            self.assertEquals(
+                "Users may only move the pseudo time forward.",
+                str(e)
+            )
 
     def add_trigger(
             self,
