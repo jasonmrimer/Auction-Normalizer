@@ -156,3 +156,13 @@ drop table join_auction_category;
 
 alter table temp_join_a_c
     rename to join_auction_category;
+
+
+
+create table pseudo_time
+(
+    now datetime
+);
+
+insert into pseudo_time
+values ('2001-12- 20 00:00:01');

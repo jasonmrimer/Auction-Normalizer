@@ -8,6 +8,8 @@ from test.helper import *
 
 
 class TestTriggers(unittest.TestCase):
+    trigger_dir = "../src/triggers"
+
     def setUp(self) -> None:
         self.conn = create_test_database()
         self.cursor = self.conn.cursor()
@@ -16,8 +18,8 @@ class TestTriggers(unittest.TestCase):
         self.conn.close()
 
     def test_all_triggers_still_allow_happy_path(self):
-        for trigger in os.listdir("../src/triggers"):
-            self.add_trigger(f"../src/triggers/{trigger}")
+        for trigger in range(1, len(os.listdir("../src/triggers"))):
+            self.add_trigger(trigger)
         try:
             self.cursor.execute(
                 "insert into category "
@@ -117,7 +119,7 @@ class TestTriggers(unittest.TestCase):
         )
 
     def test_bidding_with_new_user_triggers_user_creation(self):
-        self.add_trigger('../src/triggers/trigger1_add.sql')
+        self.add_trigger(1)
         new_user = 'newuserwhoisdefinitelynotalreadyinthedatabase'
         self.assertEqual(
             [],
@@ -149,7 +151,7 @@ class TestTriggers(unittest.TestCase):
         )
 
     def test_new_auction_with_new_seller_triggers_user_creation(self):
-        self.add_trigger('../src/triggers/trigger2_add.sql')
+        self.add_trigger(2)
         new_seller = 'newuserwhoisdefinitelynotalreadyinthedatabase'
         self.assertEqual(
             [],
@@ -197,7 +199,7 @@ class TestTriggers(unittest.TestCase):
         )
 
     def test_auction_current_price_always_matches_most_recent_bid_for_auction(self):
-        self.add_trigger('../src/triggers/trigger3_add.sql')
+        self.add_trigger(3)
         auction_id = self.cursor.execute(
             "select id "
             "from auction "
@@ -258,7 +260,7 @@ class TestTriggers(unittest.TestCase):
         )
 
     def test_seller_may_not_bid_on_auction(self):
-        self.add_trigger('../src/triggers/trigger4_add.sql')
+        self.add_trigger(4)
         bid_count = count_from_table(
             self.cursor,
             'bid'
@@ -301,7 +303,7 @@ class TestTriggers(unittest.TestCase):
         )
 
     def test_all_bids_occur_within_auction_start_and_end(self):
-        self.add_trigger('../src/triggers/trigger5_add.sql')
+        self.add_trigger(5)
         bid_count = count_from_table(
             self.cursor,
             'bid'
@@ -423,7 +425,7 @@ class TestTriggers(unittest.TestCase):
         )
 
     def test_all_auctions_maintain_accurate_number_of_bids(self):
-        self.add_trigger("../src/triggers/trigger6_add.sql")
+        self.add_trigger(6)
         seller_id = "testuser1234567890"
         bidder_id = "987654321testuser"
         self.cursor.execute(
@@ -473,7 +475,7 @@ class TestTriggers(unittest.TestCase):
         )
 
     def test_new_bid_price_must_exceed_current_highest_bid(self):
-        self.add_trigger("../src/triggers/trigger7_add.sql")
+        self.add_trigger(7)
         seller_id = "testuser1234567890"
         bidder_id = "987654321testuser"
         self.cursor.execute(
@@ -546,11 +548,63 @@ class TestTriggers(unittest.TestCase):
                 "Database failed to allow valid bid that exceeded current highest."
             )
 
+    def test_new_bids_occur_at_controlled_time(self):
+        self.add_trigger(8)
+        auction = self.cursor.execute(
+            "select id, start, end, seller_id, highest_bid "
+            "from auction "
+            "where end > datetime(start, '+2 hours')"
+            "limit 1;"
+        ).fetchone()
+        auction_id = auction[0]
+        start = auction[1]
+        end = auction[2]
+        seller_id = auction[3]
+        bid_price = 1 if auction[4] is None else float(auction[4]) + 1
+
+        bidder_id = self.cursor.execute(
+            f"select id "
+            f"from user "
+            f"where id !='{seller_id}' "
+            f"limit 1;"
+        ).fetchone()[0]
+
+        pseudo_now = add_hours_to_datestring(start, 1)
+        self.cursor.execute(
+            "update pseudo_time "
+            f"set now='{pseudo_now}' "
+            f"where true=true;"
+        )
+
+        self.cursor.execute(
+            f"insert into bid "
+            f"values ("
+            f"{auction_id}, "
+            f"'{bidder_id}', "
+            f"null, "
+            f"{bid_price}"
+            f");"
+        )
+
+        bid_time = self.cursor.execute(
+            f"select time "
+            f"from bid "
+            f"where auction_id={auction_id} "
+            f"and user_id='{bidder_id}'"
+            f"and amount={bid_price} "
+            f"limit 1;"
+        ).fetchone()[0]
+
+        self.assertEqual(
+            pseudo_now,
+            bid_time
+        )
+
     def add_trigger(
             self,
-            trigger_path
+            trigger_number
     ):
-        trigger = open(trigger_path, 'r')
+        trigger = open(f"{self.trigger_dir}/trigger{trigger_number}_add.sql", 'r')
         sql = trigger.read()
         trigger.close()
         self.cursor.executescript(
