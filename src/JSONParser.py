@@ -135,8 +135,21 @@ def values_with_many_collocated_relationships(
         collection,
         parent_key
     )
-    for parent in parents:
-        values[parent] = dict()
+    values = initialize_dict_with_parent_keys(parents, values)
+    values = add_child_values(child_keys, collection, parent_key, values)
+    values = assign_user_values_without_location(child_keys, old_implementation_for_users_without_location, values)
+    return values
+
+
+def assign_user_values_without_location(child_keys, old_implementation_for_users_without_location, values):
+    if old_implementation_for_users_without_location:
+        for key in list(values):
+            if len(values[key]) != len(child_keys):
+                del values[key]
+    return values
+
+
+def add_child_values(child_keys, collection, parent_key, values):
     for child in child_keys:
         sub_values = values_with_single_relationship(
             collection,
@@ -146,10 +159,12 @@ def values_with_many_collocated_relationships(
         )
         for sub_value in sub_values:
             values[sub_value[1]][child] = (sub_value[0])
-    if old_implementation_for_users_without_location:
-        for key in list(values):
-            if len(values[key]) != len(child_keys):
-                del values[key]
+    return values
+
+
+def initialize_dict_with_parent_keys(parents, values):
+    for parent in parents:
+        values[parent] = dict()
     return values
 
 
