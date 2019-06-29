@@ -7,7 +7,7 @@ def ingest_single_value_from_files(filepaths, dat_filepath, top_key, key):
     for filepath in filepaths:
         values = values_from_json_file(
             values,
-            list_of_objects_from_json_file(
+            extract_object_list_from_json_file(
                 filepath,
                 top_key
             ),
@@ -34,17 +34,17 @@ def ingest_related_values_from_files(
     for filepath in filepaths:
         if type(child_keys) == str:
             values = values_with_single_relationship(
-                values,
-                list_of_objects_from_json_file(filepath, top_key),
+                extract_object_list_from_json_file(filepath, top_key),
+                parent_key,
                 child_keys,
-                parent_key
+                values
             )
         else:
             values = values_with_many_collocated_relationships(
-                values,
-                list_of_objects_from_json_file(filepath, top_key),
+                extract_object_list_from_json_file(filepath, top_key),
+                parent_key,
                 child_keys,
-                parent_key
+                values
             )
     write_values_to_dat(values, dat_filepath)
 
@@ -57,7 +57,7 @@ def ingest_bids(
     for filepath in filepaths:
         bids = get_bids(
             bids,
-            list_of_objects_from_json_file(
+            extract_object_list_from_json_file(
                 filepath,
                 'Items'
             )
@@ -73,7 +73,7 @@ def ingest_auctions(
     for filepath in filepaths:
         auctions = get_auctions(
             auctions,
-            list_of_objects_from_json_file(
+            extract_object_list_from_json_file(
                 filepath,
                 'Items'
             )
@@ -94,7 +94,7 @@ def join_auction_category(
     for filepath in filepaths:
         joins = join(
             joins,
-            list_of_objects_from_json_file(
+            extract_object_list_from_json_file(
                 filepath,
                 'Items'
             )
@@ -113,7 +113,7 @@ def ingest_users(
     for filepath in filepaths:
         bids = get_bids(
             bids,
-            list_of_objects_from_json_file(
+            extract_object_list_from_json_file(
                 filepath,
                 'Items'
             )
@@ -124,7 +124,7 @@ def ingest_users(
     for filepath in filepaths:
         sellers = values_with_dislocated_relationships(
             sellers,
-            list_of_objects_from_json_file(
+            extract_object_list_from_json_file(
                 filepath,
                 'Items'
             ),

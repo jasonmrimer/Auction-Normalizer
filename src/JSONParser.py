@@ -1,7 +1,7 @@
 from json import loads
 
 
-def list_of_objects_from_json_file(
+def extract_object_list_from_json_file(
         filepath,
         top_key
 ):
@@ -20,35 +20,114 @@ def values_from_json_file(
             obj,
             search_key
         )
-    if type(values) == list:
-        return remove_duplicates(values)
+    if is_list(values):
+        return remove_duplicates_from_list(values)
     return values
 
 
 def values_with_single_relationship(
-        values,
         collection,
+        parent_key,
         child_key,
-        parent_key
+        values
 ):
-    if type(collection) == list:
-        for item in collection:
-            if type(item) == dict:
-                values = values_with_single_relationship(values, item, child_key, parent_key)
-    if type(collection) == dict:
-        if (child_key in collection) and (parent_key in collection):
-            values.add((collection[child_key], collection[parent_key]))
-        for obj in collection:
-            if (type(collection[obj]) == dict) or (type(collection[obj]) == list):
-                values = values_with_single_relationship(values, collection[obj], child_key, parent_key)
+    if is_list(collection):
+        values = extract_values_from_list(
+            collection,
+            parent_key,
+            child_key,
+            values
+        )
+    if is_dict(collection):
+        values = extract_values_from_dict(
+            collection,
+            parent_key,
+            child_key,
+            values
+        )
+    return values
+
+
+def extract_values_from_dict(
+        collection,
+        parent_key,
+        child_key,
+        values
+):
+    values = collect_values_with_same_level_relationship(
+        collection,
+        parent_key,
+        child_key,
+        values
+    )
+    values = collect_values_with_single_relationship_from_dict_or_list(
+        collection,
+        parent_key,
+        child_key,
+        values
+    )
+    return values
+
+
+def collect_values_with_same_level_relationship(
+        collection,
+        parent_key,
+        child_key,
+        values
+):
+    if is_same_level_relationship(
+            collection,
+            parent_key,
+            child_key
+    ):
+        values.add(
+            (
+                collection[child_key],
+                collection[parent_key]
+            )
+        )
+    return values
+
+
+def collect_values_with_single_relationship_from_dict_or_list(
+        collection,
+        parent_key,
+        child_key,
+        values
+):
+    for obj in collection:
+        if is_item_dict_or_list(collection[obj]):
+            values = values_with_single_relationship(
+                collection[obj],
+                parent_key,
+                child_key,
+                values
+            )
+    return values
+
+
+def extract_values_from_list(
+        collection,
+        parent_key,
+        child_key,
+        values
+):
+    for item in collection:
+        if is_dict(item):
+            values = values_with_single_relationship(
+                item,
+                parent_key,
+                child_key,
+                values
+            )
     return values
 
 
 def values_with_many_collocated_relationships(
-        values,
         collection,
-        child_keys,
         parent_key,
+        child_keys,
+        values,
         old_implementation_for_users_without_location=True
 ):
     parents = values_from_json_file(
@@ -60,10 +139,10 @@ def values_with_many_collocated_relationships(
         values[parent] = dict()
     for child in child_keys:
         sub_values = values_with_single_relationship(
-            set(),
             collection,
+            parent_key,
             child,
-            parent_key
+            set()
         )
         for sub_value in sub_values:
             values[sub_value[1]][child] = (sub_value[0])
@@ -92,10 +171,10 @@ def values_with_dislocated_relationships(
     return values
 
 
-def remove_duplicates(
-        dedupe_list
+def remove_duplicates_from_list(
+        duplicates
 ):
-    return list(dict.fromkeys(dedupe_list))
+    return list(dict.fromkeys(duplicates))
 
 
 def extract_nested_values_from_json_with_key(
@@ -154,10 +233,10 @@ def get_auctions(
         collection
 ):
     auctions = values_with_many_collocated_relationships(
-        auctions,
         collection,
-        ['Name', 'First_Bid', 'Started', 'Ends', 'Description'],
         'ItemID',
+        ['Name', 'First_Bid', 'Started', 'Ends', 'Description'],
+        auctions,
         False
     )
     for item in collection:
@@ -205,3 +284,19 @@ def optional_value_from_dictionary(
         return dictionary[optional_key]
     else:
         return None
+
+
+def is_list(values):
+    return type(values) == list
+
+
+def is_dict(collection):
+    return type(collection) == dict
+
+
+def is_same_level_relationship(collection, parent_key, child_key):
+    return (child_key in collection) and (parent_key in collection)
+
+
+def is_item_dict_or_list(item):
+    return is_list(item) or is_dict(item)
