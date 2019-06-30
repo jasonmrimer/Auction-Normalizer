@@ -9,37 +9,39 @@ def extract_object_list_from_json_file(
         return loads(file.read())[top_key]
 
 
-def values_from_json_file(
+def dedupe(values):
+    if is_list(values):
+        remove_duplicates_from_list(values)
+
+
+def assimilate_values_from_collection(
         values,
         collection,
         search_key
 ):
+    add_values_from_collection(values, collection, search_key)
+    dedupe(values)
+
+
+def add_values_from_collection(values, collection, search_key):
     for obj in collection:
-        values = extract_nested_values_from_json_with_key(
+        add_extracted_nested_values_collection(
             values,
             obj,
             search_key
         )
-    if is_list(values):
-        return remove_duplicates_from_list(values)
-    return values
 
 
-def values_with_single_relationship(
-        collection,
-        parent_key,
-        child_key,
-        values
-):
+def add_values_extracted_from_single_relationship(values, collection, parent_key, child_key):
     if is_list(collection):
-        values = extract_values_from_list(
+        add_extracted_values_from_list(
             collection,
             parent_key,
             child_key,
             values
         )
     if is_dict(collection):
-        values = extract_values_from_dict(
+        add_extracted_values_from_dict(
             collection,
             parent_key,
             child_key,
@@ -48,33 +50,18 @@ def values_with_single_relationship(
     return values
 
 
-def extract_values_from_dict(
+def add_extracted_values_from_dict(
         collection,
         parent_key,
         child_key,
         values
 ):
-    values = collect_values_with_same_level_relationship(
-        collection,
-        parent_key,
-        child_key,
-        values
-    )
-    values = collect_values_with_single_relationship_from_dict_or_list(
-        collection,
-        parent_key,
-        child_key,
-        values
-    )
+    collect_values_with_same_level_relationship(values, collection, parent_key, child_key)
+    collect_values_with_single_relationship_from_dict_or_list(values, collection, parent_key, child_key)
     return values
 
 
-def collect_values_with_same_level_relationship(
-        collection,
-        parent_key,
-        child_key,
-        values
-):
+def collect_values_with_same_level_relationship(values, collection, parent_key, child_key):
     if is_same_level_relationship(
             collection,
             parent_key,
@@ -89,24 +76,14 @@ def collect_values_with_same_level_relationship(
     return values
 
 
-def collect_values_with_single_relationship_from_dict_or_list(
-        collection,
-        parent_key,
-        child_key,
-        values
-):
+def collect_values_with_single_relationship_from_dict_or_list(values, collection, parent_key, child_key):
     for obj in collection:
         if is_item_dict_or_list(collection[obj]):
-            values = values_with_single_relationship(
-                collection[obj],
-                parent_key,
-                child_key,
-                values
-            )
+            add_values_extracted_from_single_relationship(values, collection[obj], parent_key, child_key)
     return values
 
 
-def extract_values_from_list(
+def add_extracted_values_from_list(
         collection,
         parent_key,
         child_key,
@@ -114,12 +91,7 @@ def extract_values_from_list(
 ):
     for item in collection:
         if is_dict(item):
-            values = values_with_single_relationship(
-                item,
-                parent_key,
-                child_key,
-                values
-            )
+            values = add_values_extracted_from_single_relationship(values, item, parent_key, child_key)
     return values
 
 
@@ -130,15 +102,20 @@ def values_with_many_collocated_relationships(
         values,
         old_implementation_for_users_without_location=True
 ):
-    parents = values_from_json_file(
-        [],
+    parents = []
+    get_parent_values(parents, collection, parent_key)
+    initialize_dict_with_parent_keys(values, parents)
+    add_children_to_values(values, child_keys, collection, parent_key)
+    assign_user_values_without_location(child_keys, old_implementation_for_users_without_location, values)
+    return values
+
+
+def get_parent_values(parents, collection, parent_key):
+    assimilate_values_from_collection(
+        parents,
         collection,
         parent_key
     )
-    values = initialize_dict_with_parent_keys(parents, values)
-    values = add_child_values(child_keys, collection, parent_key, values)
-    values = assign_user_values_without_location(child_keys, old_implementation_for_users_without_location, values)
-    return values
 
 
 def assign_user_values_without_location(child_keys, old_implementation_for_users_without_location, values):
@@ -149,20 +126,15 @@ def assign_user_values_without_location(child_keys, old_implementation_for_users
     return values
 
 
-def add_child_values(child_keys, collection, parent_key, values):
+def add_children_to_values(values, child_keys, collection, parent_key):
     for child in child_keys:
-        sub_values = values_with_single_relationship(
-            collection,
-            parent_key,
-            child,
-            set()
-        )
+        sub_values = add_values_extracted_from_single_relationship(set(), collection, parent_key, child)
         for sub_value in sub_values:
             values[sub_value[1]][child] = (sub_value[0])
     return values
 
 
-def initialize_dict_with_parent_keys(parents, values):
+def initialize_dict_with_parent_keys(values, parents):
     for parent in parents:
         values[parent] = dict()
     return values
@@ -189,32 +161,52 @@ def values_with_dislocated_relationships(
 def remove_duplicates_from_list(
         duplicates
 ):
-    return list(dict.fromkeys(duplicates))
+    duplicates[:] = list(dict.fromkeys(duplicates))
 
 
-def extract_nested_values_from_json_with_key(
+def add_extracted_nested_values_collection(
         values,
-        json_object,
+        collection,
         key
 ):
-    if type(json_object) == str:
-        return values
-    if key in json_object:
-        if type(json_object[key]) == list:
-            for val in json_object[key]:
-                values.append(val)
-        else:
-            values.append(json_object[key])
+    if is_nested_relationship(collection):
+        add_values_from_same_level_relationship(values, collection, key)
+        add_values_from_multi_level_relationship(values, collection, key)
 
-    if type(json_object) == dict:
-        for dict_key in json_object:
-            if type(json_object[dict_key]) == dict:
-                values = extract_nested_values_from_json_with_key(values, json_object[dict_key], key)
-            if type(json_object[dict_key]) == list:
-                for list_item in json_object[dict_key]:
-                    values = extract_nested_values_from_json_with_key(values, list_item, key)
 
-    return values
+def add_values_from_multi_level_relationship(values, collection, key):
+    if is_dict(collection):
+        crawl_dict_for_nested_relationships(values, collection, key)
+
+
+def crawl_dict_for_nested_relationships(values, collection, key):
+    for dict_key in collection:
+        extract_values_from_dict(values, collection, dict_key, key)
+        extract_values_from_list(collection, dict_key, key, values)
+
+
+def extract_values_from_list(collection, dict_key, parent_key, values):
+    if is_list(collection[dict_key]):
+        for list_item in collection[dict_key]:
+            add_extracted_nested_values_collection(values, list_item, parent_key)
+
+
+def extract_values_from_dict(values, collection, dict_key, key):
+    if is_dict(collection[dict_key]):
+        add_extracted_nested_values_collection(values, collection[dict_key], key)
+
+
+def add_values_from_same_level_relationship(values, collection, key):
+    if key in collection:
+        append_value(values, collection, key)
+
+
+def append_value(values, collection, key):
+    if is_list(collection[key]):
+        for val in collection[key]:
+            values.append(val)
+    else:
+        values.append(collection[key])
 
 
 def get_bids(
@@ -311,6 +303,10 @@ def is_dict(collection):
 
 def is_same_level_relationship(collection, parent_key, child_key):
     return (child_key in collection) and (parent_key in collection)
+
+
+def is_nested_relationship(collection):
+    return type(collection) != str
 
 
 def is_item_dict_or_list(item):

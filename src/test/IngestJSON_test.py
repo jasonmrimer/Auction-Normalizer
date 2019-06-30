@@ -1,6 +1,6 @@
 import unittest
 
-from IngestJSON import *
+from json_file_ingester import *
 
 
 class TestIngestJSON(unittest.TestCase):

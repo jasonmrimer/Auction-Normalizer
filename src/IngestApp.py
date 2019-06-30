@@ -1,4 +1,4 @@
-from src.IngestJSON import *
+from src.json_file_ingester import *
 import logging
 import sys
 import os

@@ -15,12 +15,10 @@ class JSONParserTestCase(unittest.TestCase):
         ).close()
 
     def test_extract_values_from_dict_reads_values_with_single_relationship_no_duplicates(self):
-        values = values_with_single_relationship(
-            extract_object_list_from_json_file(self.test_items, self.top_key),
-            'Country',
-            'Location',
-            set()
-        )
+        values = add_values_extracted_from_single_relationship(set(),
+                                                               extract_object_list_from_json_file(self.test_items,
+                                                                                                  self.top_key),
+                                                               'Country', 'Location')
         self.assertTrue(4, len(values))
         self.assertTrue(values.__contains__(('Sunny South', 'USA')))
         self.assertTrue(values.__contains__(('Ohio - The Buckeye State!', 'USA')))
@@ -160,8 +158,9 @@ class JSONParserTestCase(unittest.TestCase):
         )
 
     def test_readAllCategoriesFromFileWithoutDuplicates(self):
-        categories = values_from_json_file(
-            [],
+        categories = []
+        assimilate_values_from_collection(
+            categories,
             extract_object_list_from_json_file(
                 self.test_items,
                 self.top_key
@@ -178,8 +177,9 @@ class JSONParserTestCase(unittest.TestCase):
         self.assertTrue(categories.__contains__('Dept 56'))
 
     def test_readAllCountriesFromFileWithoutDuplicates(self):
-        countries = values_from_json_file(
-            [],
+        countries = []
+        assimilate_values_from_collection(
+            countries,
             extract_object_list_from_json_file(
                 self.test_items,
                 self.top_key
@@ -249,12 +249,13 @@ class JSONParserTestCase(unittest.TestCase):
         )
 
     def test_shouldAddNewCategoriesToList(self):
-        categories = values_from_json_file(
-            [
-                'Collectibles',
-                'cat4',
-                'cat5',
-            ],
+        categories = [
+            'Collectibles',
+            'cat4',
+            'cat5',
+        ]
+        assimilate_values_from_collection(
+            categories,
             extract_object_list_from_json_file(
                 self.test_items,
                 self.top_key
@@ -273,14 +274,12 @@ class JSONParserTestCase(unittest.TestCase):
         self.assertTrue(categories.__contains__('cat5'))
 
     def test_removeDuplicatesFromList(self):
+        duplicates = [
+            'a', 'a', 'a', 'b', 'b'
+        ]
+        remove_duplicates_from_list(duplicates)
         self.assertEqual(
-            len(
-                remove_duplicates_from_list(
-                    [
-                        'a', 'a', 'a', 'b', 'b'
-                    ]
-                )
-            ),
+            len(duplicates),
             2,
             'duplicates remain after dedupe'
         )
@@ -333,8 +332,9 @@ class JSONParserTestCase(unittest.TestCase):
 
             }
         )
-        values = extract_nested_values_from_json_with_key(
-            [],
+        values = []
+        add_extracted_nested_values_collection(
+            values,
             json_object,
             'Key'
         )

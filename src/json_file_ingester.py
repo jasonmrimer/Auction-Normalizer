@@ -5,18 +5,13 @@ from Writer import *
 def ingest_single_value_from_files(filepaths, dat_filepath, top_key, key):
     values = []
     for filepath in filepaths:
-        values = values_from_json_file(
+        collection = extract_object_list_from_json_file(filepath, top_key)
+        assimilate_values_from_collection(
             values,
-            extract_object_list_from_json_file(
-                filepath,
-                top_key
-            ),
+            collection,
             key
         )
-    write_values_to_dat(
-        values,
-        dat_filepath
-    )
+    write_values_to_dat(values, dat_filepath)
 
 
 def ingest_related_values_from_files(
@@ -26,27 +21,36 @@ def ingest_related_values_from_files(
         child_keys,
         parent_key
 ):
-    if type(child_keys) == str:
-        values = set()
-    else:
-        values = dict()
+    values = initialize_values(child_keys)
+    aggregate_values(values, filepaths, parent_key, top_key, child_keys)
+    write_values_to_dat(values, dat_filepath)
 
+
+def aggregate_values(values, filepaths, parent_key, top_key, child_keys):
     for filepath in filepaths:
-        if type(child_keys) == str:
-            values = values_with_single_relationship(
-                extract_object_list_from_json_file(filepath, top_key),
+        collection = extract_object_list_from_json_file(filepath, top_key)
+        if has_single_relationship(child_keys):
+            values = add_values_extracted_from_single_relationship(
+                values,
+                collection,
                 parent_key,
-                child_keys,
-                values
+                child_keys
             )
         else:
             values = values_with_many_collocated_relationships(
-                extract_object_list_from_json_file(filepath, top_key),
+                collection,
                 parent_key,
                 child_keys,
                 values
             )
-    write_values_to_dat(values, dat_filepath)
+
+
+def initialize_values(child_keys):
+    if has_single_relationship(child_keys):
+        values = set()
+    else:
+        values = dict()
+    return values
 
 
 def ingest_bids(
@@ -62,7 +66,7 @@ def ingest_bids(
                 'Items'
             )
         )
-        write_bids_to_dat(bids, dat_filepath)
+    write_bids_to_dat(bids, dat_filepath)
 
 
 def ingest_auctions(
@@ -135,8 +139,8 @@ def ingest_users(
         )
 
     users = {**bidders, **sellers}
+    write_values_to_dat(users, dat_filepath)
 
-    write_values_to_dat(
-        users,
-        dat_filepath
-    )
+
+def has_single_relationship(child_keys):
+    return type(child_keys) == str
