@@ -6,20 +6,13 @@ CECS 535-50, University of Louisville | June 18, 2019
 - `python3`
 - `sqlite3`
 
-## Expect files
-- create.sql
-- normalize.sql
-- parser.py
-- query1.sql
-- query2.sql
-- query3.sql
-- query4.sql
-- query5.sql
-- query6.sql
-- query7.sql
-- README.md
-- runParser.sh
- 
+## Test
+There are robust tests for all the parsing, importing, and constraints. These tests use an in-memory database for fast execution. All tests are in `src/test`. To run the test:
+
+`$ cd src`
+
+`python -m unittest discover -s test -p "*test.py"`
+
 ## Execute
 Navigate to where you saved the `submission` directory then execute
 
