@@ -11,7 +11,7 @@ def is_json(f):
 def main(argv):
     filepaths = []
     if len(argv) != 3:
-        logging.warning('Usage: python IngestApp.py <path to json files> <path to save dat files>')
+        logging.warning('Usage: python ingest_app.py <path to json files> <path to save dat files>')
         sys.exit(1)
 
     directory = os.fsencode(argv[1])

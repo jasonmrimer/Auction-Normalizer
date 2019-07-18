@@ -8,7 +8,7 @@ class TestTriggers(unittest.TestCase):
     trigger_dir = "../src/triggers"
 
     def setUp(self) -> None:
-        self.conn = create_im_memory_database()
+        self.conn = create_test_database()
         self.cursor = self.conn.cursor()
 
     def tearDown(self) -> None:

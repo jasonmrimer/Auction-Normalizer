@@ -45,7 +45,15 @@ def add_hours_to_datestring(
     return datetime_object.strftime('%Y-%m-%d %H:%M:%S')
 
 
-def create_im_memory_database():
+def connect_to_test_database(real_database):
+    if real_database:
+        conn = sqlite3.connect(real_database)
+    else:
+        conn = create_test_database()
+    return conn
+
+
+def create_test_database():
     conn = sqlite3.connect(':memory:')
     cursor = conn.cursor()
     file = open('../src/create.sql')

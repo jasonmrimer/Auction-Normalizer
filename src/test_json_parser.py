@@ -1,6 +1,6 @@
 import unittest
 
-from JSONParser import *
+from json_parser import *
 
 
 class JSONParserTestCase(unittest.TestCase):

@@ -1,11 +1,11 @@
 import unittest
 
-from test_helpers import create_im_memory_database
+from test_helpers import create_test_database
 
 
 class QueriesTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        self.conn = create_im_memory_database()
+        self.conn = create_test_database()
         self.cursor = self.conn.cursor()
 
     def tearDown(self) -> None:

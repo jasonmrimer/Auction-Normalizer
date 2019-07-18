@@ -1,5 +1,5 @@
-from JSONParser import *
-from Writer import *
+from json_parser import *
+from writer import *
 
 
 def ingest_single_value_from_files(filepaths, dat_filepath, top_key, key):

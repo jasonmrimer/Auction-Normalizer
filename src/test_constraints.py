@@ -1,11 +1,13 @@
+import sys
 import unittest
 from test_helpers import *
-from test_helpers import create_im_memory_database
 
 
 class TestConstraints(unittest.TestCase):
+    real_database = None
+
     def setUp(self) -> None:
-        self.conn = create_im_memory_database()
+        self.conn = connect_to_test_database(self.real_database)
         self.cursor = self.conn.cursor()
 
     def tearDown(self) -> None:
@@ -428,4 +430,6 @@ class TestConstraints(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        TestConstraints.real_database = sys.argv.pop()
     unittest.main()
