@@ -1,6 +1,5 @@
 import unittest
-import datetime
-from test.TestDatabase import *
+from TestDatabase import *
 from test.helper import *
 
 

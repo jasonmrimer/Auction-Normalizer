@@ -1,11 +1,18 @@
+import sqlite3
+import sys
 import unittest
-from test.TestDatabase import create_test_database
+
+from TestDatabase import create_test_database
 
 
 class TestDatabaseCase(unittest.TestCase):
+    REAL_DATABASE = None
 
     def setUp(self) -> None:
-        self.conn = create_test_database()
+        if self.REAL_DATABASE is not None:
+            self.conn = sqlite3.connect(f"{self.REAL_DATABASE}")
+        else:
+            self.conn = create_test_database()
         self.cursor = self.conn.cursor()
 
     def tearDown(self) -> None:
@@ -76,4 +83,6 @@ class TestDatabaseCase(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        TestDatabaseCase.REAL_DATABASE = sys.argv.pop()
     unittest.main()

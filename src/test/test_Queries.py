@@ -1,6 +1,6 @@
 import unittest
 
-from test.TestDatabase import create_test_database
+from TestDatabase import create_test_database
 
 
 class QueriesTestCase(unittest.TestCase):
