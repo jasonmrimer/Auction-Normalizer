@@ -50,6 +50,7 @@ def connect_to_test_database(real_database):
         conn = sqlite3.connect(real_database)
     else:
         conn = create_test_database()
+    conn.execute("PRAGMA foreign_keys = ON;")
     return conn
 
 
@@ -386,3 +387,13 @@ def denies_duplicates(
     attempt_insert_of_record_duplicate_on_unique_columns(test, cursor, concatenated_values, table_name, unique_columns)
 
     verify_item_count_did_not_increase_after_duplicate_insertion(test, cursor, starting_item_count, table_name)
+
+
+def auction_id_exists_in_auction_table(cursor, auction_id):
+    print(auction_id)
+    auction_count = cursor.execute(
+        "select count(*) "
+        f"from auction "
+        f"where id = {auction_id};"
+    ).fetchone()[0]
+    return auction_count > 0

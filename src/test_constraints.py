@@ -1,10 +1,11 @@
 import sys
+import time
 import unittest
 from test_helpers import *
 from test_helpers import is_table_unique_on_columns, \
  \
     verify_item_count_did_not_increase_after_duplicate_insertion, \
-    denies_duplicates
+    denies_duplicates, auction_id_exists_in_auction_table
 
 
 class TestConstraints(unittest.TestCase):
@@ -229,6 +230,41 @@ class TestConstraints(unittest.TestCase):
         )
 
     def test_items_must_exist_for_category_matches(self):
+        self.verify_all_auctions_in_join_table_are_in_auction_table()
+
+        non_existent_auction_id = int(round(time.time() * 1000))
+        while auction_id_exists_in_auction_table(
+                self.cursor,
+                non_existent_auction_id
+        ):
+            non_existent_auction_id = non_existent_auction_id + 1
+
+        starting_join_count = count_from_table(self.cursor, 'join_auction_category')
+
+        try:
+            self.cursor.execute(
+                f"insert into join_auction_category "
+                f"values (null, {non_existent_auction_id}, 1);"
+            )
+            self.assertTrue(
+                False,
+                f"Database failed to throw error on Foreign Key for auction ID: {non_existent_auction_id}"
+            )
+        except sqlite3.IntegrityError as e:
+            self.assertTrue(
+                str(e).__contains__(
+                    "FOREIGN KEY constraint failed"
+                )
+            )
+
+        verify_item_count_did_not_increase_after_duplicate_insertion(
+            self,
+            self.cursor,
+            starting_join_count,
+            'join_auction_category'
+        )
+
+    def verify_all_auctions_in_join_table_are_in_auction_table(self):
         self.assertEqual(
             [],
             self.cursor.execute(
@@ -240,27 +276,6 @@ class TestConstraints(unittest.TestCase):
                 ");"
             ).fetchall()
         )
-
-        join_count = count_from_table(self.cursor, 'join_auction_category')
-
-        try:
-            self.cursor.execute(
-                "insert into join_auction_category "
-                "values (null, 123456789, 1);"
-            )
-            self.assertTrue(
-                False,
-                f"Database failed to throw error on Foreign Key for auction ID: 123456789"
-            )
-        except sqlite3.IntegrityError as e:
-            self.assertTrue(
-                str(e).__contains__(
-                    "FOREIGN KEY constraint failed"
-                )
-            )
-
-        verify_item_count_did_not_increase_after_duplicate_insertion(self, self.cursor, join_count,
-                                                                     'join_auction_category')
 
     def test_every_bid_must_correspond_to_an_auction(self):
         self.assertEqual(
