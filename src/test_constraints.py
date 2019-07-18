@@ -7,7 +7,8 @@ class TestConstraints(unittest.TestCase):
     real_database = None
 
     def setUp(self) -> None:
-        self.conn = connect_to_test_database(self.real_database)
+        self.conn = connect_to_test_database('ebay_db')
+        # self.conn = connect_to_test_database(self.real_database)
         self.cursor = self.conn.cursor()
 
     def tearDown(self) -> None:
@@ -110,48 +111,60 @@ class TestConstraints(unittest.TestCase):
         )
 
     def test_bid_cannot_be_at_the_same_time_for_same_auction(self):
-        bid_count = count_from_table(
+        original_bid_count = count_from_table(
             self.cursor,
             'bid'
         )
+
         self.is_table_unique_on_columns(
             'bid',
             ['auction_id', 'time']
         )
-        auction_id = self.cursor.execute(
-            "select id "
+
+        existing_auction = self.cursor.execute(
+            "select id, end "
             "from auction;"
-        ).fetchone()[0]
-        user_ids = self.cursor.execute(
+        ).fetchone()
+
+        existing_auction_id = existing_auction[0]
+        existing_auction_end = existing_auction[1]
+        valid_bid_time = add_hours_to_datestring(existing_auction_end, -1)
+
+        all_user_ids = self.cursor.execute(
             "select id "
             "from user;"
         ).fetchall()
-        first_user_id = user_ids[0][0]
-        second_user_id = user_ids[1][0]
-        time = now()
+
+        first_user_id = all_user_ids[0][0]
+        second_user_id = all_user_ids[1][0]
+
         self.cursor.execute(
             f"insert into bid "
-            f"values ("
-            f"{auction_id}, "
+            f"values "
+            f"("
+            f"{existing_auction_id}, "
             f"'{first_user_id}', "
-            f"'{time}', "
-            f"123456);"
+            f"'{valid_bid_time}', "
+            f"123456"
+            f");"
         )
-        bid_count += 1
+
+        original_bid_count += 1
         self.assertEqual(
-            bid_count,
+            original_bid_count,
             count_from_table(
                 self.cursor,
                 'bid'
             )
         )
+
         try:
             self.cursor.execute(
                 f"insert into bid "
                 f"values ("
-                f"{auction_id}, "
+                f"{existing_auction_id}, "
                 f"'{second_user_id}', "
-                f"'{time}', "
+                f"'{valid_bid_time}', "
                 f"1234567);"
             )
             self.assertTrue(
@@ -165,7 +178,7 @@ class TestConstraints(unittest.TestCase):
             )
 
         self.assertEqual(
-            bid_count,
+            original_bid_count,
             count_from_table(
                 self.cursor,
                 'bid'
@@ -322,16 +335,10 @@ class TestConstraints(unittest.TestCase):
             unique_columns,
             column_names
     ):
-        item_count = count_from_table(self.cursor, table_name)
+        starting_item_count = count_from_table(self.cursor, table_name)
 
         if type(unique_columns) == list:
-            for column in range(0, len(unique_columns)):
-                if column == 0:
-                    concatenated_uniques = f'{unique_columns[column]}'
-                    if len(unique_columns) == 1:
-                        break
-                else:
-                    concatenated_uniques = f'{concatenated_uniques},{unique_columns[column]}'
+            concatenated_uniques = self.concatenate_column_names_for_sql(unique_columns)
             existing_item = self.cursor.execute(
                 f"select {concatenated_uniques} "
                 f"from {table_name};"
@@ -410,9 +417,19 @@ class TestConstraints(unittest.TestCase):
                 )
 
         self.assertEqual(
-            item_count,
+            starting_item_count,
             count_from_table(self.cursor, table_name)
         )
+
+    def concatenate_column_names_for_sql(self, unique_columns):
+        for column in range(0, len(unique_columns)):
+            if column == 0:
+                concatenated_uniques = f'{unique_columns[column]}'
+                if len(unique_columns) == 1:
+                    break
+            else:
+                concatenated_uniques = f'{concatenated_uniques},{unique_columns[column]}'
+        return concatenated_uniques
 
     def is_table_unique_on_columns(
             self,
