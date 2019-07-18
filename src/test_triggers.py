@@ -1,24 +1,21 @@
-import sqlite3
 import unittest
 import os
 
-from TestDatabase import create_test_database
-
-from test.helper import *
+from test_helpers import *
 
 
 class TestTriggers(unittest.TestCase):
     trigger_dir = "../src/triggers"
 
     def setUp(self) -> None:
-        self.conn = create_test_database()
+        self.conn = create_im_memory_database()
         self.cursor = self.conn.cursor()
 
     def tearDown(self) -> None:
         self.conn.close()
 
     def test_all_triggers_still_allow_happy_path(self):
-        for trigger in range(1, len(os.listdir("../src/triggers"))):
+        for trigger in range(1, int(len(os.listdir("../src/triggers")) / 2)):
             self.add_trigger(trigger)
         try:
             self.cursor.execute(

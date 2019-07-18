@@ -2,7 +2,7 @@ import sqlite3
 import sys
 import unittest
 
-from TestDatabase import create_test_database
+from test_helpers import create_im_memory_database
 
 
 class TestDatabaseCase(unittest.TestCase):
@@ -12,7 +12,7 @@ class TestDatabaseCase(unittest.TestCase):
         if self.REAL_DATABASE is not None:
             self.conn = sqlite3.connect(f"{self.REAL_DATABASE}")
         else:
-            self.conn = create_test_database()
+            self.conn = create_im_memory_database()
         self.cursor = self.conn.cursor()
 
     def tearDown(self) -> None:
