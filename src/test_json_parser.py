@@ -1,11 +1,11 @@
 import unittest
 
-from JSONParser import *
+from json_parser import *
 
 
 class JSONParserTestCase(unittest.TestCase):
-    test_items = './test/TestItems'
-    dat_filepath = './test/test_values.dat'
+    test_items = 'test_items_1'
+    dat_filepath = 'test_values.dat'
     top_key = 'Items'
 
     def setUp(self):

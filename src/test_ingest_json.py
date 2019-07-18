@@ -5,8 +5,8 @@ from json_file_ingester import *
 
 class TestIngestJSON(unittest.TestCase):
     auction_filepaths = [
-        './test/TestItems',
-        './test/TestItems2'
+        'test_items_1',
+        'test_items_2'
     ]
     dat_filepath = 'test_values.dat'
 

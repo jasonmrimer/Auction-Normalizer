@@ -1,5 +1,5 @@
 import unittest
-from Writer import *
+from writer import *
 
 
 class MyTestCase(unittest.TestCase):
