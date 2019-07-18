@@ -1,6 +1,10 @@
 import sys
 import unittest
 from test_helpers import *
+from test_helpers import is_table_unique_on_columns, \
+ \
+    verify_item_count_did_not_increase_after_duplicate_insertion, \
+    denies_duplicates
 
 
 class TestConstraints(unittest.TestCase):
@@ -15,26 +19,24 @@ class TestConstraints(unittest.TestCase):
         self.conn.close()
 
     def test_no_two_users_share_same_id(self):
-        self.is_table_unique_on_columns(
-            'user',
-            'id'
-        )
+        is_table_unique_on_columns(self, self.cursor, 'user', 'id')
 
     def test_cannot_add_duplicate_user(self):
-        self.denies_duplicates(
+        denies_duplicates(
+            self,
+            self.cursor,
             'user',
             'id',
             ['id', 'rating', 'location']
         )
 
     def test_auction_id_is_unique(self):
-        self.is_table_unique_on_columns(
-            'auction',
-            'id'
-        )
+        is_table_unique_on_columns(self, self.cursor, 'auction', 'id')
 
     def test_cannot_add_duplicate_auction(self):
-        self.denies_duplicates(
+        denies_duplicates(
+            self,
+            self.cursor,
             'auction',
             'id',
             [
@@ -94,17 +96,13 @@ class TestConstraints(unittest.TestCase):
                 )
             )
 
-        self.assertEqual(
-            auction_count,
-            count_from_table(self.cursor, 'auction')
-        )
+        verify_item_count_did_not_increase_after_duplicate_insertion(self, self.cursor, auction_count, 'auction')
 
     def test_bid_composite_primary_key_is_unique(self):
-        self.is_table_unique_on_columns(
-            'bid',
-            ['auction_id', 'user_id', 'amount']
-        )
-        self.denies_duplicates(
+        is_table_unique_on_columns(self, self.cursor, 'bid', ['auction_id', 'user_id', 'amount'])
+        denies_duplicates(
+            self,
+            self.cursor,
             'bid',
             ['auction_id', 'user_id', 'amount'],
             ['auction_id', 'user_id', 'time', 'amount']
@@ -116,10 +114,7 @@ class TestConstraints(unittest.TestCase):
             'bid'
         )
 
-        self.is_table_unique_on_columns(
-            'bid',
-            ['auction_id', 'time']
-        )
+        is_table_unique_on_columns(self, self.cursor, 'bid', ['auction_id', 'time'])
 
         existing_auction = self.cursor.execute(
             "select id, end "
@@ -177,22 +172,15 @@ class TestConstraints(unittest.TestCase):
                 "UNIQUE constraint failed: bid.auction_id, bid.time"
             )
 
-        self.assertEqual(
-            original_bid_count,
-            count_from_table(
-                self.cursor,
-                'bid'
-            )
-        )
+        verify_item_count_did_not_increase_after_duplicate_insertion(self, self.cursor, original_bid_count, 'bid')
 
     def test_location_id_is_unique(self):
-        self.is_table_unique_on_columns(
-            'location',
-            'id'
-        )
+        is_table_unique_on_columns(self, self.cursor, 'location', 'id')
 
     def test_cannot_add_duplicate_location(self):
-        self.denies_duplicates(
+        denies_duplicates(
+            self,
+            self.cursor,
             'location',
             [
                 'name',
@@ -206,38 +194,35 @@ class TestConstraints(unittest.TestCase):
         )
 
     def test_country_id_is_unique(self):
-        self.is_table_unique_on_columns(
-            'country',
-            'id'
-        )
+        is_table_unique_on_columns(self, self.cursor, 'country', 'id')
 
     def test_cannot_add_duplicate_country(self):
-        self.denies_duplicates(
+        denies_duplicates(
+            self,
+            self.cursor,
             'country',
             'name',
             ['id', 'name']
         )
 
     def test_category_name_is_unique(self):
-        self.is_table_unique_on_columns(
-            'category',
-            'name'
-        )
+        is_table_unique_on_columns(self, self.cursor, 'category', 'name')
 
     def test_auction_cannot_belong_to_category_more_than_once(self):
-        self.is_table_unique_on_columns(
-            'join_auction_category',
-            ['auction_id', 'category_id']
-        )
+        is_table_unique_on_columns(self, self.cursor, 'join_auction_category', ['auction_id', 'category_id'])
 
-        self.denies_duplicates(
+        denies_duplicates(
+            self,
+            self.cursor,
             'join_auction_category',
             ['auction_id', 'category_id'],
             ['id', 'auction_id', 'category_id']
         )
 
     def test_cannot_add_duplicate_category(self):
-        self.denies_duplicates(
+        denies_duplicates(
+            self,
+            self.cursor,
             'category',
             'name',
             ['id', 'name']
@@ -274,10 +259,8 @@ class TestConstraints(unittest.TestCase):
                 )
             )
 
-        self.assertEqual(
-            join_count,
-            count_from_table(self.cursor, 'join_auction_category')
-        )
+        verify_item_count_did_not_increase_after_duplicate_insertion(self, self.cursor, join_count,
+                                                                     'join_auction_category')
 
     def test_every_bid_must_correspond_to_an_auction(self):
         self.assertEqual(
@@ -328,189 +311,6 @@ class TestConstraints(unittest.TestCase):
                     "FOREIGN KEY constraint failed"
                 )
             )
-
-    def denies_duplicates(
-            self,
-            table_name,
-            unique_columns,
-            column_names
-    ):
-        starting_item_count = count_from_table(self.cursor, table_name)
-        existing_item = self.get_existing_item(table_name, unique_columns)
-        concatenated_values = self.generate_values_for_insertion_attempt(column_names, existing_item, unique_columns)
-
-        try:
-            self.cursor.execute(
-                f'insert into {table_name} '
-                f'values ({concatenated_values});'
-            )
-        except sqlite3.IntegrityError as e:
-            if type(unique_columns) == list:
-                for column_index in range(0, len(unique_columns)):
-                    if column_index == 0:
-                        concatenated_error = f"{table_name}.{unique_columns[column_index]}"
-                    else:
-                        concatenated_error = f"{concatenated_error}, {table_name}.{unique_columns[column_index]}"
-
-                self.assertTrue(
-                    str(e).__contains__(f"UNIQUE constraint failed: {concatenated_error}")
-                )
-            else:
-                self.assertTrue(
-                    str(e).__contains__(f"UNIQUE constraint failed: {table_name}.{unique_columns}")
-                )
-
-        self.assertEqual(
-            starting_item_count,
-            count_from_table(self.cursor, table_name)
-        )
-
-    def generate_values_for_insertion_attempt(self, column_names, existing_item, unique_columns):
-        for column_index in range(0, len(column_names)):
-            column_name = column_names[column_index]
-            if type(unique_columns) == list:
-                if column_index == 0:
-                    concatenated_values = self.concatenate_first_existing_value_or_static_value(
-                        column_name,
-                        existing_item,
-                        unique_columns
-                    )
-                else:
-                    concatenated_values = self.concatenate_remaining_existing_values_or_static_values(
-                        column_name,
-                        concatenated_values,
-                        existing_item,
-                        unique_columns
-                    )
-            else:
-                if column_index == 0:
-                    if column_name == unique_columns:
-                        concatenated_values = f"'{existing_item}'"
-                    else:
-                        if column_name == 'start':
-                            concatenated_values = f"'{now()}"
-                        elif column_name == 'end':
-                            concatenated_values = f"'{now(1)}"
-                        else:
-                            concatenated_values = f"'123456789'"
-
-                    if len(column_names) == 1:
-                        break
-                else:
-                    concatenated_values = self.concatenate_many_values(
-                        column_name,
-                        concatenated_values,
-                        existing_item,
-                        unique_columns
-                    )
-        return concatenated_values
-
-    def concatenate_many_values(
-            self,
-            column_name,
-            concatenated_values,
-            existing_item,
-            unique_columns
-    ):
-        if column_name == unique_columns:
-            concatenated_values = f"{concatenated_values}, '{existing_item}'"
-        elif column_name == 'start':
-            concatenated_values = f"{concatenated_values}, " \
-                f"'{now()}'"
-        elif column_name == 'end':
-            concatenated_values = f"{concatenated_values}, " \
-                f"'{now(1)}'"
-        else:
-            concatenated_values = f"{concatenated_values}, '123456789'"
-        return concatenated_values
-
-    def concatenate_remaining_existing_values_or_static_values(
-            self,
-            column_name,
-            concatenated_values,
-            existing_item,
-            unique_columns
-    ):
-        if unique_columns.__contains__(column_name):
-            concatenated_values = \
-                f"{concatenated_values}, " \
-                    f"'{existing_item[unique_columns.index(column_name)]}'"
-        else:
-            concatenated_values = f"{concatenated_values}, '123456789'"
-        return concatenated_values
-
-    def concatenate_first_existing_value_or_static_value(
-            self,
-            column_name,
-            existing_item,
-            unique_columns
-    ):
-        if unique_columns.__contains__(column_name):
-            concatenated_values = f"'{existing_item[unique_columns.index(column_name)]}'"
-        else:
-            concatenated_values = f"'123456789'"
-        return concatenated_values
-
-    def get_existing_item(
-            self,
-            table_name,
-            unique_columns
-    ):
-        if type(unique_columns) == list:
-            concatenated_uniques = self.concatenate_column_names_for_sql(unique_columns)
-            existing_item = self.fetch_existing_item_from_many_columns(concatenated_uniques, table_name)
-        else:
-            existing_item = self.fetch_existing_item_from_single_column(table_name, unique_columns)
-        return existing_item
-
-    def fetch_existing_item_from_single_column(
-            self,
-            table_name,
-            unique_columns
-    ):
-        existing_item = self.cursor.execute(
-            f"select {unique_columns} "
-            f"from {table_name};"
-        ).fetchone()[0]
-        return existing_item
-
-    def fetch_existing_item_from_many_columns(
-            self,
-            concatenated_uniques,
-            table_name
-    ):
-        existing_item = self.cursor.execute(
-            f"select {concatenated_uniques} "
-            f"from {table_name};"
-        ).fetchone()
-        return existing_item
-
-    def concatenate_column_names_for_sql(
-            self,
-            unique_columns
-    ):
-        for column in range(0, len(unique_columns)):
-            if column == 0:
-                concatenated_uniques = f'{unique_columns[column]}'
-                if len(unique_columns) == 1:
-                    break
-            else:
-                concatenated_uniques = f'{concatenated_uniques},{unique_columns[column]}'
-        return concatenated_uniques
-
-    def is_table_unique_on_columns(
-            self,
-            table_name,
-            unique_on_column_names
-    ):
-        self.assertEqual(
-            [],
-            duplicate_rows_from_table(
-                self.cursor,
-                table_name,
-                unique_on_column_names
-            )
-        )
 
 
 if __name__ == '__main__':
