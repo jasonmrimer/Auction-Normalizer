@@ -8,9 +8,9 @@ Design your constraints: Create a file called constraints.txt in this file, you 
 
 2. All sellers and bidders must already exist as users.
 - I created a bid_with_new_user trigger that creates a new user if the bidding user does not exist. I chose this method for the sake of the user experience (i.e., to avoid an error-state that denies a bid).
-(file: trigger1_add.sql)
+(file: trigger1_drop.sql)
 - Ditto for the seller onto auctions via auction_with_new_user.
-(file: trigger2_add.sql)
+(file: trigger2_drop.sql)
 *Note, for both of these constraints the normalize.sql runs joins on the data imported from the JSON files to ensure a normalized database that begins with referential integrity.
 (file: normalize.sql, , approximate line: {seller: 71, 87}, {bidder: 103, 112})
 
@@ -41,7 +41,7 @@ Design your constraints: Create a file called constraints.txt in this file, you 
 
 6. The Current Price of an item must always match the Amount of the most recent bid for that item.
 - I created a trigger that adds the newest bid price to the auction's highest_bid price; although, it does NOT check that it is the actually highest (yet) just the most recent.
-(file: trigger3_add.sql, auction_highest_price_on_new_bid)
+(file: trigger3_drop.sql, auction_highest_price_on_new_bid)
 *Note, I enforced all previous additions from the JSON ingest via an update that selects the max bid for an auction (file: normalize, approximate line: 127-133)
 
 
@@ -49,7 +49,7 @@ Design your constraints: Create a file called constraints.txt in this file, you 
 
 1. A user may not bid on an item he or she is also selling.
 - I created an abortive trigger (with error message) that validates sellers cannot be bidders.
-(file: trigger4_add.sql, seller_cannot_bid_on_auction)
+(file: trigger4_drop.sql, seller_cannot_bid_on_auction)
 
 2. No auction may have two bids at the exact same time.
 - I created an abortive unique constraint on the bid table that enforces a single time per auction.
