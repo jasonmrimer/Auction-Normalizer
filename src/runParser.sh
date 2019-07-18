@@ -42,7 +42,7 @@ echo -e "Setup 4 of 5: \n\tNormalizing database relationships..."
 
 sqlite3 ./ebay_db < normalize.sql
 
-echo -e "Step 5: Testing queries...\n"
+echo -e "Step 5: Testing queries from Phase 1...\n"
 echo -e '1. Find the number of users in the database.'
 echo -e "\tCorrect Answer > 13422 | $(sqlite3 ./ebay_db < ./queries/query1.sql) < My Answer"
 echo -e '2. Find the number of users from New York (i.e., users whose location is the string ”New York”).'
@@ -58,6 +58,12 @@ echo -e "\tCorrect Answer > 6717 | $(sqlite3 ./ebay_db < ./queries/query6.sql) <
 echo -e '7. Find the number of categories that include at least one item with a bid of more than $100.'
 echo -e "\tCorrect Answer > 150 | $(sqlite3 ./ebay_db < ./queries/query7.sql) < My Answer"
 echo -e "\n*The given answer to #4 (1046871451) is an incorrect highest price due 1NF db."
-echo -e "Through discussions with Professor Khalefa on June 14, this normalized answer is preferred."
+echo -e "Through discussions with Professor Khalefa on June 14, this normalized answer is preferred.\n\n"
+
+echo -e "Step 6: Add triggers.\n"
+
+for (( trigger = 1; trigger < 10; ++trigger )); do
+    sqlite3 ebay_db < ./triggers/trigger${trigger}_add.sql
+done
 
 echo -e "\n\nProgram complete. Student: Jason Rimer"
