@@ -5,15 +5,14 @@ from test_helpers import *
 from test_helpers import is_table_unique_on_columns, \
  \
     verify_item_count_did_not_increase_after_duplicate_insertion, \
-    denies_duplicates, auction_id_exists_in_auction_table
+    verify_table_denies_duplicates_on_unique_columns, auction_id_exists_in_auction_table
 
 
 class TestConstraints(unittest.TestCase):
     real_database = None
 
     def setUp(self) -> None:
-        self.conn = connect_to_test_database('ebay_db')
-        # self.conn = connect_to_test_database(self.real_database)
+        self.conn = connect_to_test_database(self.real_database)
         self.cursor = self.conn.cursor()
 
     def tearDown(self) -> None:
@@ -23,7 +22,7 @@ class TestConstraints(unittest.TestCase):
         is_table_unique_on_columns(self, self.cursor, 'user', 'id')
 
     def test_cannot_add_duplicate_user(self):
-        denies_duplicates(
+        verify_table_denies_duplicates_on_unique_columns(
             self,
             self.cursor,
             'user',
@@ -35,7 +34,7 @@ class TestConstraints(unittest.TestCase):
         is_table_unique_on_columns(self, self.cursor, 'auction', 'id')
 
     def test_cannot_add_duplicate_auction(self):
-        denies_duplicates(
+        verify_table_denies_duplicates_on_unique_columns(
             self,
             self.cursor,
             'auction',
@@ -101,13 +100,35 @@ class TestConstraints(unittest.TestCase):
 
     def test_bid_composite_primary_key_is_unique(self):
         is_table_unique_on_columns(self, self.cursor, 'bid', ['auction_id', 'user_id', 'amount'])
-        denies_duplicates(
-            self,
-            self.cursor,
-            'bid',
-            ['auction_id', 'user_id', 'amount'],
-            ['auction_id', 'user_id', 'time', 'amount']
-        )
+
+        existing_bid = self.cursor.execute(
+            f"select * "
+            f"from bid "
+            f"limit 1;"
+        ).fetchone()
+
+        auction_from_bid = self.cursor.execute(
+            f"select * "
+            f"from auction "
+            f"where id={existing_bid[0]};"
+        ).fetchone()
+
+        valid_bid_time = add_hours_to_datestring(auction_from_bid[4], -1)
+
+        try:
+            self.cursor.execute(
+                f"insert into bid "
+                f"values ("
+                f"'{existing_bid[0]}', "
+                f"'{existing_bid[1]}', "
+                f"'{valid_bid_time}', "
+                f"{existing_bid[3]}"
+                f");"
+            )
+        except sqlite3.IntegrityError as e:
+            self.assertTrue(
+                str(e).__contains__(f"UNIQUE constraint failed: bid.auction_id, bid.user_id, bid.amount")
+            )
 
     def test_bid_cannot_be_at_the_same_time_for_same_auction(self):
         original_bid_count = count_from_table(
@@ -179,7 +200,7 @@ class TestConstraints(unittest.TestCase):
         is_table_unique_on_columns(self, self.cursor, 'location', 'id')
 
     def test_cannot_add_duplicate_location(self):
-        denies_duplicates(
+        verify_table_denies_duplicates_on_unique_columns(
             self,
             self.cursor,
             'location',
@@ -198,7 +219,7 @@ class TestConstraints(unittest.TestCase):
         is_table_unique_on_columns(self, self.cursor, 'country', 'id')
 
     def test_cannot_add_duplicate_country(self):
-        denies_duplicates(
+        verify_table_denies_duplicates_on_unique_columns(
             self,
             self.cursor,
             'country',
@@ -212,7 +233,7 @@ class TestConstraints(unittest.TestCase):
     def test_auction_cannot_belong_to_category_more_than_once(self):
         is_table_unique_on_columns(self, self.cursor, 'join_auction_category', ['auction_id', 'category_id'])
 
-        denies_duplicates(
+        verify_table_denies_duplicates_on_unique_columns(
             self,
             self.cursor,
             'join_auction_category',
@@ -221,7 +242,7 @@ class TestConstraints(unittest.TestCase):
         )
 
     def test_cannot_add_duplicate_category(self):
-        denies_duplicates(
+        verify_table_denies_duplicates_on_unique_columns(
             self,
             self.cursor,
             'category',
@@ -231,14 +252,7 @@ class TestConstraints(unittest.TestCase):
 
     def test_items_must_exist_for_category_matches(self):
         self.verify_all_auctions_in_join_table_are_in_auction_table()
-
-        non_existent_auction_id = int(round(time.time() * 1000))
-        while auction_id_exists_in_auction_table(
-                self.cursor,
-                non_existent_auction_id
-        ):
-            non_existent_auction_id = non_existent_auction_id + 1
-
+        non_existent_auction_id = self.generate_non_existent_auction_id()
         starting_join_count = count_from_table(self.cursor, 'join_auction_category')
 
         try:
@@ -263,6 +277,15 @@ class TestConstraints(unittest.TestCase):
             starting_join_count,
             'join_auction_category'
         )
+
+    def generate_non_existent_auction_id(self):
+        non_existent_auction_id = int(round(time.time() * 1000))
+        while auction_id_exists_in_auction_table(
+                self.cursor,
+                non_existent_auction_id
+        ):
+            non_existent_auction_id = non_existent_auction_id + 1
+        return non_existent_auction_id
 
     def verify_all_auctions_in_join_table_are_in_auction_table(self):
         self.assertEqual(
