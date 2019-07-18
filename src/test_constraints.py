@@ -336,59 +336,8 @@ class TestConstraints(unittest.TestCase):
             column_names
     ):
         starting_item_count = count_from_table(self.cursor, table_name)
-
-        if type(unique_columns) == list:
-            concatenated_uniques = self.concatenate_column_names_for_sql(unique_columns)
-            existing_item = self.cursor.execute(
-                f"select {concatenated_uniques} "
-                f"from {table_name};"
-            ).fetchone()
-        else:
-            existing_item = self.cursor.execute(
-                f"select {unique_columns} "
-                f"from {table_name};"
-            ).fetchone()[0]
-
-        for column_index in range(0, len(column_names)):
-            column_name = column_names[column_index]
-            if type(unique_columns) == list:
-                if column_index == 0:
-                    if unique_columns.__contains__(column_name):
-                        concatenated_values = f"'{existing_item[unique_columns.index(column_name)]}'"
-                    else:
-                        concatenated_values = f"'123456789'"
-                else:
-                    if unique_columns.__contains__(column_name):
-                        concatenated_values = \
-                            f"{concatenated_values}, " \
-                                f"'{existing_item[unique_columns.index(column_name)]}'"
-                    else:
-                        concatenated_values = f"{concatenated_values}, '123456789'"
-
-            else:
-                if column_index == 0:
-                    if column_name == unique_columns:
-                        concatenated_values = f"'{existing_item}'"
-                    else:
-                        if column_name == 'start':
-                            concatenated_values = f"'{now()}"
-                        elif column_name == 'end':
-                            concatenated_values = f"'{now(1)}"
-                        else:
-                            concatenated_values = f"'123456789'"
-                    if len(column_names) == 1:
-                        break
-                else:
-                    if column_name == unique_columns:
-                        concatenated_values = f"{concatenated_values}, '{existing_item}'"
-                    elif column_name == 'start':
-                        concatenated_values = f"{concatenated_values}, " \
-                            f"'{now()}'"
-                    elif column_name == 'end':
-                        concatenated_values = f"{concatenated_values}, " \
-                            f"'{now(1)}'"
-                    else:
-                        concatenated_values = f"{concatenated_values}, '123456789'"
+        existing_item = self.get_existing_item(table_name, unique_columns)
+        concatenated_values = self.generate_values_for_insertion_attempt(column_names, existing_item, unique_columns)
 
         try:
             self.cursor.execute(
@@ -399,14 +348,9 @@ class TestConstraints(unittest.TestCase):
             if type(unique_columns) == list:
                 for column_index in range(0, len(unique_columns)):
                     if column_index == 0:
-                        concatenated_error = \
-                            f"{table_name}" \
-                                f".{unique_columns[column_index]}"
+                        concatenated_error = f"{table_name}.{unique_columns[column_index]}"
                     else:
-                        concatenated_error = \
-                            f"{concatenated_error}" \
-                                f", {table_name}" \
-                                f".{unique_columns[column_index]}"
+                        concatenated_error = f"{concatenated_error}, {table_name}.{unique_columns[column_index]}"
 
                 self.assertTrue(
                     str(e).__contains__(f"UNIQUE constraint failed: {concatenated_error}")
@@ -421,7 +365,130 @@ class TestConstraints(unittest.TestCase):
             count_from_table(self.cursor, table_name)
         )
 
-    def concatenate_column_names_for_sql(self, unique_columns):
+    def generate_values_for_insertion_attempt(self, column_names, existing_item, unique_columns):
+        for column_index in range(0, len(column_names)):
+            column_name = column_names[column_index]
+            if type(unique_columns) == list:
+                if column_index == 0:
+                    concatenated_values = self.concatenate_first_existing_value_or_static_value(
+                        column_name,
+                        existing_item,
+                        unique_columns
+                    )
+                else:
+                    concatenated_values = self.concatenate_remaining_existing_values_or_static_values(
+                        column_name,
+                        concatenated_values,
+                        existing_item,
+                        unique_columns
+                    )
+            else:
+                if column_index == 0:
+                    if column_name == unique_columns:
+                        concatenated_values = f"'{existing_item}'"
+                    else:
+                        if column_name == 'start':
+                            concatenated_values = f"'{now()}"
+                        elif column_name == 'end':
+                            concatenated_values = f"'{now(1)}"
+                        else:
+                            concatenated_values = f"'123456789'"
+
+                    if len(column_names) == 1:
+                        break
+                else:
+                    concatenated_values = self.concatenate_many_values(
+                        column_name,
+                        concatenated_values,
+                        existing_item,
+                        unique_columns
+                    )
+        return concatenated_values
+
+    def concatenate_many_values(
+            self,
+            column_name,
+            concatenated_values,
+            existing_item,
+            unique_columns
+    ):
+        if column_name == unique_columns:
+            concatenated_values = f"{concatenated_values}, '{existing_item}'"
+        elif column_name == 'start':
+            concatenated_values = f"{concatenated_values}, " \
+                f"'{now()}'"
+        elif column_name == 'end':
+            concatenated_values = f"{concatenated_values}, " \
+                f"'{now(1)}'"
+        else:
+            concatenated_values = f"{concatenated_values}, '123456789'"
+        return concatenated_values
+
+    def concatenate_remaining_existing_values_or_static_values(
+            self,
+            column_name,
+            concatenated_values,
+            existing_item,
+            unique_columns
+    ):
+        if unique_columns.__contains__(column_name):
+            concatenated_values = \
+                f"{concatenated_values}, " \
+                    f"'{existing_item[unique_columns.index(column_name)]}'"
+        else:
+            concatenated_values = f"{concatenated_values}, '123456789'"
+        return concatenated_values
+
+    def concatenate_first_existing_value_or_static_value(
+            self,
+            column_name,
+            existing_item,
+            unique_columns
+    ):
+        if unique_columns.__contains__(column_name):
+            concatenated_values = f"'{existing_item[unique_columns.index(column_name)]}'"
+        else:
+            concatenated_values = f"'123456789'"
+        return concatenated_values
+
+    def get_existing_item(
+            self,
+            table_name,
+            unique_columns
+    ):
+        if type(unique_columns) == list:
+            concatenated_uniques = self.concatenate_column_names_for_sql(unique_columns)
+            existing_item = self.fetch_existing_item_from_many_columns(concatenated_uniques, table_name)
+        else:
+            existing_item = self.fetch_existing_item_from_single_column(table_name, unique_columns)
+        return existing_item
+
+    def fetch_existing_item_from_single_column(
+            self,
+            table_name,
+            unique_columns
+    ):
+        existing_item = self.cursor.execute(
+            f"select {unique_columns} "
+            f"from {table_name};"
+        ).fetchone()[0]
+        return existing_item
+
+    def fetch_existing_item_from_many_columns(
+            self,
+            concatenated_uniques,
+            table_name
+    ):
+        existing_item = self.cursor.execute(
+            f"select {concatenated_uniques} "
+            f"from {table_name};"
+        ).fetchone()
+        return existing_item
+
+    def concatenate_column_names_for_sql(
+            self,
+            unique_columns
+    ):
         for column in range(0, len(unique_columns)):
             if column == 0:
                 concatenated_uniques = f'{unique_columns[column]}'
