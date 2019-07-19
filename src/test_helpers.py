@@ -1,52 +1,9 @@
+from helpers_for_tests import *
+from helpers_for_general_functions import *
+import time
 import csv
-import datetime
 import os
 import sqlite3
-import time
-
-from helpers_for_tests import *
-
-
-def count_from_table(
-        cursor,
-        table_name
-):
-    return cursor.execute(
-        "select count(*) "
-        f"from {table_name};"
-    ).fetchone()[0]
-
-
-def duplicate_rows_from_table(
-        cursor,
-        table_name,
-        column_names
-):
-    if type(column_names) == list:
-        column_names = ','.join(column_names)
-
-    return cursor.execute(
-        f"select {column_names} "
-        f"from {table_name} "
-        f"group by {column_names} "
-        f"having count (*) > 1;"
-    ).fetchall()
-
-
-def now(
-        add_days=0
-):
-    return (datetime.datetime.now() + datetime.timedelta(days=add_days)).strftime('%Y-%m-%d %H:%M:%S')
-
-
-def add_hours_to_datestring(
-        datestring,
-        add_hours=0
-):
-    datetime_object = \
-        datetime.datetime.strptime(datestring, '%Y-%m-%d %H:%M:%S') \
-        + datetime.timedelta(hours=add_hours)
-    return datetime_object.strftime('%Y-%m-%d %H:%M:%S')
 
 
 def connect_to_test_database(real_database):
@@ -166,6 +123,7 @@ def import_dat(
         table_name,
         column_names
 ):
+    concatenated_value_headers = ''
     file = open(dat_path, 'r')
     dat_file = csv.reader(
         file,
@@ -192,17 +150,30 @@ def import_dat(
     file.close()
 
 
-def concatenate_column_names_for_sql(
-        unique_columns
+def count_from_table(
+        cursor,
+        table_name
 ):
-    for column in range(0, len(unique_columns)):
-        if column == 0:
-            concatenated_uniques = f'{unique_columns[column]}'
-            if len(unique_columns) == 1:
-                break
-        else:
-            concatenated_uniques = f'{concatenated_uniques},{unique_columns[column]}'
-    return concatenated_uniques
+    return cursor.execute(
+        "select count(*) "
+        f"from {table_name};"
+    ).fetchone()[0]
+
+
+def duplicate_rows_from_table(
+        cursor,
+        table_name,
+        column_names
+):
+    if type(column_names) == list:
+        column_names = ','.join(column_names)
+
+    return cursor.execute(
+        f"select {column_names} "
+        f"from {table_name} "
+        f"group by {column_names} "
+        f"having count (*) > 1;"
+    ).fetchall()
 
 
 def fetch_existing_item_from_many_columns(
@@ -218,52 +189,6 @@ def fetch_existing_item_from_many_columns(
     return existing_item
 
 
-def concatenate_many_values(
-        column_name,
-        concatenated_values,
-        existing_item,
-        unique_columns
-):
-    if column_name == unique_columns:
-        concatenated_values = f"{concatenated_values}, '{existing_item}'"
-    elif column_name == 'start':
-        concatenated_values = f"{concatenated_values}, " \
-            f"'{now()}'"
-    elif column_name == 'end':
-        concatenated_values = f"{concatenated_values}, " \
-            f"'{now(1)}'"
-    else:
-        concatenated_values = f"{concatenated_values}, '123456789'"
-    return concatenated_values
-
-
-def concatenate_remaining_existing_values_or_static_values(
-        column_name,
-        concatenated_values,
-        existing_item,
-        unique_columns
-):
-    if unique_columns.__contains__(column_name):
-        concatenated_values = \
-            f"{concatenated_values}, " \
-                f"'{existing_item[unique_columns.index(column_name)]}'"
-    else:
-        concatenated_values = f"{concatenated_values}, '123456789'"
-    return concatenated_values
-
-
-def concatenate_first_existing_value_or_static_value(
-        column_name,
-        existing_item,
-        unique_columns
-):
-    if unique_columns.__contains__(column_name):
-        concatenated_values = f"'{existing_item[unique_columns.index(column_name)]}'"
-    else:
-        concatenated_values = f"'123456789'"
-    return concatenated_values
-
-
 def fetch_existing_item_from_single_column(
         cursor,
         table_name,
@@ -274,51 +199,6 @@ def fetch_existing_item_from_single_column(
         f"from {table_name};"
     ).fetchone()[0]
     return existing_item
-
-
-def concatenate_filler_values_for_non_unique_columns(
-        existing_item,
-        unique_columns,
-        all_column_names
-):
-    for column_index in range(0, len(all_column_names)):
-        column_name = all_column_names[column_index]
-        if type(unique_columns) == list:
-            if column_index == 0:
-                concatenated_values = concatenate_first_existing_value_or_static_value(
-                    column_name,
-                    existing_item,
-                    unique_columns
-                )
-            else:
-                concatenated_values = concatenate_remaining_existing_values_or_static_values(
-                    column_name,
-                    concatenated_values,
-                    existing_item,
-                    unique_columns
-                )
-        else:
-            if column_index == 0:
-                if column_name == unique_columns:
-                    concatenated_values = f"'{existing_item}'"
-                else:
-                    if column_name == 'start':
-                        concatenated_values = f"'{now()}"
-                    elif column_name == 'end':
-                        concatenated_values = f"'{now(1)}"
-                    else:
-                        concatenated_values = f"'123456789'"
-
-                if len(all_column_names) == 1:
-                    break
-            else:
-                concatenated_values = concatenate_many_values(
-                    column_name,
-                    concatenated_values,
-                    existing_item,
-                    unique_columns
-                )
-    return concatenated_values
 
 
 def get_existing_item(
@@ -333,40 +213,6 @@ def get_existing_item(
     return existing_item
 
 
-def attempt_insert_of_record_duplicate_on_unique_columns(
-        test,
-        cursor,
-        concatenated_values,
-        table_name,
-        unique_columns
-):
-    try:
-        cursor.execute(
-            f"insert into {table_name} "
-            f"values ({concatenated_values});"
-        )
-    except sqlite3.IntegrityError as e:
-        if type(unique_columns) == list:
-            concatenated_error = concatenate_error_values(table_name, unique_columns)
-            test.assertTrue(
-                str(e).__contains__(f"UNIQUE constraint failed: {concatenated_error}")
-            )
-        else:
-            test.assertTrue(
-                str(e).__contains__(f"UNIQUE constraint failed: {table_name}.{unique_columns}")
-            )
-
-
-def concatenate_error_values(table_name, unique_columns):
-    concatenated_error = ''
-    for column_index in range(0, len(unique_columns)):
-        if column_index == 0:
-            concatenated_error = f"{table_name}.{unique_columns[column_index]}"
-        else:
-            concatenated_error = f"{concatenated_error}, {table_name}.{unique_columns[column_index]}"
-    return concatenated_error
-
-
 def auction_id_exists_in_auction_table(cursor, auction_id):
     auction_count = cursor.execute(
         "select count(*) "
@@ -374,24 +220,6 @@ def auction_id_exists_in_auction_table(cursor, auction_id):
         f"where id = {auction_id};"
     ).fetchone()[0]
     return auction_count > 0
-
-
-def calculate_a_valid_bid_time(auction):
-    auction_start = datetime.datetime.strptime(auction[3], '%Y-%m-%d %H:%M:%S')
-    auction_end = datetime.datetime.strptime(auction[4], '%Y-%m-%d %H:%M:%S')
-    time_range = auction_end - auction_start
-    time_range_in_hours = time_range.days * 24
-    bid_time = add_hours_to_datestring(auction[4], -(time_range_in_hours / 2))
-    while bid_time_is_invalid(bid_time, auction_start):
-        bid_time = add_hours_to_datestring(auction[4], -(time_range_in_hours / 2))
-
-    return bid_time
-
-
-def bid_time_is_invalid(bid_time, auction_start):
-    bid_time = datetime.datetime.strptime(bid_time, '%Y-%m-%d %H:%M:%S')
-    time_difference = bid_time - auction_start
-    return time_difference.days * 24 <= 0
 
 
 def get_existing_user_id(cursor):
@@ -413,9 +241,7 @@ def get_auction(cursor):
     return auction_end, auction_id, auction_start
 
 
-def add_trigger(trigger_dir, cursor,
-                trigger_number
-                ):
+def add_trigger(cursor, trigger_dir, trigger_number):
     trigger = open(f"{trigger_dir}/trigger{trigger_number}_add.sql", 'r')
     sql = trigger.read()
     trigger.close()
@@ -441,8 +267,8 @@ def create_new_auction(cursor, seller_id):
         f"null, "
         f"'test name', "
         f"10.00, "
-        f"'{now()}', "
-        f"'{now(4)}', "
+        f"'{now_plus_days()}', "
+        f"'{now_plus_days(4)}', "
         f"'test description', "
         f"99.99, "
         f"'{seller_id}', "
@@ -459,7 +285,7 @@ def make_new_bid_for_ten_dollars(cursor, auction_id, bidder_id):
         f"("
         f"{auction_id}, "
         f"'{bidder_id}', "
-        f"'{now()}', "
+        f"'{now_plus_days()}', "
         f"10.00"
         f")"
     )
@@ -481,9 +307,9 @@ def get_existing_auction_with_bid_lower_than_test(cursor, highest_bid_price):
     return auction
 
 
-def add_all_triggers(trigger_dir, cursor):
+def add_all_triggers(cursor, trigger_dir):
     for trigger in range(1, int(len(os.listdir("../src/triggers")) / 2)):
-        add_trigger(trigger_dir, cursor, trigger)
+        add_trigger(cursor, trigger_dir, trigger)
 
 
 def insert_fresh_bid(cursor):
@@ -512,30 +338,47 @@ def insert_bid_from_new_user(cursor, new_user):
     )
 
 
-def generate_new_user(test, cursor):
-    new_user = 'newuserwhoisdefinitelynotalreadyinthedatabase'
-    verify_user_does_not_exist(test, cursor, new_user)
-    return new_user
+def generate_new_user_id(cursor):
+    new_user_id = 'new_user_who_is_definitely_not_already_in_the_database'
+    users = fetch_all_users_with_id(cursor, new_user_id)
+
+    while len(users) > 0:
+        new_user_id = f"{new_user_id}{round(time.time() * 1000)}"
+        users = fetch_all_users_with_id(cursor, new_user_id)
+    return new_user_id
 
 
-def create_new_auction_from_new_seller(test, cursor, new_seller):
-    new_auction = 123456789
-    test.assertEqual(
-        [],
-        cursor.execute(
-            f'select * '
-            f'from auction '
-            f'where id=\'{new_auction}\';'
-        ).fetchall()
-    )
+def fetch_all_users_with_id(cursor, new_user_id):
+    users = cursor.execute(
+        f"select * "
+        f"from user "
+        f"where id='{new_user_id}';"
+    ).fetchall()
+    return users
+
+
+def fetch_all_auctions_with_id(cursor, new_user_id):
+    users = cursor.execute(
+        f"select * "
+        f"from user "
+        f"where id='{auction_id_exists_in_auction_table()}';"
+    ).fetchall()
+    return users
+
+
+def create_new_auction_from_new_seller(cursor, new_seller):
+    new_auction_id = round(time.time() * 1000)
+    while auction_id_exists_in_auction_table(cursor, new_auction_id):
+        new_auction_id = {round(time.time() * 1000)}
+
     cursor.execute(
         f"insert into auction "
         f"values ("
-        f"{new_auction}, "
+        f"{new_auction_id}, "
         f"'name of the auction', "
         f"7.75, "
-        f"'{now()}', "
-        f"'{now(2)}', "
+        f"'{now_plus_days()}', "
+        f"'{now_plus_days(2)}', "
         f"'description of the auction', "
         f"70.00, "
         f"'{new_seller}', "
@@ -545,64 +388,11 @@ def create_new_auction_from_new_seller(test, cursor, new_seller):
     )
 
 
-def deny_new_bid_with_value_less_than_current_high(test, cursor, auction, user_id):
-    auction_id = auction[0]
-    bid_time = calculate_a_valid_bid_time(auction)
-    try:
-        cursor.execute(
-            f"insert into bid "
-            f"values ("
-            f"{auction_id}, "
-            f"'{user_id}', "
-            f"'{bid_time}', "
-            f"1"
-            f");"
-        )
-    except sqlite3.IntegrityError as e:
-        test.assertTrue(
-            str(e).__contains__('New bids must exceed the current highest bid.')
-        )
-
-
-def current_price_still_matches_highest_bid(test, cursor, auction, highest_bid):
-    auction_id = auction[0]
-    test.assertEqual(
-        highest_bid,
-        cursor.execute(
-            f"select highest_bid "
-            f"from auction "
-            f"where id={auction_id}"
-        ).fetchone()[0]
-    )
-
-
 def setup_auction_with_beatable_bid(cursor):
     highest_bid_price = 123456
     auction = get_existing_auction_with_bid_lower_than_test(cursor, highest_bid_price)
     user_id = get_existing_user_id(cursor)
     return auction, highest_bid_price, user_id
-
-
-def attempt_bid_on_item_auctioned_by_bidder(test, cursor, auction_id, seller_id):
-    try:
-        cursor.execute(
-            f"insert into bid "
-            f"values ("
-            f"{auction_id}, "
-            f"'{seller_id}', "
-            f"'{now()}', "
-            f"123456"
-            f")"
-        )
-        test.assertTrue(
-            False,
-            "Database failed to deny bid on an auction from the seller of that auction."
-        )
-    except sqlite3.IntegrityError as e:
-        test.assertEqual(
-            str(e),
-            "Sellers may not bid on their own auction."
-        )
 
 
 def fetch_seller_and_auction(cursor):
@@ -615,78 +405,9 @@ def fetch_seller_and_auction(cursor):
     return auction_id, seller_id
 
 
-def attempt_bid_before_auction_start(test, cursor, auction_id, auction_start, user_id):
-    starting_bid_count = count_from_table(
-        cursor,
-        'bid'
-    )
-
-    try:
-        cursor.execute(
-            f"insert into bid "
-            f"values ("
-            f"{auction_id}, "
-            f"'{user_id}', "
-            f"'{add_hours_to_datestring(auction_start, -4)}',"
-            f"123456"
-            f");"
-        )
-        test.assertTrue(
-            False,
-            "Databased failed to check bid time is after auction start"
-        )
-    except sqlite3.IntegrityError as e:
-        test.assertEqual(
-            "Bids must be after the auction starts.",
-            str(e)
-        )
-
-    test.assertEqual(
-        starting_bid_count,
-        count_from_table(
-            cursor,
-            'bid'
-        )
-    )
-
-
-def attempt_bid_after_auction_ends(test, cursor, auction_end, auction_id, user_id):
-    starting_bid_count = count_from_table(
-        cursor,
-        'bid'
-    )
-
-    try:
-        cursor.execute(
-            f"insert into bid "
-            f"values ("
-            f"{auction_id}, "
-            f"'{user_id}', "
-            f"'{add_hours_to_datestring(auction_end, 4)}',"
-            f"123456"
-            f");"
-        )
-        test.assertTrue(
-            False,
-            "Databased failed to check bid time is before auction end"
-        )
-    except sqlite3.IntegrityError as e:
-        test.assertEqual(
-            "Bids must be before the auction ends.",
-            str(e)
-        )
-    test.assertEqual(
-        starting_bid_count,
-        count_from_table(
-            cursor,
-            'bid'
-        )
-    )
-
-
 def create_new_bidder_and_auction(cursor):
-    seller_id = "testuser1234567890"
-    bidder_id = "987654321testuser"
+    seller_id = "test_user1234567890"
+    bidder_id = "987654321test_user"
     add_new_users(cursor, bidder_id, seller_id)
     create_new_auction(cursor, seller_id)
     auction_id = fetch_last_row_added(cursor)
@@ -720,7 +441,8 @@ def fetch_user_who_is_not_the_seller(cursor, seller_id):
 def update_pseudo_time_and_place_bid(cursor, auction_id, bid_price, bidder_id, pseudo_now):
     cursor.execute(
         "update pseudo_time "
-        f"set now='{pseudo_now}';"
+        f"set now='{pseudo_now}' "
+        f"where 1=1;"
     )
     cursor.execute(
         f"insert into bid "
@@ -744,7 +466,7 @@ def generate_bid_that_has_duplicate_key(cursor):
         f"from auction "
         f"where id={existing_bid[0]};"
     ).fetchone()
-    valid_bid_time = add_hours_to_datestring(auction_from_bid[4], -1)
+    valid_bid_time = add_hours_to_date_string(auction_from_bid[4], -1)
     return existing_bid, valid_bid_time
 
 
@@ -755,7 +477,7 @@ def get_existing_auction_and_unique_users(cursor):
     ).fetchone()
     existing_auction_id = existing_auction[0]
     existing_auction_end = existing_auction[1]
-    valid_bid_time = add_hours_to_datestring(existing_auction_end, -1)
+    valid_bid_time = add_hours_to_date_string(existing_auction_end, -1)
     all_user_ids = cursor.execute(
         "select id "
         "from user;"
@@ -773,5 +495,3 @@ def generate_non_existent_auction_id(cursor):
     ):
         non_existent_auction_id = non_existent_auction_id + 1
     return non_existent_auction_id
-
-

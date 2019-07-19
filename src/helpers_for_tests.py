@@ -30,7 +30,7 @@ def verify_table_denies_duplicates_on_unique_columns(test, cursor, table_name, u
         unique_columns,
         column_names
     )
-    attempt_insert_of_record_duplicate_on_unique_columns(
+    verify_deny_insert_record_that_is_duplicated_on_unique_columns(
         test,
         cursor,
         new_item_duplicate_on_unique_columns,
@@ -235,9 +235,9 @@ def verify_allow_move_time_forward(test, cursor):
     try:
         cursor.execute(
             f"insert into pseudo_time "
-            f"values ('{now()}');"
+            f"values ('{now_plus_days()}');"
         )
-    except sqlite3.IntegrityError as e:
+    except sqlite3.IntegrityError:
         test.assertTrue(
             False,
             "Database failed to accept forward modification of pseudo time."
@@ -248,7 +248,7 @@ def verify_deny_move_time_backward(test, cursor):
     try:
         cursor.execute(
             f"insert into pseudo_time "
-            f"values ('{now(-1)}');"
+            f"values ('{now_plus_days(-1)}');"
         )
     except sqlite3.IntegrityError as e:
         test.assertEquals(
@@ -280,7 +280,7 @@ def verify_allow_bid_insertion_with_higher_price(test, cursor, auction_id, bidde
             f"("
             f"{auction_id}, "
             f"'{bidder_id}', "
-            f"'{now(1)}', "
+            f"'{now_plus_days(1)}', "
             f"40.00"
             f")"
         )
@@ -295,7 +295,7 @@ def verify_deny_bid_with_price_lower_than_current_high(test, cursor, auction_id,
     try:
         cursor.execute(
             "insert into bid "
-            f"values ({auction_id}, '{bidder_id}','{now()}', 3.50);"
+            f"values ({auction_id}, '{bidder_id}','{now_plus_days()}', 3.50);"
         )
         test.assertTrue(
             False,
@@ -461,7 +461,7 @@ def verify_allow_valid_insertion_on_every_table(test, cursor):
 
         cursor.execute(
             "insert into bid "
-            f"values ({auction_id}, '{bidder_id}', '{now()}', 12.00)"
+            f"values ({auction_id}, '{bidder_id}', '{now_plus_days()}', 12.00)"
         )
 
         cursor.execute(
@@ -513,3 +513,162 @@ def verify_table_is_unique_on_columns(test, cursor, table_name, unique_on_column
             unique_on_column_names
         )
     )
+
+
+def verify_deny_insert_record_that_is_duplicated_on_unique_columns(
+        test,
+        cursor,
+        concatenated_values,
+        table_name,
+        unique_columns
+):
+    try:
+        cursor.execute(
+            f"insert into {table_name} "
+            f"values ({concatenated_values});"
+        )
+    except sqlite3.IntegrityError as e:
+        if type(unique_columns) == list:
+            concatenated_error = concatenate_error_values(table_name, unique_columns)
+            test.assertTrue(
+                str(e).__contains__(f"UNIQUE constraint failed: {concatenated_error}")
+            )
+        else:
+            test.assertTrue(
+                str(e).__contains__(f"UNIQUE constraint failed: {table_name}.{unique_columns}")
+            )
+
+
+def verify_auction_does_not_exist(test, cursor):
+    new_auction = 123456789
+    test.assertEqual(
+        [],
+        cursor.execute(
+            f'select * '
+            f'from auction '
+            f'where id=\'{new_auction}\';'
+        ).fetchall()
+    )
+    return new_auction
+
+
+def verify_deny_bid_before_auction_start(test, cursor, auction_id, auction_start, user_id):
+    starting_bid_count = count_from_table(
+        cursor,
+        'bid'
+    )
+
+    try:
+        cursor.execute(
+            f"insert into bid "
+            f"values ("
+            f"{auction_id}, "
+            f"'{user_id}', "
+            f"'{add_hours_to_date_string(auction_start, -4)}',"
+            f"123456"
+            f");"
+        )
+        test.assertTrue(
+            False,
+            "Databased failed to check bid time is after auction start"
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertEqual(
+            "Bids must be after the auction starts.",
+            str(e)
+        )
+
+    test.assertEqual(
+        starting_bid_count,
+        count_from_table(
+            cursor,
+            'bid'
+        )
+    )
+
+
+def verify_deny_bid_after_auction_ends(test, cursor, auction_end, auction_id, user_id):
+    starting_bid_count = count_from_table(
+        cursor,
+        'bid'
+    )
+
+    try:
+        cursor.execute(
+            f"insert into bid "
+            f"values ("
+            f"{auction_id}, "
+            f"'{user_id}', "
+            f"'{add_hours_to_date_string(auction_end, 4)}',"
+            f"123456"
+            f");"
+        )
+        test.assertTrue(
+            False,
+            "Databased failed to check bid time is before auction end"
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertEqual(
+            "Bids must be before the auction ends.",
+            str(e)
+        )
+    test.assertEqual(
+        starting_bid_count,
+        count_from_table(
+            cursor,
+            'bid'
+        )
+    )
+
+
+def verify_deny_new_bid_with_value_less_than_current_high(test, cursor, auction, user_id):
+    auction_id = auction[0]
+    bid_time = calculate_a_valid_bid_time(auction)
+    try:
+        cursor.execute(
+            f"insert into bid "
+            f"values ("
+            f"{auction_id}, "
+            f"'{user_id}', "
+            f"'{bid_time}', "
+            f"1"
+            f");"
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertTrue(
+            str(e).__contains__('New bids must exceed the current highest bid.')
+        )
+
+
+def verify_current_price_still_matches_highest_bid(test, cursor, auction, highest_bid):
+    auction_id = auction[0]
+    test.assertEqual(
+        highest_bid,
+        cursor.execute(
+            f"select highest_bid "
+            f"from auction "
+            f"where id={auction_id}"
+        ).fetchone()[0]
+    )
+
+
+def verify_deny_bid_on_item_auctioned_by_bidder(test, cursor, auction_id, seller_id):
+    try:
+        cursor.execute(
+            f"insert into bid "
+            f"values ("
+            f"{auction_id}, "
+            f"'{seller_id}', "
+            f"'{now_plus_days()}', "
+            f"123456"
+            f")"
+        )
+        test.assertTrue(
+            False,
+            "Database failed to deny bid on an auction from the seller of that auction."
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertEqual(
+            str(e),
+            "Sellers may not bid on their own auction."
+        )
