@@ -203,25 +203,58 @@ class TestTriggers(unittest.TestCase):
 
     def test_auction_current_price_always_matches_most_recent_bid_for_auction(self):
         self.add_trigger(3)
-        auction_id = self.cursor.execute(
-            "select id "
-            "from auction "
-            "where highest_bid < 123456;"
-        ).fetchone()[0]
+
+        highest_bid_price = 123456
+        auction = self.get_existing_auction_with_bid_lower_than_test(highest_bid_price)
+        auction_id = auction[0]
         user_id = get_existing_user_id(self.cursor)
+
+        self.verify_insertion_with_exceeding_bid_sets_global_highest_price(auction, highest_bid_price, user_id)
+        self.deny_new_bid_with_value_less_than_current_high(auction, auction_id, user_id)
+        self.current_price_still_matches_highest_bid(auction_id, highest_bid_price)
+
+    def deny_new_bid_with_value_less_than_current_high(self, auction, auction_id, user_id):
+        bid_time = calculate_a_valid_bid_time(auction)
+        try:
+            self.cursor.execute(
+                f"insert into bid "
+                f"values ("
+                f"{auction_id}, "
+                f"'{user_id}', "
+                f"'{bid_time}', "
+                f"1"
+                f");"
+            )
+        except sqlite3.IntegrityError as e:
+            self.assertTrue(
+                str(e).__contains__('New bids must exceed the current highest bid.')
+            )
+
+    def current_price_still_matches_highest_bid(self, auction_id, highest_bid):
+        self.assertEqual(
+            highest_bid,
+            self.cursor.execute(
+                f"select highest_bid "
+                f"from auction "
+                f"where id={auction_id}"
+            ).fetchone()[0]
+        )
+
+    def verify_insertion_with_exceeding_bid_sets_global_highest_price(self, auction, highest_bid_price, user_id):
+        auction_id = auction[0]
+        bid_time = calculate_a_valid_bid_time(auction)
 
         self.cursor.execute(
             f"insert into bid "
             f"values ("
             f"{auction_id}, "
             f"'{user_id}', "
-            f"'{now()}', "
+            f"'{bid_time}', "
             f"123456"
             f");"
         )
-
         self.assertEqual(
-            123456,
+            highest_bid_price,
             self.cursor.execute(
                 f"select highest_bid "
                 f"from auction "
@@ -229,24 +262,13 @@ class TestTriggers(unittest.TestCase):
             ).fetchone()[0]
         )
 
-        self.cursor.execute(
-            f"insert into bid "
-            f"values ("
-            f"{auction_id}, "
-            f"'{user_id}', "
-            f"'{now(1)}', "
-            f"1"
-            f");"
-        )
-
-        self.assertEqual(
-            1,
-            self.cursor.execute(
-                f"select highest_bid "
-                f"from auction "
-                f"where id={auction_id}"
-            ).fetchone()[0]
-        )
+    def get_existing_auction_with_bid_lower_than_test(self, highest_bid_price):
+        auction = self.cursor.execute(
+            "select * "
+            "from auction "
+            f"where highest_bid < {highest_bid_price};"
+        ).fetchone()
+        return auction
 
     def test_no_bids_belong_to_auction_sellers(self):
         self.assertEqual(
@@ -311,7 +333,6 @@ class TestTriggers(unittest.TestCase):
 
         self.verify_valid_bid_insertion_at_auction_start(auction_id, auction_start, user_id)
         self.attempt_bid_before_auction_start(auction_id, auction_start, user_id)
-        self.verify_valid_bid_insertion_at_auction_end(auction_end, auction_id, user_id)
         self.attempt_bid_after_auction_ends(auction_end, auction_id, user_id)
 
     def attempt_bid_after_auction_ends(self, auction_end, auction_id, user_id):
@@ -339,52 +360,6 @@ class TestTriggers(unittest.TestCase):
                 "Bids must be before the auction ends.",
                 str(e)
             )
-        self.assertEqual(
-            starting_bid_count,
-            count_from_table(
-                self.cursor,
-                'bid'
-            )
-        )
-
-    def verify_valid_bid_insertion_at_auction_end(self, auction_end, auction_id, user_id):
-        starting_bid_count = count_from_table(
-            self.cursor,
-            'bid'
-        )
-
-        amount = int(round(time.time() * 1000))
-        print(
-            self.cursor.execute(
-                f"select * "
-                f"from bid "
-                f"where auction_id={auction_id} "
-                f"and time='{auction_end}';"
-            ).fetchall()
-        )
-        print(auction_id, auction_end, user_id, amount)
-        try:
-            self.cursor.execute(
-                f"insert into bid "
-                f"values ("
-                f"{auction_id}, "
-                f"'{user_id}', "
-                f"'{auction_end}', "
-                f"{amount}"
-                f");"
-            )
-        except sqlite3.IntegrityError as e:
-            print(
-                self.cursor.execute(
-                    f"select * "
-                    f"from bid "
-                    f"where auction_id={auction_id} "
-                    f"and time='{auction_end}';"
-                ).fetchall().__len__()
-            )
-            print(str(e))
-
-        starting_bid_count += 1
         self.assertEqual(
             starting_bid_count,
             count_from_table(
