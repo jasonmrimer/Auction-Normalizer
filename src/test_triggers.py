@@ -2,13 +2,17 @@ import sys
 import unittest
 
 from test_helpers import *
-from test_helpers import verify_bidders_are_not_auction_sellers, attempt_bid_on_item_auctioned_by_bidder, \
-    fetch_seller_and_auction, verify_deny_seller_bid, verify_all_existing_bids_fall_within_auction_time_windows, \
-    verify_valid_bid_insertion_at_auction_start, attempt_bid_before_auction_start, attempt_bid_after_auction_ends, \
-    create_new_bidder_and_auction, verify_total_bids_for_auction, verify_deny_bid_with_price_lower_than_current_high, \
-    verify_allow_bid_insertion_with_higher_price, fetch_auction_with_time_range_greater_than_two_hours, \
-    fetch_user_who_is_not_the_seller, update_pseudo_time_and_place_bid, verify_new_bid_time_matched_pseudo_time, \
-    verify_deny_move_time_backward, verify_allow_move_time_forward
+from test_helpers import attempt_bid_on_item_auctioned_by_bidder, \
+    fetch_seller_and_auction, attempt_bid_before_auction_start, attempt_bid_after_auction_ends, \
+    create_new_bidder_and_auction, fetch_auction_with_time_range_greater_than_two_hours, \
+    fetch_user_who_is_not_the_seller, update_pseudo_time_and_place_bid
+from helpers_for_tests import verify_allow_move_time_forward, verify_deny_move_time_backward, \
+    verify_new_bid_time_matched_pseudo_time, verify_allow_bid_insertion_with_higher_price, \
+    verify_deny_bid_with_price_lower_than_current_high, verify_total_bids_for_auction, \
+    verify_valid_bid_insertion_at_auction_start, verify_all_existing_bids_fall_within_auction_time_windows, \
+    verify_bidders_are_not_auction_sellers, verify_insertion_with_exceeding_bid_sets_global_highest_price, \
+    verify_new_user_created, verify_bid_added_to_table, verify_allow_valid_insertion_on_every_table, \
+    verify_deny_seller_bid
 
 
 class TestTriggers(unittest.TestCase):

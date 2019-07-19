@@ -1,5 +1,7 @@
 import sys
 import unittest
+
+from helpers_for_tests import *
 from test_helpers import *
 
 
