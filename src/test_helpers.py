@@ -659,3 +659,91 @@ def generate_new_user(test, cursor):
     new_user = 'newuserwhoisdefinitelynotalreadyinthedatabase'
     verify_user_does_not_exist(test, cursor, new_user)
     return new_user
+
+
+def create_new_auction_from_new_seller(test, cursor, new_seller):
+    new_auction = 123456789
+    test.assertEqual(
+        [],
+        cursor.execute(
+            f'select * '
+            f'from auction '
+            f'where id=\'{new_auction}\';'
+        ).fetchall()
+    )
+    cursor.execute(
+        f"insert into auction "
+        f"values ("
+        f"{new_auction}, "
+        f"'name of the auction', "
+        f"7.75, "
+        f"'{now()}', "
+        f"'{now(2)}', "
+        f"'description of the auction', "
+        f"70.00, "
+        f"'{new_seller}', "
+        f"0, "
+        f"0 "
+        f");"
+    )
+
+
+def verify_insertion_with_exceeding_bid_sets_global_highest_price(test, cursor, auction, highest_bid_price, user_id):
+    auction_id = auction[0]
+    bid_time = calculate_a_valid_bid_time(auction)
+
+    cursor.execute(
+        f"insert into bid "
+        f"values ("
+        f"{auction_id}, "
+        f"'{user_id}', "
+        f"'{bid_time}', "
+        f"123456"
+        f");"
+    )
+    test.assertEqual(
+        highest_bid_price,
+        cursor.execute(
+            f"select highest_bid "
+            f"from auction "
+            f"where id={auction_id}"
+        ).fetchone()[0]
+    )
+
+
+def deny_new_bid_with_value_less_than_current_high(test, cursor, auction, user_id):
+    auction_id = auction[0]
+    bid_time = calculate_a_valid_bid_time(auction)
+    try:
+        cursor.execute(
+            f"insert into bid "
+            f"values ("
+            f"{auction_id}, "
+            f"'{user_id}', "
+            f"'{bid_time}', "
+            f"1"
+            f");"
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertTrue(
+            str(e).__contains__('New bids must exceed the current highest bid.')
+        )
+
+
+def current_price_still_matches_highest_bid(test, cursor, auction, highest_bid):
+    auction_id = auction[0]
+    test.assertEqual(
+        highest_bid,
+        cursor.execute(
+            f"select highest_bid "
+            f"from auction "
+            f"where id={auction_id}"
+        ).fetchone()[0]
+    )
+
+
+def setup_auction_with_beatable_bid(cursor):
+    highest_bid_price = 123456
+    auction = get_existing_auction_with_bid_lower_than_test(cursor, highest_bid_price)
+    user_id = get_existing_user_id(cursor)
+    return auction, highest_bid_price, user_id
