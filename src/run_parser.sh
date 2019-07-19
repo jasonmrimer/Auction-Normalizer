@@ -66,4 +66,10 @@ for (( trigger = 1; trigger < 10; ++trigger )); do
     sqlite3 ebay_db < ./triggers/trigger${trigger}_add.sql
 done
 
+echo -e "Step 7: Run verification.\n"
+
+python3 test_constraints.py -v ./ebay_db
+python3 test_triggers.py -v ./ebay_db
+
+
 echo -e "\n\nProgram complete. Student: Jason Rimer"
