@@ -1,5 +1,6 @@
 import csv
 import datetime
+import os
 import sqlite3
 
 
@@ -467,3 +468,194 @@ def get_auction(cursor):
     auction_start = auction[1]
     auction_end = auction[2]
     return auction_end, auction_id, auction_start
+
+
+def add_trigger(trigger_dir, cursor,
+                trigger_number
+                ):
+    trigger = open(f"{trigger_dir}/trigger{trigger_number}_add.sql", 'r')
+    sql = trigger.read()
+    trigger.close()
+    cursor.executescript(
+        sql
+    )
+
+
+def add_new_users(cursor, bidder_id, seller_id):
+    cursor.execute(
+        "insert into user "
+        f"values "
+        f"('{seller_id}', 0, null),"
+        f"('{bidder_id}', 0, null);"
+    )
+
+
+def create_new_auction(cursor, seller_id):
+    cursor.execute(
+        "insert into auction "
+        f"values "
+        f"("
+        f"null, "
+        f"'test name', "
+        f"10.00, "
+        f"'{now()}', "
+        f"'{now(4)}', "
+        f"'test description', "
+        f"99.99, "
+        f"'{seller_id}', "
+        f"0, "
+        f"0.00"
+        f");"
+    )
+
+
+def make_new_bid_for_ten_dollars(cursor, auction_id, bidder_id):
+    cursor.execute(
+        "insert into bid "
+        f"values "
+        f"("
+        f"{auction_id}, "
+        f"'{bidder_id}', "
+        f"'{now()}', "
+        f"10.00"
+        f")"
+    )
+
+
+def fetch_last_row_added(cursor):
+    auction_id = cursor.execute(
+        "select last_insert_rowid();"
+    ).fetchone()[0]
+    return auction_id
+
+
+def get_existing_auction_with_bid_lower_than_test(cursor, highest_bid_price):
+    auction = cursor.execute(
+        "select * "
+        "from auction "
+        f"where highest_bid < {highest_bid_price};"
+    ).fetchone()
+    return auction
+
+
+def verify_allow_valid_insertion_on_every_table(test, cursor):
+    try:
+        cursor.execute(
+            "insert into category "
+            "values (null, 'Test Category');"
+        )
+
+        category_id = fetch_last_row_added(cursor)
+
+        cursor.execute(
+            "insert into country "
+            "values (null, 'Test Country');"
+        )
+        country_id = fetch_last_row_added(cursor)
+
+        cursor.execute(
+            f"insert into location "
+            f"values (null, 'Test Location', {country_id});"
+        )
+        location_id = fetch_last_row_added(cursor)
+
+        seller_id = "testuser1234567890"
+        bidder_id = "987654321testuser"
+        cursor.execute(
+            "insert into user "
+            f"values "
+            f"('{seller_id}', 0, {location_id}),"
+            f"('{bidder_id}', 0, {location_id});"
+        )
+
+        create_new_auction(cursor, seller_id)
+        auction_id = fetch_last_row_added(cursor)
+
+        cursor.execute(
+            "insert into bid "
+            f"values ({auction_id}, '{bidder_id}', '{now()}', 12.00)"
+        )
+
+        cursor.execute(
+            "insert into join_auction_category "
+            f"values (null, {auction_id}, {category_id})"
+        )
+
+    except sqlite3.IntegrityError as e:
+        test.assertTrue(
+            False,
+            f"All triggers failed an addition on a valid condition:\n{e}"
+        )
+    except sqlite3.Error as e:
+        test.assertTrue(
+            False,
+            f"All triggers failed an addition on a valid condition:\n{e}"
+        )
+
+
+def add_all_triggers(trigger_dir, cursor):
+    for trigger in range(1, int(len(os.listdir("../src/triggers")) / 2)):
+        add_trigger(trigger_dir, cursor, trigger)
+
+
+def insert_fresh_bid(cursor):
+    user_id = get_existing_user_id(cursor)
+    auction = cursor.execute(
+        "select * "
+        "from auction;"
+    ).fetchone()
+    valid_bid_time = calculate_a_valid_bid_time(auction)
+    cursor.execute(
+        f"insert into bid "
+        f"values ({auction[0]}, '{user_id}', '{valid_bid_time}', 7.75);"
+    )
+
+
+def verify_bid_added_to_table(test, cursor, starting_bid_count):
+    test.assertEqual(
+        starting_bid_count + 1,
+        count_from_table(cursor, 'bid')
+    )
+
+
+def verify_new_user_created(test, cursor, new_user):
+    test.assertEqual(
+        1,
+        len(
+            cursor.execute(
+                f'select * '
+                f'from user '
+                f'where id=\'{new_user}\';'
+            ).fetchall()
+        )
+    )
+
+
+def insert_bid_from_new_user(cursor, new_user):
+    auction = cursor.execute(
+        "select * "
+        "from auction;"
+    ).fetchone()
+    auction_id = auction[0]
+    valid_bid_time = calculate_a_valid_bid_time(auction)
+    cursor.execute(
+        f"insert into bid "
+        f"values ({auction_id}, '{new_user}', '{valid_bid_time}', 7.75);"
+    )
+
+
+def verify_user_does_not_exist(test, cursor, new_user):
+    test.assertEqual(
+        [],
+        cursor.execute(
+            f'select * '
+            f'from user '
+            f'where id=\'{new_user}\';'
+        ).fetchall()
+    )
+
+
+def generate_new_user(test, cursor):
+    new_user = 'newuserwhoisdefinitelynotalreadyinthedatabase'
+    verify_user_does_not_exist(test, cursor, new_user)
+    return new_user
