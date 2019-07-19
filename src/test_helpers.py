@@ -368,7 +368,7 @@ def get_existing_item(
     return existing_item
 
 
-def verify_is_table_unique_on_columns(test, cursor, table_name, unique_on_column_names):
+def verify_table_is_unique_on_columns(test, cursor, table_name, unique_on_column_names):
     test.assertEqual(
         [],
         duplicate_rows_from_table(
@@ -1192,3 +1192,102 @@ def verify_deny_insert_bid_for_auction_at_the_same_time(test, cursor, existing_a
             "UNIQUE constraint failed: bid.auction_id, bid.time"
         )
     verify_item_count_did_not_increase(test, cursor, original_bid_count, 'bid')
+
+
+def verify_deny_insert_category_with_non_existent_auction(test, cursor, non_existent_auction_id):
+    starting_join_count = count_from_table(cursor, 'join_auction_category')
+    try:
+        cursor.execute(
+            f"insert into join_auction_category "
+            f"values (null, {non_existent_auction_id}, 1);"
+        )
+        test.assertTrue(
+            False,
+            f"Database failed to throw error on Foreign Key for auction ID: {non_existent_auction_id}"
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertTrue(
+            str(e).__contains__(
+                "FOREIGN KEY constraint failed"
+            )
+        )
+    verify_item_count_did_not_increase(
+        test,
+        cursor,
+        starting_join_count,
+        'join_auction_category'
+    )
+
+
+def verify_all_auctions_in_join_table_are_in_auction_table(test, cursor):
+    test.assertEqual(
+        [],
+        cursor.execute(
+            "select auction_id "
+            "from join_auction_category "
+            "where not exists("
+            "select id "
+            "from auction"
+            ");"
+        ).fetchall()
+    )
+
+
+def generate_non_existent_auction_id(cursor):
+    non_existent_auction_id = int(round(time.time() * 1000))
+    while auction_id_exists_in_auction_table(
+            cursor,
+            non_existent_auction_id
+    ):
+        non_existent_auction_id = non_existent_auction_id + 1
+    return non_existent_auction_id
+
+
+def verify_deny_insert_bid_with_non_existing_auction(test, cursor, user_id):
+    try:
+        cursor.execute(
+            "insert into bid "
+            f"values (123456789, '{user_id}', '2001-12-13 16:28:34','7.75');"
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertTrue(
+            str(e).__contains__(
+                "FOREIGN KEY constraint failed"
+            )
+        )
+
+
+def verify_deny_insert_new_bid_without_auction(test, cursor, user_id):
+    try:
+        cursor.execute(
+            "insert into bid "
+            f"values (null, '{user_id}', '2001-12-13 16:28:34','7.75');"
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertTrue(
+            str(e).__contains__(
+                "NOT NULL constraint failed: bid.auction_id"
+            )
+        )
+    test.assertEqual(
+        [],
+        cursor.execute(
+            "select * "
+            "from auction "
+            "where id=123456789"
+        ).fetchall()
+    )
+
+
+def verify_all_bids_have_existing_auction(test, cursor):
+    test.assertEqual(
+        [],
+        cursor.execute(
+            "select auction_id "
+            "from bid "
+            "where not exists("
+            "select id "
+            "from auction"
+            ");"
+        ).fetchall()
+    )
