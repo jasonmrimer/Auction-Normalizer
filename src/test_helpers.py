@@ -2,6 +2,7 @@ import csv
 import datetime
 import os
 import sqlite3
+import time
 
 
 def verify_table_denies_duplicates_on_unique_columns(
@@ -747,3 +748,168 @@ def setup_auction_with_beatable_bid(cursor):
     auction = get_existing_auction_with_bid_lower_than_test(cursor, highest_bid_price)
     user_id = get_existing_user_id(cursor)
     return auction, highest_bid_price, user_id
+
+
+def verify_bidders_are_not_auction_sellers(test, cursor):
+    test.assertEqual(
+        [],
+        cursor.execute(
+            "select * "
+            "from bid "
+            "where user_id = "
+            "(select seller_id from auction where id = bid.auction_id);"
+        ).fetchall()
+    )
+
+
+def attempt_bid_on_item_auctioned_by_bidder(test, cursor, auction_id, seller_id):
+    try:
+        cursor.execute(
+            f"insert into bid "
+            f"values ("
+            f"{auction_id}, "
+            f"'{seller_id}', "
+            f"'{now()}', "
+            f"123456"
+            f")"
+        )
+        test.assertTrue(
+            False,
+            "Database failed to deny bid on an auction from the seller of that auction."
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertEqual(
+            str(e),
+            "Sellers may not bid on their own auction."
+        )
+
+
+def fetch_seller_and_auction(cursor):
+    auction = cursor.execute(
+        "select id, seller_id "
+        "from auction;"
+    ).fetchone()
+    auction_id = auction[0]
+    seller_id = auction[1]
+    return auction_id, seller_id
+
+
+def verify_deny_seller_bid(test, cursor, bid_count):
+    test.assertEqual(
+        bid_count,
+        count_from_table(
+            cursor,
+            'bid'
+        ),
+        "Database allowed new bid from seller of auction."
+    )
+
+
+def verify_all_existing_bids_fall_within_auction_time_windows(test, cursor):
+    test.assertEqual(
+        [],
+        cursor.execute(
+            "select * "
+            "from bid "
+            "where "
+            "time < (select start from auction where id = auction_id)"
+            "and "
+            "time > ( select end from auction where id = auction_id);"
+        ).fetchall()
+    )
+
+
+def verify_valid_bid_insertion_at_auction_start(test, cursor, auction_id, auction_start, user_id):
+    starting_bid_count = count_from_table(
+        cursor,
+        'bid'
+    )
+
+    amount = int(round(time.time() * 1000))
+
+    cursor.execute(
+        f"insert into bid "
+        f"values ("
+        f"{auction_id}, "
+        f"'{user_id}', "
+        f"'{auction_start}',"
+        f"{amount}"
+        f");"
+    )
+    starting_bid_count += 1
+    test.assertEqual(
+        starting_bid_count,
+        count_from_table(
+            cursor,
+            'bid'
+        )
+    )
+
+
+def attempt_bid_before_auction_start(test, cursor, auction_id, auction_start, user_id):
+    starting_bid_count = count_from_table(
+        cursor,
+        'bid'
+    )
+
+    try:
+        cursor.execute(
+            f"insert into bid "
+            f"values ("
+            f"{auction_id}, "
+            f"'{user_id}', "
+            f"'{add_hours_to_datestring(auction_start, -4)}',"
+            f"123456"
+            f");"
+        )
+        test.assertTrue(
+            False,
+            "Databased failed to check bid time is after auction start"
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertEqual(
+            "Bids must be after the auction starts.",
+            str(e)
+        )
+
+    test.assertEqual(
+        starting_bid_count,
+        count_from_table(
+            cursor,
+            'bid'
+        )
+    )
+
+
+def attempt_bid_after_auction_ends(test, cursor, auction_end, auction_id, user_id):
+    starting_bid_count = count_from_table(
+        cursor,
+        'bid'
+    )
+
+    try:
+        cursor.execute(
+            f"insert into bid "
+            f"values ("
+            f"{auction_id}, "
+            f"'{user_id}', "
+            f"'{add_hours_to_datestring(auction_end, 4)}',"
+            f"123456"
+            f");"
+        )
+        test.assertTrue(
+            False,
+            "Databased failed to check bid time is before auction end"
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertEqual(
+            "Bids must be before the auction ends.",
+            str(e)
+        )
+    test.assertEqual(
+        starting_bid_count,
+        count_from_table(
+            cursor,
+            'bid'
+        )
+    )

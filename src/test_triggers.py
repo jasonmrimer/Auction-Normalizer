@@ -1,8 +1,10 @@
 import sys
-import time
 import unittest
 
 from test_helpers import *
+from test_helpers import verify_bidders_are_not_auction_sellers, attempt_bid_on_item_auctioned_by_bidder, \
+    fetch_seller_and_auction, verify_deny_seller_bid, verify_all_existing_bids_fall_within_auction_time_windows, \
+    verify_valid_bid_insertion_at_auction_start, attempt_bid_before_auction_start, attempt_bid_after_auction_ends
 
 
 class TestTriggers(unittest.TestCase):
@@ -66,69 +68,61 @@ class TestTriggers(unittest.TestCase):
         )
 
     def test_no_bids_belong_to_auction_sellers(self):
-        self.assertEqual(
-            [],
-            self.cursor.execute(
-                "select * "
-                "from bid "
-                "where user_id = "
-                "(select seller_id from auction where id = bid.auction_id);"
-            ).fetchall()
-        )
+        verify_bidders_are_not_auction_sellers(self, self.cursor)
 
     def test_seller_may_not_bid_on_auction(self):
         add_trigger(self.trigger_dir, self.cursor, 4)
-        bid_count = count_from_table(
+        starting_bid_count = count_from_table(self.cursor, 'bid')
+        (
+            auction_id,
+            seller_id
+        ) = fetch_seller_and_auction(self.cursor)
+        attempt_bid_on_item_auctioned_by_bidder(
+            self,
             self.cursor,
-            'bid'
+            auction_id,
+            seller_id
         )
-
-        auction = self.cursor.execute(
-            "select id, seller_id "
-            "from auction;"
-        ).fetchone()
-        auction_id = auction[0]
-        seller_id = auction[1]
-
-        try:
-            self.cursor.execute(
-                f"insert into bid "
-                f"values ("
-                f"{auction_id}, "
-                f"'{seller_id}', "
-                f"'{now()}', "
-                f"123456"
-                f")"
-            )
-            self.assertTrue(
-                False,
-                "Database failed to deny bid on an auction from the seller of that auction."
-            )
-        except sqlite3.IntegrityError as e:
-            self.assertEqual(
-                str(e),
-                "Sellers may not bid on their own auction."
-            )
-
-        self.assertEqual(
-            bid_count,
-            count_from_table(
-                self.cursor,
-                'bid'
-            ),
-            "Database allowed new bid from seller of auction."
+        verify_deny_seller_bid(
+            self,
+            self.cursor,
+            starting_bid_count
         )
 
     def test_all_bids_occur_within_auction_start_and_end(self):
         add_trigger(self.trigger_dir, self.cursor, 5)
-        self.verify_all_existing_bids_fall_within_auction_time_windows()
-
-        auction_end, auction_id, auction_start = get_auction(self.cursor)
         user_id = get_existing_user_id(self.cursor)
+        (
+            auction_end,
+            auction_id,
+            auction_start
+        ) = get_auction(self.cursor)
 
-        self.verify_valid_bid_insertion_at_auction_start(auction_id, auction_start, user_id)
-        self.attempt_bid_before_auction_start(auction_id, auction_start, user_id)
-        self.attempt_bid_after_auction_ends(auction_end, auction_id, user_id)
+        verify_all_existing_bids_fall_within_auction_time_windows(
+            self,
+            self.cursor
+        )
+        verify_valid_bid_insertion_at_auction_start(
+            self,
+            self.cursor,
+            auction_id,
+            auction_start,
+            user_id
+        )
+        attempt_bid_before_auction_start(
+            self,
+            self.cursor,
+            auction_id,
+            auction_start,
+            user_id
+        )
+        attempt_bid_after_auction_ends(
+            self,
+            self.cursor,
+            auction_end,
+            auction_id,
+            user_id
+        )
 
     def test_all_auctions_maintain_accurate_number_of_bids(self):
         add_trigger(self.trigger_dir, self.cursor, 6)
@@ -225,112 +219,6 @@ class TestTriggers(unittest.TestCase):
                 "Users may only move the pseudo time forward.",
                 str(e)
             )
-
-    def attempt_bid_after_auction_ends(self, auction_end, auction_id, user_id):
-        starting_bid_count = count_from_table(
-            self.cursor,
-            'bid'
-        )
-
-        try:
-            self.cursor.execute(
-                f"insert into bid "
-                f"values ("
-                f"{auction_id}, "
-                f"'{user_id}', "
-                f"'{add_hours_to_datestring(auction_end, 4)}',"
-                f"123456"
-                f");"
-            )
-            self.assertTrue(
-                False,
-                "Databased failed to check bid time is before auction end"
-            )
-        except sqlite3.IntegrityError as e:
-            self.assertEqual(
-                "Bids must be before the auction ends.",
-                str(e)
-            )
-        self.assertEqual(
-            starting_bid_count,
-            count_from_table(
-                self.cursor,
-                'bid'
-            )
-        )
-
-    def verify_valid_bid_insertion_at_auction_start(self, auction_id, auction_start, user_id):
-        starting_bid_count = count_from_table(
-            self.cursor,
-            'bid'
-        )
-
-        amount = int(round(time.time() * 1000))
-
-        self.cursor.execute(
-            f"insert into bid "
-            f"values ("
-            f"{auction_id}, "
-            f"'{user_id}', "
-            f"'{auction_start}',"
-            f"{amount}"
-            f");"
-        )
-        starting_bid_count += 1
-        self.assertEqual(
-            starting_bid_count,
-            count_from_table(
-                self.cursor,
-                'bid'
-            )
-        )
-
-    def attempt_bid_before_auction_start(self, auction_id, auction_start, user_id):
-        starting_bid_count = count_from_table(
-            self.cursor,
-            'bid'
-        )
-
-        try:
-            self.cursor.execute(
-                f"insert into bid "
-                f"values ("
-                f"{auction_id}, "
-                f"'{user_id}', "
-                f"'{add_hours_to_datestring(auction_start, -4)}',"
-                f"123456"
-                f");"
-            )
-            self.assertTrue(
-                False,
-                "Databased failed to check bid time is after auction start"
-            )
-        except sqlite3.IntegrityError as e:
-            self.assertEqual(
-                "Bids must be after the auction starts.",
-                str(e)
-            )
-
-        self.assertEqual(
-            starting_bid_count,
-            count_from_table(
-                self.cursor,
-                'bid'
-            )
-        )
-
-    def verify_all_existing_bids_fall_within_auction_time_windows(self):
-        self.assertEqual(
-            [],
-            self.cursor.execute(
-                "select * "
-                "from bid "
-                "where "
-                "time < (select start from auction where id = auction_id)"
-                "and "
-                "time > ( select end from auction where id = auction_id);"
-            ).fetchall()
-        )
 
     def create_new_bidder_and_auction(self):
         seller_id = "testuser1234567890"
