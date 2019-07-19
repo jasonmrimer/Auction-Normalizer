@@ -913,3 +913,140 @@ def attempt_bid_after_auction_ends(test, cursor, auction_end, auction_id, user_i
             'bid'
         )
     )
+
+
+def create_new_bidder_and_auction(cursor):
+    seller_id = "testuser1234567890"
+    bidder_id = "987654321testuser"
+    add_new_users(cursor, bidder_id, seller_id)
+    create_new_auction(cursor, seller_id)
+    auction_id = fetch_last_row_added(cursor)
+    return auction_id, bidder_id
+
+
+def verify_total_bids_for_auction(test, cursor, auction_id):
+    test.assertEqual(
+        1,
+        cursor.execute(
+            "select number_of_bids "
+            "from auction "
+            f"where id={auction_id}"
+        ).fetchone()[0]
+    )
+
+
+def verify_deny_bid_with_price_lower_than_current_high(test, cursor, auction_id, bidder_id):
+    try:
+        cursor.execute(
+            "insert into bid "
+            f"values ({auction_id}, '{bidder_id}','{now()}', 3.50);"
+        )
+        test.assertTrue(
+            False,
+            "Database failed to deny low bid."
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertEqual(
+            "New bids must exceed the current highest bid.",
+            str(e)
+        )
+
+
+def verify_allow_bid_insertion_with_higher_price(test, cursor, auction_id, bidder_id):
+    try:
+        cursor.execute(
+            "insert or replace into bid "
+            f"values "
+            f"("
+            f"{auction_id}, "
+            f"'{bidder_id}', "
+            f"'{now(1)}', "
+            f"40.00"
+            f")"
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertTrue(
+            False,
+            f"Database failed to allow valid bid that exceeded current highest. Threw error:\n{e}"
+        )
+
+
+def fetch_auction_with_time_range_greater_than_two_hours(cursor):
+    auction = cursor.execute(
+        "select id, start, end, seller_id, highest_bid "
+        "from auction "
+        "where end > datetime(start, '+2 hours')"
+        "limit 1;"
+    ).fetchone()
+    auction_id = auction[0]
+    start = auction[1]
+    seller_id = auction[3]
+    bid_price = 1 if auction[4] is None else float(auction[4]) + 1
+    return auction_id, bid_price, seller_id, start
+
+
+def fetch_user_who_is_not_the_seller(cursor, seller_id):
+    bidder_id = cursor.execute(
+        f"select id "
+        f"from user "
+        f"where id !='{seller_id}' "
+        f"limit 1;"
+    ).fetchone()[0]
+    return bidder_id
+
+
+def update_pseudo_time_and_place_bid(cursor, auction_id, bid_price, bidder_id, pseudo_now):
+    cursor.execute(
+        "update pseudo_time "
+        f"set now='{pseudo_now}';"
+    )
+    cursor.execute(
+        f"insert into bid "
+        f"values ("
+        f"{auction_id}, "
+        f"'{bidder_id}', "
+        f"null, "
+        f"{bid_price}"
+        f");"
+    )
+
+
+def verify_new_bid_time_matched_pseudo_time(test, cursor, auction_id, bid_price, bidder_id, pseudo_now):
+    bid_time = cursor.execute(
+        f"select time "
+        f"from bid "
+        f"where auction_id={auction_id} "
+        f"and user_id='{bidder_id}'"
+        f"and amount={bid_price} "
+        f"limit 1;"
+    ).fetchone()[0]
+    test.assertEqual(
+        pseudo_now,
+        bid_time
+    )
+
+
+def verify_deny_move_time_backward(test, cursor):
+    try:
+        cursor.execute(
+            f"insert into pseudo_time "
+            f"values ('{now(-1)}');"
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertEquals(
+            "Users may only move the pseudo time forward.",
+            str(e)
+        )
+
+
+def verify_allow_move_time_forward(test, cursor):
+    try:
+        cursor.execute(
+            f"insert into pseudo_time "
+            f"values ('{now()}');"
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertTrue(
+            False,
+            "Database failed to accept forward modification of pseudo time."
+        )
