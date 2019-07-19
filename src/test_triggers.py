@@ -28,25 +28,19 @@ class TestTriggers(unittest.TestCase):
                 "values (null, 'Test Category');"
             )
 
-            category_id = self.cursor.execute(
-                "select last_insert_rowid();"
-            ).fetchone()[0]
+            category_id = self.fetch_last_auction_added()
 
             self.cursor.execute(
                 "insert into country "
                 "values (null, 'Test Country');"
             )
-            country_id = self.cursor.execute(
-                "select last_insert_rowid();"
-            ).fetchone()[0]
+            country_id = self.fetch_last_auction_added()
 
             self.cursor.execute(
                 f"insert into location "
                 f"values (null, 'Test Location', {country_id});"
             )
-            location_id = self.cursor.execute(
-                "select last_insert_rowid();"
-            ).fetchone()[0]
+            location_id = self.fetch_last_auction_added()
 
             seller_id = "testuser1234567890"
             bidder_id = "987654321testuser"
@@ -57,25 +51,8 @@ class TestTriggers(unittest.TestCase):
                 f"('{bidder_id}', 0, {location_id});"
             )
 
-            self.cursor.execute(
-                "insert into auction "
-                f"values "
-                f"("
-                f"null, "
-                f"'test name', "
-                f"10.00, "
-                f"'{now()}', "
-                f"'{now(4)}', "
-                f"'test description', "
-                f"99.99, "
-                f"'{seller_id}', "
-                f"0, "
-                f"0.00"
-                f");"
-            )
-            auction_id = self.cursor.execute(
-                "select last_insert_rowid();"
-            ).fetchone()[0]
+            self.create_new_auction(seller_id)
+            auction_id = self.fetch_last_auction_added()
 
             self.cursor.execute(
                 "insert into bid "
@@ -124,22 +101,19 @@ class TestTriggers(unittest.TestCase):
     def test_bidding_with_new_user_triggers_user_creation(self):
         self.add_trigger(1)
         new_user = 'newuserwhoisdefinitelynotalreadyinthedatabase'
-        self.assertEqual(
-            [],
-            self.cursor.execute(
-                f'select * '
-                f'from user '
-                f'where id=\'{new_user}\';'
-            ).fetchall()
-        )
 
-        auction_id = self.cursor.execute(
-            "select id "
+        self.verify_user_does_not_exist(new_user)
+
+        auction = self.cursor.execute(
+            "select * "
             "from auction;"
-        ).fetchone()[0]
+        ).fetchone()
+        auction_id = auction[0]
+        valid_bid_time = calculate_a_valid_bid_time(auction)
+
         self.cursor.execute(
             f"insert into bid "
-            f"values ({auction_id}, '{new_user}', '{now()}', 7.75);"
+            f"values ({auction_id}, '{new_user}', '{valid_bid_time}', 7.75);"
         )
 
         self.assertEqual(
@@ -153,17 +127,20 @@ class TestTriggers(unittest.TestCase):
             )
         )
 
-    def test_new_auction_with_new_seller_triggers_user_creation(self):
-        self.add_trigger(2)
-        new_seller = 'newuserwhoisdefinitelynotalreadyinthedatabase'
+    def verify_user_does_not_exist(self, new_user):
         self.assertEqual(
             [],
             self.cursor.execute(
                 f'select * '
                 f'from user '
-                f'where id=\'{new_seller}\';'
+                f'where id=\'{new_user}\';'
             ).fetchall()
         )
+
+    def test_new_auction_with_new_seller_triggers_user_creation(self):
+        self.add_trigger(2)
+        new_seller = 'newuserwhoisdefinitelynotalreadyinthedatabase'
+        self.verify_user_does_not_exist(new_seller)
 
         new_auction = 123456789
         self.assertEqual(
@@ -443,45 +420,9 @@ class TestTriggers(unittest.TestCase):
 
     def test_all_auctions_maintain_accurate_number_of_bids(self):
         self.add_trigger(6)
-        seller_id = "testuser1234567890"
-        bidder_id = "987654321testuser"
-        self.cursor.execute(
-            "insert into user "
-            f"values "
-            f"('{seller_id}', 0, null),"
-            f"('{bidder_id}', 0, null);"
-        )
+        auction_id, bidder_id = self.create_new_bidder_and_auction()
 
-        self.cursor.execute(
-            "insert into auction "
-            f"values "
-            f"("
-            f"null, "
-            f"'test name', "
-            f"10.00, "
-            f"'{now()}', "
-            f"'{now(4)}', "
-            f"'test description', "
-            f"99.99, "
-            f"'{seller_id}', "
-            f"0, "
-            f"0.00"
-            f");"
-        )
-        auction_id = self.cursor.execute(
-            "select last_insert_rowid();"
-        ).fetchone()[0]
-
-        self.cursor.execute(
-            "insert into bid "
-            f"values "
-            f"("
-            f"{auction_id}, "
-            f"'{bidder_id}', "
-            f"'{now()}', "
-            f"10.00"
-            f")"
-        )
+        self.make_new_bid_for_ten_dollars(auction_id, bidder_id)
         self.assertEqual(
             1,
             self.cursor.execute(
@@ -491,48 +432,46 @@ class TestTriggers(unittest.TestCase):
             ).fetchone()[0]
         )
 
-    def test_new_bid_price_must_exceed_current_highest_bid(self):
-        self.add_trigger(7)
-        seller_id = "testuser1234567890"
-        bidder_id = "987654321testuser"
-        self.cursor.execute(
-            "insert into user "
-            f"values "
-            f"('{seller_id}', 0, null),"
-            f"('{bidder_id}', 0, null);"
-        )
-
-        self.cursor.execute(
-            "insert into auction "
-            f"values "
-            f"("
-            f"null, "
-            f"'test name', "
-            f"10.00, "
-            f"'{now()}', "
-            f"'{now(4)}', "
-            f"'test description', "
-            f"99.99, "
-            f"'{seller_id}', "
-            f"0, "
-            f"0.00"
-            f");"
-        )
+    def fetch_last_auction_added(self):
         auction_id = self.cursor.execute(
             "select last_insert_rowid();"
         ).fetchone()[0]
+        return auction_id
 
-        self.cursor.execute(
-            "insert into bid "
-            f"values "
-            f"("
-            f"{auction_id}, "
-            f"'{bidder_id}', "
-            f"'{now()}', "
-            f"10.00"
-            f")"
-        )
+    def test_new_bid_price_must_exceed_current_highest_bid(self):
+        self.add_trigger(7)
+        auction_id, bidder_id = self.create_new_bidder_and_auction()
+        self.make_new_bid_for_ten_dollars(auction_id, bidder_id)
+        self.verify_deny_bid_with_price_lower_than_current_high(auction_id, bidder_id)
+        self.verify_allow_bid_insertion_with_higher_price(auction_id, bidder_id)
 
+    def create_new_bidder_and_auction(self):
+        seller_id = "testuser1234567890"
+        bidder_id = "987654321testuser"
+        self.add_new_users(bidder_id, seller_id)
+        self.create_new_auction(seller_id)
+        auction_id = self.fetch_last_auction_added()
+        return auction_id, bidder_id
+
+    def verify_allow_bid_insertion_with_higher_price(self, auction_id, bidder_id):
+        try:
+            self.cursor.execute(
+                "insert or replace into bid "
+                f"values "
+                f"("
+                f"{auction_id}, "
+                f"'{bidder_id}', "
+                f"'{now(1)}', "
+                f"40.00"
+                f")"
+            )
+        except sqlite3.IntegrityError as e:
+            self.assertTrue(
+                False,
+                f"Database failed to allow valid bid that exceeded current highest. Threw error:\n{e}"
+            )
+
+    def verify_deny_bid_with_price_lower_than_current_high(self, auction_id, bidder_id):
         try:
             self.cursor.execute(
                 "insert into bid "
@@ -548,22 +487,43 @@ class TestTriggers(unittest.TestCase):
                 str(e)
             )
 
-        try:
-            self.cursor.execute(
-                "insert into bid "
-                f"values "
-                f"("
-                f"{auction_id}, "
-                f"'{bidder_id}', "
-                f"'{now(1)}', "
-                f"40.00"
-                f")"
-            )
-        except sqlite3.IntegrityError as e:
-            self.assertTrue(
-                False,
-                f"Database failed to allow valid bid that exceeded current highest. Threw error:\n{e}"
-            )
+    def make_new_bid_for_ten_dollars(self, auction_id, bidder_id):
+        self.cursor.execute(
+            "insert into bid "
+            f"values "
+            f"("
+            f"{auction_id}, "
+            f"'{bidder_id}', "
+            f"'{now()}', "
+            f"10.00"
+            f")"
+        )
+
+    def create_new_auction(self, seller_id):
+        self.cursor.execute(
+            "insert into auction "
+            f"values "
+            f"("
+            f"null, "
+            f"'test name', "
+            f"10.00, "
+            f"'{now()}', "
+            f"'{now(4)}', "
+            f"'test description', "
+            f"99.99, "
+            f"'{seller_id}', "
+            f"0, "
+            f"0.00"
+            f");"
+        )
+
+    def add_new_users(self, bidder_id, seller_id):
+        self.cursor.execute(
+            "insert into user "
+            f"values "
+            f"('{seller_id}', 0, null),"
+            f"('{bidder_id}', 0, null);"
+        )
 
     def test_new_bids_occur_at_controlled_time(self):
         self.add_trigger(8)
