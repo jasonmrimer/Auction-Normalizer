@@ -18,7 +18,7 @@ def connect_to_test_database(real_database):
 def create_test_database():
     conn = sqlite3.connect(':memory:')
     cursor = conn.cursor()
-    file = open('../src/create.sql')
+    file = open('./create.sql')
     sql = file.read()
     file.close()
     cursor.executescript(sql)
@@ -26,7 +26,7 @@ def create_test_database():
     import_dat(
         conn,
         cursor,
-        '../src/dat/categories.dat',
+        './dat/categories.dat',
         'category',
         [
             'id',
@@ -37,7 +37,7 @@ def create_test_database():
     import_dat(
         conn,
         cursor,
-        '../src/dat/countries.dat',
+        './dat/countries.dat',
         'country',
         [
             'id',
@@ -48,7 +48,7 @@ def create_test_database():
     import_dat(
         conn,
         cursor,
-        '../src/dat/locations.dat',
+        './dat/locations.dat',
         'location',
         [
             'id',
@@ -60,7 +60,7 @@ def create_test_database():
     import_dat(
         conn,
         cursor,
-        '../src/dat/users.dat',
+        './dat/users.dat',
         'user',
         [
             'id',
@@ -72,7 +72,7 @@ def create_test_database():
     import_dat(
         conn,
         cursor,
-        '../src/dat/bids.dat',
+        './dat/bids.dat',
         'bid',
         [
             'auction_id',
@@ -84,7 +84,7 @@ def create_test_database():
     import_dat(
         conn,
         cursor,
-        '../src/dat/auctions.dat',
+        './dat/auctions.dat',
         'auction',
         [
             'id',
@@ -100,7 +100,7 @@ def create_test_database():
     import_dat(
         conn,
         cursor,
-        '../src/dat/join_auction_category.dat',
+        './dat/join_auction_category.dat',
         'join_auction_category',
         [
             'id',
@@ -109,7 +109,7 @@ def create_test_database():
         ]
     )
 
-    file = open('../src/normalize.sql')
+    file = open('./normalize.sql')
     sql = file.read()
     file.close()
     cursor.executescript(sql)
@@ -308,7 +308,7 @@ def get_existing_auction_with_bid_lower_than_test(cursor, highest_bid_price):
 
 
 def add_all_triggers(cursor, trigger_dir):
-    for trigger in range(1, int(len(os.listdir("../src/triggers")) / 2)):
+    for trigger in range(1, int(len(os.listdir("./triggers")) / 2)):
         add_trigger(cursor, trigger_dir, trigger)
 
 

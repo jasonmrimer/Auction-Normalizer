@@ -12,7 +12,7 @@ class QueriesTestCase(unittest.TestCase):
         self.conn.close()
 
     def test_query_1_number_of_users(self):
-        file = open('../src/queries/query1.sql')
+        file = open('./queries/query1.sql')
         sql = file.read()
         file.close()
         users = self.cursor.execute(
@@ -24,7 +24,7 @@ class QueriesTestCase(unittest.TestCase):
         )
 
     def test_query_2_users_from_new_york(self):
-        file = open('../src/queries/query2.sql')
+        file = open('./queries/query2.sql')
         sql = file.read()
         file.close()
         users = self.cursor.execute(
@@ -36,7 +36,7 @@ class QueriesTestCase(unittest.TestCase):
         )
 
     def test_query_3_auctions_with_four_categories(self):
-        file = open('../src/queries/query3.sql')
+        file = open('./queries/query3.sql')
         sql = file.read()
         file.close()
         auctions = self.cursor.execute(
@@ -48,7 +48,7 @@ class QueriesTestCase(unittest.TestCase):
         )
 
     def test_query_4_auction_with_highest_bid(self):
-        file = open('../src/queries/query4.sql')
+        file = open('./queries/query4.sql')
         sql = file.read()
         file.close()
         auctions = self.cursor.execute(
@@ -60,7 +60,7 @@ class QueriesTestCase(unittest.TestCase):
         )
 
     def test_query_5_sellers_with_ratings_over_1000(self):
-        file = open('../src/queries/query5.sql')
+        file = open('./queries/query5.sql')
         sql = file.read()
         file.close()
         sellers = self.cursor.execute(
@@ -72,7 +72,7 @@ class QueriesTestCase(unittest.TestCase):
         )
 
     def test_query_6_users_that_are_bidders_and_sellers(self):
-        file = open('../src/queries/query6.sql')
+        file = open('./queries/query6.sql')
         sql = file.read()
         file.close()
         users = self.cursor.execute(
@@ -84,7 +84,7 @@ class QueriesTestCase(unittest.TestCase):
         )
 
     def test_query_7_categories_with_bids_over_100(self):
-        file = open('../src/queries/query7.sql')
+        file = open('./queries/query7.sql')
         sql = file.read()
         file.close()
         categories = self.cursor.execute(

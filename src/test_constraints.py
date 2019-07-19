@@ -9,8 +9,7 @@ class TestConstraints(unittest.TestCase):
     real_database = None
 
     def setUp(self) -> None:
-        self.conn = connect_to_test_database('ebay_db')
-        # self.conn = connect_to_test_database(self.real_database)
+        self.conn = connect_to_test_database(self.real_database)
         self.cursor = self.conn.cursor()
 
     def tearDown(self) -> None:
