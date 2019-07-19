@@ -430,3 +430,40 @@ def auction_id_exists_in_auction_table(cursor, auction_id):
         f"where id = {auction_id};"
     ).fetchone()[0]
     return auction_count > 0
+
+
+def calculate_a_valid_bid_time(auction):
+    auction_start = datetime.datetime.strptime(auction[3], '%Y-%m-%d %H:%M:%S')
+    auction_end = datetime.datetime.strptime(auction[4], '%Y-%m-%d %H:%M:%S')
+    time_range = auction_end - auction_start
+    time_range_in_hours = time_range.days * 24
+    bid_time = add_hours_to_datestring(auction[4], -(time_range_in_hours / 2))
+    while bid_time_is_invalid(bid_time, auction_start):
+        bid_time = add_hours_to_datestring(auction[4], -(time_range_in_hours / 2))
+
+    return bid_time
+
+
+def bid_time_is_invalid(bid_time, auction_start):
+    bid_time = datetime.datetime.strptime(bid_time, '%Y-%m-%d %H:%M:%S')
+    time_difference = bid_time - auction_start
+    return time_difference.days * 24 <= 0
+
+
+def get_existing_user_id(cursor):
+    user_id = cursor.execute(
+        "select id "
+        "from user;"
+    ).fetchone()[0]
+    return user_id
+
+
+def get_auction(cursor):
+    auction = cursor.execute(
+        "select id, start, end "
+        "from auction;"
+    ).fetchone()
+    auction_id = auction[0]
+    auction_start = auction[1]
+    auction_end = auction[2]
+    return auction_end, auction_id, auction_start
