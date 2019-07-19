@@ -33,7 +33,7 @@ def verify_table_denies_duplicates_on_unique_columns(
         table_name,
         unique_columns
     )
-    verify_item_count_did_not_increase_after_duplicate_insertion(
+    verify_item_count_did_not_increase(
         test,
         cursor,
         starting_item_count,
@@ -368,7 +368,7 @@ def get_existing_item(
     return existing_item
 
 
-def is_table_unique_on_columns(test, cursor, table_name, unique_on_column_names):
+def verify_is_table_unique_on_columns(test, cursor, table_name, unique_on_column_names):
     test.assertEqual(
         [],
         duplicate_rows_from_table(
@@ -413,7 +413,7 @@ def concatenate_error_values(table_name, unique_columns):
     return concatenated_error
 
 
-def verify_item_count_did_not_increase_after_duplicate_insertion(
+def verify_item_count_did_not_increase(
         test,
         cursor,
         starting_item_count,
@@ -1050,3 +1050,145 @@ def verify_allow_move_time_forward(test, cursor):
             False,
             "Database failed to accept forward modification of pseudo time."
         )
+
+
+def verify_deny_insert_auction_with_end_before_start(test, cursor, auction_count, seller_id):
+    try:
+        cursor.execute(
+            f"insert into auction "
+            f"values ("
+            f"null, "
+            f"'name', "
+            f"0.01, "
+            f"'2000-01-01 00:00:01', "
+            f"'1999-12-31 23:59:59', "
+            f"'description', "
+            f"10.00, "
+            f"'{seller_id}', "
+            f"0, "
+            f"0.00);"
+        )
+        test.assertTrue(
+            False,
+            "Database failed to deny auction with end time before start time."
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertTrue(
+            str(e).__contains__(
+                "CHECK constraint failed: auction"
+            )
+        )
+    verify_item_count_did_not_increase(test, cursor, auction_count, 'auction')
+
+
+def verify_all_existing_auctions_end_after_start(test, cursor):
+    test.assertEqual(
+        [],
+        cursor.execute(
+            "select * "
+            "from auction "
+            "where end <= start;"
+        ).fetchall()
+    )
+
+
+def generate_bid_that_has_duplicate_key(cursor):
+    existing_bid = cursor.execute(
+        f"select * "
+        f"from bid "
+        f"limit 1;"
+    ).fetchone()
+    auction_from_bid = cursor.execute(
+        f"select * "
+        f"from auction "
+        f"where id={existing_bid[0]};"
+    ).fetchone()
+    valid_bid_time = add_hours_to_datestring(auction_from_bid[4], -1)
+    return existing_bid, valid_bid_time
+
+
+def verify_deny_insert_bid_with_duplicate_key(test, cursor, existing_bid, valid_bid_time):
+    try:
+        cursor.execute(
+            f"insert into bid "
+            f"values ("
+            f"'{existing_bid[0]}', "
+            f"'{existing_bid[1]}', "
+            f"'{valid_bid_time}', "
+            f"{existing_bid[3]}"
+            f");"
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertTrue(
+            str(e).__contains__(f"UNIQUE constraint failed: bid.auction_id, bid.user_id, bid.amount")
+        )
+
+
+def verify_insert_bid_at_specific_time(test, cursor, existing_auction_id, first_user_id, valid_bid_time):
+    original_bid_count = count_from_table(
+        cursor,
+        'bid'
+    )
+    cursor.execute(
+        f"insert into bid "
+        f"values "
+        f"("
+        f"{existing_auction_id}, "
+        f"'{first_user_id}', "
+        f"'{valid_bid_time}', "
+        f"123456"
+        f");"
+    )
+    original_bid_count += 1
+    test.assertEqual(
+        original_bid_count,
+        count_from_table(
+            cursor,
+            'bid'
+        )
+    )
+    return original_bid_count
+
+
+def get_existing_auction_and_unique_users(cursor):
+    existing_auction = cursor.execute(
+        "select id, end "
+        "from auction;"
+    ).fetchone()
+    existing_auction_id = existing_auction[0]
+    existing_auction_end = existing_auction[1]
+    valid_bid_time = add_hours_to_datestring(existing_auction_end, -1)
+    all_user_ids = cursor.execute(
+        "select id "
+        "from user;"
+    ).fetchall()
+    first_user_id = all_user_ids[0][0]
+    second_user_id = all_user_ids[1][0]
+    return existing_auction_id, first_user_id, second_user_id, valid_bid_time
+
+
+def verify_deny_insert_bid_for_auction_at_the_same_time(test, cursor, existing_auction_id,
+                                                        second_user_id, valid_bid_time):
+    original_bid_count = count_from_table(
+        cursor,
+        'bid'
+    )
+    try:
+        cursor.execute(
+            f"insert into bid "
+            f"values ("
+            f"{existing_auction_id}, "
+            f"'{second_user_id}', "
+            f"'{valid_bid_time}', "
+            f"1234567);"
+        )
+        test.assertTrue(
+            False,
+            "Database failed to deny bid for the same auction at the same time"
+        )
+    except sqlite3.IntegrityError as e:
+        test.assertEqual(
+            str(e),
+            "UNIQUE constraint failed: bid.auction_id, bid.time"
+        )
+    verify_item_count_did_not_increase(test, cursor, original_bid_count, 'bid')
