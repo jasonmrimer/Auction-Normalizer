@@ -26,12 +26,9 @@ class TestTriggers(unittest.TestCase):
         )
 
     def test_new_bid_with_existing_user(self):
-        starting_bid_count = count_from_table(self.cursor, 'bid')
-        insert_fresh_bid(self.cursor)
         verify_bid_added_to_table(
             self,
-            self.cursor,
-            starting_bid_count
+            self.cursor
         )
 
     def test_bidding_with_new_user_triggers_user_creation(self):

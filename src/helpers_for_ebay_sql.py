@@ -11,6 +11,10 @@ def get_existing_user_id(cursor):
     return fetch_existing_record_id_from_table(cursor, 'user')
 
 
+def get_existing_auction_id(cursor):
+    return fetch_existing_record_id_from_table(cursor, 'auction')
+
+
 def get_auction_values(cursor):
     auction = fetch_existing_item_column_values_from_column_names(
         cursor,
@@ -64,7 +68,7 @@ def make_new_bid_for_ten_dollars(cursor, auction_id, bidder_id):
     )
 
 
-def get_existing_auction_with_bid_lower_than_test(cursor, highest_bid_price):
+def get_existing_auction_with_bid_lower_than_price(cursor, highest_bid_price):
     auction = cursor.execute(
         "select * "
         "from auction "
@@ -83,7 +87,7 @@ def insert_fresh_bid(cursor):
     auction_end = auction_values[2]
     # auction = fetch_single_item_from_table(cursor, 'auction')
     # auction_id = fetch_existing_record_id_from_table(cursor, 'auction')
-    valid_bid_time = calculate_a_valid_bid_time(auction_start, auction_end)
+    valid_bid_time = generate_a_datetime_within_range(auction_start, auction_end)
     cursor.execute(
         f"insert into bid "
         f"values ({auction_id}, '{user_id}', '{valid_bid_time}', 7.75);"
@@ -97,7 +101,7 @@ def insert_bid_from_new_user(cursor, new_user):
     auction_id = auction_values[0]
     auction_start = auction_values[1]
     auction_end = auction_values[2]
-    valid_bid_time = calculate_a_valid_bid_time(auction_start, auction_end)
+    valid_bid_time = generate_a_datetime_within_range(auction_start, auction_end)
     cursor.execute(
         f"insert into bid "
         f"values ({auction_id}, '{new_user}', '{valid_bid_time}', 7.75);"
@@ -133,7 +137,7 @@ def create_new_auction_from_new_seller(cursor, new_seller):
 
 def setup_auction_with_beatable_bid(cursor):
     highest_bid_price = 123456
-    auction = get_existing_auction_with_bid_lower_than_test(cursor, highest_bid_price)
+    auction = get_existing_auction_with_bid_lower_than_price(cursor, highest_bid_price)
     user_id = get_existing_user_id(cursor)
     return auction, highest_bid_price, user_id
 
@@ -213,22 +217,26 @@ def generate_bid_that_has_duplicate_key(cursor):
     return existing_bid, valid_bid_time
 
 
-def get_existing_auction_and_unique_users(cursor):
-    existing_auction = cursor.execute(
-        "select id, end "
-        "from auction;"
-    ).fetchone()
-    existing_auction_id = existing_auction[0]
-    existing_auction_end = existing_auction[1]
-    valid_bid_time = add_hours_to_date_string(existing_auction_end, -1)
+def get_existing_unique_users(cursor):
     all_user_ids = cursor.execute(
         "select id "
         "from user;"
     ).fetchall()
     first_user_id = all_user_ids[0][0]
     second_user_id = all_user_ids[1][0]
-    return existing_auction_id, first_user_id, second_user_id, valid_bid_time
+    return first_user_id, second_user_id
 
 
 def generate_non_existent_auction_id(cursor):
     return generate_new_id_for_table(cursor, 'auction')
+
+
+def generate_valid_bid_time(cursor, existing_auction_id):
+    auction = cursor.execute(
+        f"select start, end "
+        f"from auction "
+        f"where id='{existing_auction_id}';"
+    ).fetchone()
+    auction_start = auction[0]
+    auction_end = auction[1]
+    return generate_a_datetime_within_range(auction_start, auction_end)
