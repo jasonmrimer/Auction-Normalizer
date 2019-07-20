@@ -1,8 +1,9 @@
 import sys
 import unittest
 
+from helpers_for_database_setup import connect_to_test_database
 from helpers_for_tests import *
-from helpers_for_sql import *
+from helpers_for_ebay_sql import *
 
 
 class TestConstraints(unittest.TestCase):

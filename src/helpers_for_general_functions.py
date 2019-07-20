@@ -1,5 +1,5 @@
 import datetime
-import helpers_for_sql
+import helpers_for_ebay_sql
 
 
 def add_hours_to_date_string(
@@ -128,14 +128,14 @@ def concatenate_error_values(table_name, unique_columns):
     return concatenated_error
 
 
-def calculate_a_valid_bid_time(auction):
-    auction_start = datetime.datetime.strptime(auction[3], '%Y-%m-%d %H:%M:%S')
-    auction_end = datetime.datetime.strptime(auction[4], '%Y-%m-%d %H:%M:%S')
-    time_range = auction_end - auction_start
+def calculate_a_valid_bid_time(start_string, end_string):
+    start_datetime = datetime.datetime.strptime(start_string, '%Y-%m-%d %H:%M:%S')
+    end_datetime = datetime.datetime.strptime(end_string, '%Y-%m-%d %H:%M:%S')
+    time_range = end_datetime - start_datetime
     time_range_in_hours = time_range.days * 24
-    bid_time = add_hours_to_date_string(auction[4], - int(time_range_in_hours / 2))
-    while bid_time_is_invalid(bid_time, auction_start):
-        bid_time = add_hours_to_date_string(auction[4], - int(time_range_in_hours / 2))
+    bid_time = add_hours_to_date_string(end_string, - int(time_range_in_hours / 2))
+    while bid_time_is_invalid(bid_time, start_datetime):
+        bid_time = add_hours_to_date_string(end_string, - int(time_range_in_hours / 2))
 
     return bid_time
 
