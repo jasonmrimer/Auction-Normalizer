@@ -1,8 +1,9 @@
 import sys
 import unittest
 
+from helpers_for_database_setup import connect_to_test_database
 from helpers_for_tests import *
-from helpers_for_sql import *
+from helpers_for_ebay_sql import *
 
 
 class TestConstraints(unittest.TestCase):
@@ -11,7 +12,6 @@ class TestConstraints(unittest.TestCase):
     def setUp(self) -> None:
         # self.conn = connect_to_test_database(self.real_database)
         self.conn = connect_to_test_database('ebay_db')
-
         self.cursor = self.conn.cursor()
 
     def tearDown(self) -> None:
@@ -63,12 +63,12 @@ class TestConstraints(unittest.TestCase):
         )
 
     def test_cannot_add_auctions_with_end_time_before_or_equal_to_start_time(self):
+        auction_count = count_from_table(self.cursor, 'auction')
+        seller_id = get_existing_user_id(self.cursor)
         verify_all_existing_auctions_end_after_start(
             self,
             self.cursor
         )
-        auction_count = count_from_table(self.cursor, 'auction')
-        seller_id = get_existing_user_id(self.cursor)
         verify_deny_insert_auction_with_end_before_start(
             self,
             self.cursor,
@@ -77,16 +77,16 @@ class TestConstraints(unittest.TestCase):
         )
 
     def test_bid_composite_primary_key_is_unique(self):
+        (
+            existing_bid,
+            valid_bid_time
+        ) = generate_bid_that_has_duplicate_key(self.cursor)
         verify_table_is_unique_on_columns(
             self,
             self.cursor,
             'bid',
             ['auction_id', 'user_id', 'amount']
         )
-        (
-            existing_bid,
-            valid_bid_time
-        ) = generate_bid_that_has_duplicate_key(self.cursor)
         verify_deny_insert_bid_with_duplicate_key(
             self,
             self.cursor,
@@ -95,19 +95,19 @@ class TestConstraints(unittest.TestCase):
         )
 
     def test_bid_cannot_be_at_the_same_time_for_same_auction(self):
+        (
+            first_user_id,
+            second_user_id
+        ) = get_existing_unique_users(self.cursor)
+        existing_auction_id = get_existing_auction_id(self.cursor)
+        valid_bid_time = generate_valid_bid_time(self.cursor, existing_auction_id)
         verify_table_is_unique_on_columns(
             self,
             self.cursor,
             'bid',
             ['auction_id', 'time']
         )
-        (
-            existing_auction_id,
-            first_user_id,
-            second_user_id,
-            valid_bid_time
-        ) = get_existing_auction_and_unique_users(self.cursor)
-        verify_insert_bid_at_specific_time(
+        verify_allow_insert_bid_at_unique_time(
             self,
             self.cursor,
             existing_auction_id,
@@ -123,7 +123,12 @@ class TestConstraints(unittest.TestCase):
         )
 
     def test_location_id_is_unique(self):
-        verify_table_is_unique_on_columns(self, self.cursor, 'location', 'id')
+        verify_table_is_unique_on_columns(
+            self,
+            self.cursor,
+            'location',
+            'id'
+        )
 
     def test_cannot_add_duplicate_location(self):
         verify_table_denies_duplicates_on_unique_columns(
@@ -142,7 +147,12 @@ class TestConstraints(unittest.TestCase):
         )
 
     def test_country_id_is_unique(self):
-        verify_table_is_unique_on_columns(self, self.cursor, 'country', 'id')
+        verify_table_is_unique_on_columns(
+            self,
+            self.cursor,
+            'country',
+            'id'
+        )
 
     def test_cannot_add_duplicate_country(self):
         verify_table_denies_duplicates_on_unique_columns(

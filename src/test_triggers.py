@@ -1,5 +1,6 @@
+from helpers_for_database_setup import connect_to_test_database
 from helpers_for_tests import *
-from helpers_for_sql import *
+from helpers_for_ebay_sql import *
 from helpers_for_general_functions import *
 import sys
 import unittest
@@ -10,7 +11,8 @@ class TestTriggers(unittest.TestCase):
     trigger_dir = "./triggers"
 
     def setUp(self) -> None:
-        self.conn = connect_to_test_database(self.real_database)
+        # self.conn = connect_to_test_database(self.real_database)
+        self.conn = connect_to_test_database('ebay_db')
         self.cursor = self.conn.cursor()
 
     def tearDown(self) -> None:
@@ -24,12 +26,9 @@ class TestTriggers(unittest.TestCase):
         )
 
     def test_new_bid_with_existing_user(self):
-        starting_bid_count = count_from_table(self.cursor, 'bid')
-        insert_fresh_bid(self.cursor)
         verify_bid_added_to_table(
             self,
-            self.cursor,
-            starting_bid_count
+            self.cursor
         )
 
     def test_bidding_with_new_user_triggers_user_creation(self):
@@ -111,7 +110,7 @@ class TestTriggers(unittest.TestCase):
             auction_end,
             auction_id,
             auction_start
-        ) = get_auction(self.cursor)
+        ) = get_auction_values(self.cursor)
 
         verify_all_existing_bids_fall_within_auction_time_windows(
             self,

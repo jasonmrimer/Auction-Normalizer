@@ -1,4 +1,8 @@
-from helpers_for_sql import *
+from helpers_for_ebay_sql import *
+import sqlite3
+
+from helpers_for_generic_sql import count_from_table, duplicates_from_table, get_existing_item_from_key, \
+    fetch_last_row_added
 
 
 def verify_all_bids_have_existing_auction(test, cursor):
@@ -20,7 +24,7 @@ def verify_table_denies_duplicates_on_unique_columns(test, cursor, table_name, u
         cursor,
         table_name
     )
-    existing_item_from_table = get_existing_item(
+    existing_item_from_table = get_existing_item_from_key(
         cursor,
         table_name,
         unique_columns
@@ -159,7 +163,7 @@ def verify_deny_insert_new_bid_without_auction(test, cursor, user_id):
     )
 
 
-def verify_insert_bid_at_specific_time(test, cursor, existing_auction_id, first_user_id, valid_bid_time):
+def verify_allow_insert_bid_at_unique_time(test, cursor, existing_auction_id, first_user_id, valid_bid_time):
     original_bid_count = count_from_table(
         cursor,
         'bid'
@@ -374,7 +378,9 @@ def verify_bidders_are_not_auction_sellers(test, cursor):
 
 def verify_insertion_with_exceeding_bid_sets_global_highest_price(test, cursor, auction, highest_bid_price, user_id):
     auction_id = auction[0]
-    bid_time = calculate_a_valid_bid_time(auction)
+    auction_start = auction[3]
+    auction_end = auction[4]
+    bid_time = generate_a_datetime_within_range(auction_start, auction_end)
 
     cursor.execute(
         f"insert into bid "
@@ -408,7 +414,9 @@ def verify_new_user_created(test, cursor, new_user):
     )
 
 
-def verify_bid_added_to_table(test, cursor, starting_bid_count):
+def verify_bid_added_to_table(test, cursor):
+    starting_bid_count = count_from_table(cursor, 'bid')
+    insert_fresh_bid(cursor)
     test.assertEqual(
         starting_bid_count + 1,
         count_from_table(cursor, 'bid')
@@ -507,7 +515,7 @@ def verify_item_count_did_not_increase(
 def verify_table_is_unique_on_columns(test, cursor, table_name, unique_on_column_names):
     test.assertEqual(
         [],
-        duplicate_rows_from_table(
+        duplicates_from_table(
             cursor,
             table_name,
             unique_on_column_names
@@ -623,7 +631,9 @@ def verify_deny_bid_after_auction_ends(test, cursor, auction_end, auction_id, us
 
 def verify_deny_new_bid_with_value_less_than_current_high(test, cursor, auction, user_id):
     auction_id = auction[0]
-    bid_time = calculate_a_valid_bid_time(auction)
+    auction_start = auction[3]
+    auction_end = auction[4]
+    bid_time = generate_a_datetime_within_range(auction_start, auction_end)
     try:
         cursor.execute(
             f"insert into bid "
