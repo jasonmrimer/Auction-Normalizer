@@ -1,5 +1,5 @@
 from helpers_for_tests import *
-from test_helpers import *
+from helpers_for_sql import *
 from helpers_for_general_functions import *
 import sys
 import unittest

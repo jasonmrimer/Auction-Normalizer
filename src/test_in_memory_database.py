@@ -2,7 +2,7 @@ import sqlite3
 import sys
 import unittest
 
-from test_helpers import create_test_database
+from helpers_for_sql import create_test_database
 
 
 class TestDatabaseCase(unittest.TestCase):

@@ -1,5 +1,5 @@
 import datetime
-import test_helpers
+import helpers_for_sql
 
 
 def add_hours_to_date_string(

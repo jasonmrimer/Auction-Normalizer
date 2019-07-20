@@ -1,4 +1,4 @@
-from test_helpers import *
+from helpers_for_sql import *
 
 
 def verify_all_bids_have_existing_auction(test, cursor):
